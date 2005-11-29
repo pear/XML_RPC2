@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.1 2005-11-29 21:41:26 sergiosgc Exp $ -->
+<!-- $Id: package.xml,v 1.2 2005-11-29 21:49:47 sergiosgc Exp $ -->
   <name>XML_RPC2</name>
   <summary>XML-RPC client/server library</summary>
   <description>
@@ -18,11 +18,11 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <state>alpha</state>
-    <date>2005-09-07</date>
+    <date>2005-11-29</date>
     <notes>
-  Implemented changes requested during package voting
+  Initial PEAR release
   </notes>
     <filelist>
       <dir name="XML" role="php">
@@ -70,61 +70,63 @@
           <file name="Value.php"/>
         </dir>
       </dir>
-      <dir name="XML_RPC2" role="test">
-        <dir name="phpBackend" role="test">
-          <dir name="client" role="test">
-            <file name="faultFromPython.phpt"/>
-            <file name="okFromPython.phpt"/>
-            <file name="protocolError.phpt"/>
+      <dir name="tests" role="test">
+        <dir name="XML_RPC2" role="test">
+          <dir name="phpBackend" role="test">
+            <dir name="client" role="test">
+              <file name="faultFromPython.phpt"/>
+              <file name="okFromPython.phpt"/>
+              <file name="protocolError.phpt"/>
+            </dir>
+            <dir name="decoding" role="test">
+              <file name="array.phpt"/>
+              <file name="base64.phpt"/>
+              <file name="boolean.phpt"/>
+              <file name="datetime.phpt"/>
+              <file name="double.phpt"/>
+              <file name="faultResponse.phpt"/>
+              <file name="integer2.phpt"/>
+              <file name="integer.phpt"/>
+              <file name="request.phpt"/>
+              <file name="response.phpt"/>
+              <file name="string.phpt"/>
+              <file name="struct.phpt"/>
+            </dir>
+            <dir name="encoding" role="test">
+              <file name="array.phpt"/>
+              <file name="base64.phpt"/>
+              <file name="boolean.phpt"/>
+              <file name="datetime1.phpt"/>
+              <file name="datetime2.phpt"/>
+              <file name="datetime3.phpt"/>
+              <file name="datetime4.phpt"/>
+              <file name="datetime.phpt"/>
+              <file name="double.phpt"/>
+              <file name="integer.phpt"/>
+              <file name="request.phpt"/>
+              <file name="response2.phpt"/>
+              <file name="response.phpt"/>
+              <file name="string.phpt"/>
+              <file name="struct.phpt"/>
+            </dir>
+            <dir name="server" role="test">
+              <file name="invalidXMLRequest.phpt"/>
+              <file name="nonexistantMethod.phpt"/>
+              <file name="normalRequest.phpt"/>
+            </dir>
           </dir>
-          <dir name="decoding" role="test">
-            <file name="array.phpt"/>
-            <file name="base64.phpt"/>
-            <file name="boolean.phpt"/>
-            <file name="datetime.phpt"/>
-            <file name="double.phpt"/>
-            <file name="faultResponse.phpt"/>
-            <file name="integer2.phpt"/>
-            <file name="integer.phpt"/>
-            <file name="request.phpt"/>
-            <file name="response.phpt"/>
-            <file name="string.phpt"/>
-            <file name="struct.phpt"/>
-          </dir>
-          <dir name="encoding" role="test">
-            <file name="array.phpt"/>
-            <file name="base64.phpt"/>
-            <file name="boolean.phpt"/>
-            <file name="datetime1.phpt"/>
-            <file name="datetime2.phpt"/>
-            <file name="datetime3.phpt"/>
-            <file name="datetime4.phpt"/>
-            <file name="datetime.phpt"/>
-            <file name="double.phpt"/>
-            <file name="integer.phpt"/>
-            <file name="request.phpt"/>
-            <file name="response2.phpt"/>
-            <file name="response.phpt"/>
-            <file name="string.phpt"/>
-            <file name="struct.phpt"/>
-          </dir>
-          <dir name="server" role="test">
-            <file name="invalidXMLRequest.phpt"/>
-            <file name="nonexistantMethod.phpt"/>
-            <file name="normalRequest.phpt"/>
-          </dir>
-        </dir>
-        <dir name="xmlrpcextBackend" role="test">
-          <dir name="client" role="test">
-            <file name="faultFromPython.phpt"/>
-            <file name="okFromPython.phpt"/>
-            <file name="protocolError.phpt"/>
-            <file name="valueCreateFromNative.phpt"/>
-          </dir>
-          <dir name="server" role="test">
-            <file name="invalidXMLRequest.phpt"/>
-            <file name="nonexistantMethod.phpt"/>
-            <file name="normalRequest.phpt"/>
+          <dir name="xmlrpcextBackend" role="test">
+            <dir name="client" role="test">
+              <file name="faultFromPython.phpt"/>
+              <file name="okFromPython.phpt"/>
+              <file name="protocolError.phpt"/>
+              <file name="valueCreateFromNative.phpt"/>
+            </dir>
+            <dir name="server" role="test">
+              <file name="invalidXMLRequest.phpt"/>
+              <file name="nonexistantMethod.phpt"/>
+              <file name="normalRequest.phpt"/>
+            </dir>
           </dir>
         </dir>
       </dir>
