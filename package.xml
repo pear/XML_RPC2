@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<package version="1.0">
+<!-- $Id: package.xml,v 1.1 2005-11-29 21:41:26 sergiosgc Exp $ -->
+  <name>XML_RPC2</name>
+  <summary>XML-RPC client/server library</summary>
+  <description>
+ XML_RPC2 is a pear package providing XML_RPC client and server services. XML-RPC is a simple remote procedure call protocol built using HTTP as transport and XML as encoding.
+
+ As a client library, XML_RPC2 is capable of creating a proxy class which exposes the methods exported by the server. As a server library, XML_RPC2 is capable of exposing methods from a class or object instance, seamlessly exporting local methods as remotely callable procedures.
+ </description>
+  <license>LGPL</license>
+  <maintainers>
+    <maintainer>
+      <user>sergiosgc</user>
+      <role>lead</role>
+      <name>Sérgio Carvalho</name>
+      <email>sergio.carvalho@portugalmail.com</email>
+    </maintainer>
+  </maintainers>
+  <release>
+    <version>0.0.5</version>
+    <state>alpha</state>
+    <date>2005-09-07</date>
+    <notes>
+  Implemented changes requested during package voting
+  </notes>
+    <filelist>
+      <dir name="XML" role="php">
+        <dir name="RPC2" role="php">
+          <dir name="Backend" role="php">
+            <dir name="Php" role="php">
+              <file name="Client.php"/>
+              <file name="Request.php"/>
+              <file name="Response.php"/>
+              <file name="Server.php"/>
+              <dir name="Value" role="php">
+                <file name="Array.php"/>
+                <file name="Base64.php"/>
+                <file name="Boolean.php"/>
+                <file name="Datetime.php"/>
+                <file name="Double.php"/>
+                <file name="Integer.php"/>
+                <file name="Scalar.php"/>
+                <file name="String.php"/>
+                <file name="Struct.php"/>
+              </dir>
+              <file name="Value.php"/>
+            </dir>
+            <dir name="Xmlrpcext" role="php">
+              <file name="Client.php"/>
+              <file name="Server.php"/>
+              <file name="Value.php"/>
+            </dir>
+          </dir>
+          <file name="Backend.php"/>
+          <file name="Client.php"/>
+          <file name="Exception.php"/>
+          <dir name="Server" role="php">
+            <dir name="CallHandler" role="php">
+              <file name="Class.php"/>
+              <file name="Instance.php"/>
+            </dir>
+            <file name="CallHandler.php"/>
+            <file name="Method.php"/>
+          </dir>
+          <file name="Server.php"/>
+          <dir name="Util" role="php">
+            <file name="HTTPRequest.php"/>
+          </dir>
+          <file name="Value.php"/>
+        </dir>
+      </dir>
+      <dir name="XML_RPC2" role="test">
+        <dir name="phpBackend" role="test">
+          <dir name="client" role="test">
+            <file name="faultFromPython.phpt"/>
+            <file name="okFromPython.phpt"/>
+            <file name="protocolError.phpt"/>
+          </dir>
+          <dir name="decoding" role="test">
+            <file name="array.phpt"/>
+            <file name="base64.phpt"/>
+            <file name="boolean.phpt"/>
+            <file name="datetime.phpt"/>
+            <file name="double.phpt"/>
+            <file name="faultResponse.phpt"/>
+            <file name="integer2.phpt"/>
+            <file name="integer.phpt"/>
+            <file name="request.phpt"/>
+            <file name="response.phpt"/>
+            <file name="string.phpt"/>
+            <file name="struct.phpt"/>
+          </dir>
+          <dir name="encoding" role="test">
+            <file name="array.phpt"/>
+            <file name="base64.phpt"/>
+            <file name="boolean.phpt"/>
+            <file name="datetime1.phpt"/>
+            <file name="datetime2.phpt"/>
+            <file name="datetime3.phpt"/>
+            <file name="datetime4.phpt"/>
+            <file name="datetime.phpt"/>
+            <file name="double.phpt"/>
+            <file name="integer.phpt"/>
+            <file name="request.phpt"/>
+            <file name="response2.phpt"/>
+            <file name="response.phpt"/>
+            <file name="string.phpt"/>
+            <file name="struct.phpt"/>
+          </dir>
+          <dir name="server" role="test">
+            <file name="invalidXMLRequest.phpt"/>
+            <file name="nonexistantMethod.phpt"/>
+            <file name="normalRequest.phpt"/>
+          </dir>
+        </dir>
+        <dir name="xmlrpcextBackend" role="test">
+          <dir name="client" role="test">
+            <file name="faultFromPython.phpt"/>
+            <file name="okFromPython.phpt"/>
+            <file name="protocolError.phpt"/>
+            <file name="valueCreateFromNative.phpt"/>
+          </dir>
+          <dir name="server" role="test">
+            <file name="invalidXMLRequest.phpt"/>
+            <file name="nonexistantMethod.phpt"/>
+            <file name="normalRequest.phpt"/>
+          </dir>
+        </dir>
+      </dir>
+    </filelist>
+    <deps>
+      <dep type="php" rel="ge" version="5.0.0"/>
+      <dep type="pkg" rel="ge" version="1.0b1">PEAR</dep>
+    </deps>
+  </release>
+</package>
