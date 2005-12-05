@@ -1,38 +1,50 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                              |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
-/**
- */
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Backend.php';
-/* }}} */
+// }}}
+
+
 /**
  * XML_RPC2_Server is the frontend class for exposing PHP functions via XML-RPC. 
  *
@@ -75,21 +87,53 @@ require_once 'XML/RPC2/Backend.php';
  * $server->handleCall();
  * </code>
  *
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @version    CVS: $Id$
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Server 
 {
-    /* callHandler Field {{{ */
-    /** The call handler is responsible for executing the server exported methods */
-    protected $_callHandler = null;
+
+    // {{{ properties
+    
+    /**
+     * callHandler field
+     *
+     * The call handler is responsible for executing the server exported methods
+     *
+     * @var mixed
+     */
+    protected $callHandler = null;
+    
+    /**
+     * aliases field
+     * 
+     * Holds method aliases
+     *
+     * @var mixed
+     */
+    protected $aliases = null;
+    
+    // }}}
+    // {{{ setCallHandler()
+    
     /** 
      * callHandler setter 
      * 
-     * @param object Object that will receive calls for remote methods
+     * @param object object that will receive calls for remote methods
      */
     protected function setCallHandler($callHandler) 
     {
-        $this->_callHandler = $callHandler;
+        $this->callHandler = $callHandler;
     }
+    
+    // }}}
+    // {{{ getCallHandler()
+    
     /** 
      * callHandler getter 
      * 
@@ -97,30 +141,51 @@ abstract class XML_RPC2_Server
      */
     protected function getCallHandler()
     {
-        return $this->_callHandler;
+        return $this->callHandler;
     }
-    /* }}} */
-    /* aliases Field {{{ */
-    /** Holds method aliases */
-    protected $_aliases = array();
-    /** aliases setter */
+    
+    // }}}
+    // {{{ setAliases()
+
+    /**
+     * aliases setter
+     * 
+     * @param mixed 
+     */
     protected function setAliases($aliases) 
     {
         $this->_aliases = $aliases;
     }
-    /** aliases appender */
+    
+    // }}}
+    // {{{ addAlias()
+    
+    /**
+     * aliases appender
+     * 
+     * @param mixed
+     */
     protected function addAlias($alias) 
     {
         $this->_aliases[] = $alias;
     }
-    /** aliases getter */
+    
+    // }}}
+    // {{{ getAliases()
+    
+    /**
+     * aliases getter
+     * 
+     * @return mixed aliases
+     */
     protected function getAliases()
     {
         return $this->_aliases;
     }
-    /* }}} */
     
-    /* Constructor {{{ */
+    // }}}
+    // {{{ constructor
+    
     /**
      * Create a new XML-RPC Server. 
      *
@@ -128,23 +193,23 @@ abstract class XML_RPC2_Server
      */
     protected function __construct($callHandler)
     {
-        $this->_callHandler = $callHandler;
+        $this->callHandler = $callHandler;
     }
-    /* }}} */
-    /* create {{{ */
+    
+    // }}}
+    // {{{ create()
+    
     /**
      * Factory method to select a backend and return a new XML_RPC2_Server based on the backend
      *
      * @param mixed Call target. Either a class name or an object instance. 
      * @param string Method prefix. This prefix will be prepended to exported method names. (Defaults to '')
      * @param object Call handler object. Defaults to selecting a CallHandler suited to the received call target
-     *
      * @return XML_RPC2_Server A server class instance
      */
     public static function create($callTarget, $prefix = '', $callHandler = null)
     {
         $backend = XML_RPC2_Backend::getServerClassname();
-
         // Find callHandler class
         if (is_null($callHandler)) {
             if (is_object($callTarget)) { // Delegate calls to instance methods
@@ -157,13 +222,18 @@ abstract class XML_RPC2_Server
         }
         return new $backend($callHandler);
     }
-    /* }}} */
-    /* handleCall(abstract) {{{ */
+    
+    // }}}
+    // {{{ handleCall()
+    
     /**
      * Receive the XML-RPC request, decode the HTTP payload, delegate execution to the call handler, and output the encoded call handler response.
      *
      */
     public abstract function handleCall();
-    /* }}} */
+    
+    // }}}
+
 }
+
 ?>
