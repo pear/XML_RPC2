@@ -1,39 +1,50 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker: 
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC.                                               |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
-/**
- */
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Backend/Php/Request.php';
 require_once 'XML/RPC2/Backend/Php/Response.php';
 require_once 'XML/RPC2/Exception.php';
-/* }}} */
+// }}}
+
 /**
  * XML_RPC server class XMLRPCext extension-based backend
  * 
@@ -42,15 +53,32 @@ require_once 'XML/RPC2/Exception.php';
  *
  * The XML_RPC server is responsible for decoding the request and calling the appropriate method in the
  * call handler class. It then encodes the result into an XML-RPC response and returns it to the client.
- * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ *
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @version    CVS: $Id$
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
 {
-    /* _xmlrpcextServer Field {{{ */
+    
+    // {{{ properties
+    
+    /** 
+     * xmlrpcext server
+     *
+     * @var resource
+     */
     private $_xmlrpcextServer;
-    /** _xmlrpcextServer getter 
+    
+    // }}}
+    // {{{ getXmlrpcextServer()
+    
+    /**
+     * _xmlrpcextServer getter 
      * 
      * @return resource xmlrpcext server
      */
@@ -58,7 +86,12 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     {
         return $this->_xmlrpcextServer;
     }
-    /** _xmlrpcextServer setter
+   
+    // }}}
+    // {{{ setXmlrpcextServer()
+    
+    /**
+     * _xmlrpcextServer setter
      * 
      * @param resource xmlrpcext server
      */
@@ -66,8 +99,10 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     {
         $this->_xmlrpcextServer = $server;
     }
-    /* }}} */
-    /* Constructor {{{ */
+    
+    // }}}
+    // {{{ constructor
+    
     /**
      * Create a new XML-RPC Server. 
      *
@@ -86,8 +121,10 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             }
         }
     }
-    /* }}} */
-    /* epiFunctionHandlerAdapter {{{ */
+    
+    // }}}
+    // {{{ epiFunctionHandlerAdapter()
+    
     /**
      * This is an adapter between XML_RPC2_CallHandler::__call and xmlrpc_server_register_method callback interface
      * 
@@ -98,25 +135,10 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     protected function epiFunctionHandlerAdapter($method_name, $params, $app_data) {
         return @call_user_func_array(array($this->getCallHandler(), $method_name), $params);
     }
-    /* }}} */
-    /* errorToException {{{ */
-    public static function errorToException($errno, $errstr, $errfile, $errline)
-    {
-        switch ($errno) {
-            case E_WARNING:
-            case E_NOTICE:
-            case E_USER_WARNING:
-            case E_USER_NOTICE:
-            case E_STRICT:
-                // Silence warnings
-                // TODO Logging should occur here
-                break;
-            default:
-                throw new Exception('Classic error reported "' . $errstr . '" on ' . $errfile . ':' . $errline);
-        }
-    }
-    /* }}} */
-    /* handleCall {{{ */
+    
+    // }}}
+    // {{{ handleCall()
+    
     /**
      * Respond to the XML-RPC request.
      *
@@ -141,6 +163,8 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
         }
     }
-    /* }}} */
+    
+    // }}}
+    
 }
 ?>

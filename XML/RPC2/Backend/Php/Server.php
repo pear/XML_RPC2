@@ -82,33 +82,6 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     }
     
     // }}}
-    // {{{ errorToException()
-    
-    /**
-     * Transform an error into an exception
-     *
-     * @param int $errno error number
-     * @param string $errstr error string
-     * @param string $errfile error file
-     * @param int $errline error line
-     */
-    public static function errorToException($errno, $errstr, $errfile, $errline)
-    {
-        switch ($errno) {
-        case E_WARNING:
-        case E_NOTICE:
-        case E_USER_WARNING:
-        case E_USER_NOTICE:
-        case E_STRICT:
-            // Silence warnings
-            // TODO Logging should occur here
-            break;
-        default:
-            throw new Exception('PHP error reported "' . $errstr . '" on ' . $errfile . ':' . $errline);
-        }
-    }
-
-    // }}}
     // {{{ handleCall()
     
     /**
