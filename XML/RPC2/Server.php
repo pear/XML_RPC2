@@ -124,7 +124,7 @@ abstract class XML_RPC2_Server
     /** 
      * callHandler setter 
      * 
-     * @param object object that will receive calls for remote methods
+     * @param object $callHandler object that will receive calls for remote methods
      */
     protected function setCallHandler($callHandler) 
     {
@@ -150,11 +150,11 @@ abstract class XML_RPC2_Server
     /**
      * aliases setter
      * 
-     * @param mixed 
+     * @param mixed $aliases
      */
     protected function setAliases($aliases) 
     {
-        $this->_aliases = $aliases;
+        $this->aliases = $aliases;
     }
     
     // }}}
@@ -163,11 +163,11 @@ abstract class XML_RPC2_Server
     /**
      * aliases appender
      * 
-     * @param mixed
+     * @param mixed $alias
      */
     protected function addAlias($alias) 
     {
-        $this->_aliases[] = $alias;
+        $this->aliases[] = $alias;
     }
     
     // }}}
@@ -180,7 +180,7 @@ abstract class XML_RPC2_Server
      */
     protected function getAliases()
     {
-        return $this->_aliases;
+        return $this->aliases;
     }
     
     // }}}
@@ -189,7 +189,7 @@ abstract class XML_RPC2_Server
     /**
      * Create a new XML-RPC Server. 
      *
-     * @param object Call handler. The call handler will receive a method call for each remote call received. 
+     * @param object $callHandler the call handler will receive a method call for each remote call received. 
      */
     protected function __construct($callHandler)
     {
@@ -202,10 +202,10 @@ abstract class XML_RPC2_Server
     /**
      * Factory method to select a backend and return a new XML_RPC2_Server based on the backend
      *
-     * @param mixed Call target. Either a class name or an object instance. 
-     * @param string Method prefix. This prefix will be prepended to exported method names. (Defaults to '')
-     * @param object Call handler object. Defaults to selecting a CallHandler suited to the received call target
-     * @return XML_RPC2_Server A server class instance
+     * @param mixed $callTarget either a class name or an object instance. 
+     * @param string $prefix this method prefix will be prepended to exported method names. (Defaults to '')
+     * @param object $callHandler defaults to selecting a CallHandler suited to the received call target
+     * @return object a server class instance
      */
     public static function create($callTarget, $prefix = '', $callHandler = null)
     {
