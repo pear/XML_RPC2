@@ -59,7 +59,6 @@ require_once 'XML/RPC2/Exception.php';
  * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
  * @copyright  2004-2005 Sérgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
- * @version    CVS: $Id$
  * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server

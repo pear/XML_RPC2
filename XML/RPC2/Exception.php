@@ -1,37 +1,51 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                               |
-   |                                                                             |
-   | XML_RPC2 is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
 /**
  * XML_RPC2 base exception class. All XML_RPC2 originated exceptions inherit from XML_RPC2_Exception
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Exception extends Exception
 {
@@ -41,8 +55,12 @@ class XML_RPC2_Exception extends Exception
 /**
  * XML_RPC2_InvalidTypeException is thrown whenever an invalid XML_RPC type is used in an operation
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_InvalidTypeException extends XML_RPC2_Exception
 {
@@ -51,8 +69,12 @@ class XML_RPC2_InvalidTypeException extends XML_RPC2_Exception
 /**
  * XML_RPC2_InvalidTypeException is thrown when creating DateTime value objects from invalid string datetime representations
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_InvalidDateFormatException extends XML_RPC2_Exception
 {
@@ -61,8 +83,12 @@ class XML_RPC2_InvalidDateFormatException extends XML_RPC2_Exception
 /**
  * XML_RPC2_EncodeException is thrown whenever a class is asked to encode itself in XML with invalid or not enough data.
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_EncodeException extends XML_RPC2_Exception
 {
@@ -71,8 +97,12 @@ class XML_RPC2_EncodeException extends XML_RPC2_Exception
 /**
  * XML_RPC2_DecodeException is thrown whenever there is a problem decoding transport XML
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_DecodeException extends XML_RPC2_Exception
 {
@@ -82,8 +112,12 @@ class XML_RPC2_DecodeException extends XML_RPC2_Exception
  * XML_RPC2_InvalidTypeEncodeException is thrown whenever a class is asked to encode itself and provided a PHP type 
  * that can't be translated to XML_RPC
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_InvalidTypeEncodeException extends XML_RPC2_Exception
 {
@@ -93,8 +127,12 @@ class XML_RPC2_InvalidTypeEncodeException extends XML_RPC2_Exception
 /**
  * XML_RPC2_InvalidUriException is thrown whenever the XML_RPC2 client is asked to use an invalid uri
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_InvalidUriException extends XML_RPC2_Exception
 {
@@ -103,16 +141,28 @@ class XML_RPC2_InvalidUriException extends XML_RPC2_Exception
 /**
  * XML_RPC2_FaultException signals a XML-RPC response that contains a fault element instead of a regular params element.
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_FaultException extends XML_RPC2_Exception
 {
-    /* vars {{{ */
+    
+    // {{{ properties
+    
+    /**
+    * Fault code (in the response body)
+    *
+    * @var string
+    */
     protected $faultCode = null;
-    /* }}} */
-
-    /* constructor {{{ */
+    
+    // }}}
+    // {{{ constructor
+    
     /** Construct a new XML_RPC2_FaultException with a given message string and fault code
      * 
      * @param string        The message string, corresponding to the faultString present in the response body
@@ -123,19 +173,29 @@ class XML_RPC2_FaultException extends XML_RPC2_Exception
         parent::__construct($messageString);
         $this->faultCode = $faultCode;
     }
-    /* }}} */
+    
+    // }}}
+    // {{{ getFaultCode()
 
-    /* getFaultCode {{{ */
     /** 
-     * faultCode getter 
+     * FaultCode getter 
+     *
+     * @return string fault code
      */
     public function getFaultCode()
     {
         return $this->faultCode;
     }
-    /* }}} */
-
-    /* createFromDecode {{{ */
+    
+    // }}}
+    // {{{ createFromDecode()
+    
+    /**
+    * Create a XML_RPC2_FaultException by decoding the corresponding xml string
+    *
+    * @param string $xml
+    * @return object a XML_RPC2_FaultException
+    */
     public static function createFromDecode($xml) {
         require_once 'XML/RPC2/Backend/Php/Value.php';
 
@@ -148,14 +208,20 @@ class XML_RPC2_FaultException extends XML_RPC2_Exception
 
         return new XML_RPC2_FaultException( $struct['faultString'], $struct['faultCode'] );
     }
-    /* }}} */
+    
+    // }}}
+    
 }
 
 /**
  * XML_RPC2_UnknownMethodException is thrown when a non-existent method is remote-called
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_UnknownMethodException extends XML_RPC2_Exception
 {
@@ -164,8 +230,12 @@ class XML_RPC2_UnknownMethodException extends XML_RPC2_Exception
 /**
  * XML_RPC2_TransportException signal transport level exceptions that stop requests from reaching the server
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_TransportException extends XML_RPC2_Exception
 {
@@ -174,8 +244,12 @@ class XML_RPC2_TransportException extends XML_RPC2_Exception
 /**
  * XML_RPC2_ReceivedInvalidStatusCodeExceptionextends is thrown whenever the XML_RPC2 response to a request does not return a 200 http status code.
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_ReceivedInvalidStatusCodeException extends XML_RPC2_TransportException
 {
@@ -184,8 +258,12 @@ class XML_RPC2_ReceivedInvalidStatusCodeException extends XML_RPC2_TransportExce
 /**
  * XML_RPC2_CurlError is thrown whenever an error is reported by the low level HTTP cURL library
  * 
- * @author Sérgio Carvalho
- * @package XML_RPC2
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_CurlException extends XML_RPC2_TransportException
 {
