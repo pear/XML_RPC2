@@ -37,6 +37,8 @@
 * @link       http://pear.php.net/package/XML_RPC2
 */
 
+// }}}
+
 /**
  * XML_RPC2 base exception class. All XML_RPC2 originated exceptions inherit from XML_RPC2_Exception
  * 

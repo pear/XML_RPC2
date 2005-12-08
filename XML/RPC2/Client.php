@@ -1,38 +1,49 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                              |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
-/**
- */ 
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Backend.php';
-/* }}} /*
+// }}}
+
 /**
  * XML_RPC client class. Use this class to access remote methods.
  * 
@@ -51,15 +62,40 @@ require_once 'XML/RPC2/Backend.php';
  * The above example will call the example.hello method on the xmlrpc.example.com
  * server, under the /1.0/ URI. 
  * 
- * @package XML_RPC2
- * @author Sérgio Carvalho
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 abstract class XML_RPC2_Client 
 {
-    /* uri Field {{{ */
-    /** Holds the uri for the XML_RPC server */
+
+    // {{{ properties
+    
+    /**
+     * uri Field (holds the uri for the XML_RPC server)
+     *
+     * @var array
+     */
     protected $_uri = null;
-    /** uri setter */
+    
+    /**
+     * proxy Field (holds the proxy server data)
+     *
+     * @var array
+     */
+    protected $_proxy = null;
+    
+    // }}}
+    // {{{ setUri()
+    
+    /** 
+     * uri setter 
+     *
+     * @param string $uri
+     */
     protected function setUri($uri) 
     {
         if (!$uriParse = parse_url($uri)) {
@@ -71,16 +107,28 @@ abstract class XML_RPC2_Client
         }
         $this->_uri['uri'] = $uri;
     }
-    /** uri getter */
+    
+    // }}}
+    // {{{ getUri()
+    
+    /**
+     * uri getter
+     *
+     * @return string 
+     */
     protected function getUri()
     {
         return $this->_uri['uri'];
     }
-    /* }}} */
-    /* proxy Field {{{ */
-    /** Holds the proxy server data */
-    protected $_proxy = null;
-    /** proxy setter */
+    
+    // }}}
+    // {{{ setProxy()
+    
+    /**
+     * proxy setter
+     * 
+     * @param string $proxy
+     */
     protected function setProxy($proxy) 
     {
         if (is_null($proxy)) {
@@ -94,12 +142,24 @@ abstract class XML_RPC2_Client
         }
         $this->_proxy['uri'] = $proxy;
     }
-    /** proxy getter */
+    
+    // }}}
+    // {{{ getProxy()
+    
+    /**
+     * proxy getter
+     *
+     * @return string
+     */
     protected function getProxy()
     {
         return $this->_proxy['uri'];
     }
-    /* }}} */
+    
+    // }}}
+    
+    // TODO : coding standards bottom this line !!!
+    
     /* prefix Field {{{ */
     /** Holds the prefix to prepend to method names */
     protected $_prefix = null;
