@@ -1,48 +1,116 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                              |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
-/**
- */ 
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Exception.php';
-/* }}} /*
+// }}}
+
 /**
  * XML_RPC utility HTTP request class. This class mimics a subset of PEAR's HTTP_Request
  * and is to be refactored out of the package once HTTP_Request releases an E_STRICT version.
  * 
- * @package XML_RPC2
- * @author Sérgio Carvalho
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Util_HTTPRequest
 {
-    /* body Field {{{ */
+
+    // {{{ properties
+    
+    /**
+     * body field
+     *
+     * @var string
+     */
     private $_body;
+    
+    /**
+     * postData field 
+     *
+     * @var string
+     */
+    private $_postData;
+   
+    /** 
+     * method Field 
+     *
+     * @var string
+     */
+    private $_method = 'POST';
+    
+    /**
+     * params Field 
+     *
+     * @var array
+     */
+    private $_params;
+    
+    /**
+     * proxy field
+     *
+     * @var array
+     */
+    private $_proxy = null;
+    
+    /**
+     * proxy auth
+     *
+     * @var string
+     */
+    private $_proxyAuth = null;
+    
+    /**
+     * uri field 
+     *
+     * @var array
+     */
+    private $_uri;
+    
+    // }}}
+    // {{{ getBody()
+
     /**
      * body field getter
      *
@@ -52,6 +120,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_body;
     }
+    
+    // }}}
+    // {{{ setBody()
+    
     /**
      * body field setter
      *
@@ -61,9 +133,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_body = $value;
     }
-    /* }}} */
-    /* postData Field {{{ */
-    private $_postData;
+    
+    // }}}
+    // {{{ getPostData()
+
     /**
      * postData field getter
      *
@@ -73,6 +146,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_postData;
     }
+    
+    // }}}
+    // {{{ setPostData()
+    
     /**
      * postData field setter
      *
@@ -82,9 +159,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_postData = $value;
     }
-    /* }}} */
-    /* method Field {{{ */
-    private $_method = 'POST';
+    
+    // }}}
+    // {{{ getMethod()
+
     /**
      * method field getter
      *
@@ -94,6 +172,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_method;
     }
+    
+    // }}}
+    // {{{ setMethod()
+    
     /**
      * method field setter (ignored!)
      * 
@@ -105,9 +187,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_method = 'POST';
     }
-    /* }}} */
-    /* params Field {{{ */
-    private $_params;
+    
+    // }}}
+    // {{{ getParams()
+
     /**
      * params field getter
      *
@@ -117,6 +200,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_params;
     }
+    
+    // }}}
+    // {{{ setParams()
+    
     /**
      * params field setter
      *
@@ -126,9 +213,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_params = $value;
     }
-    /* }}} */
-    /* proxy Field {{{ */
-    private $_proxy = null;
+    
+    // }}} 
+    // {{{ getProxy()
+
     /**
      * proxy field getter
      *
@@ -138,6 +226,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_proxy;
     }
+    
+    // }}}
+    // {{{ setProxy()
+    
     /**
      * proxy field setter
      *
@@ -147,9 +239,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_proxy = $value;
     }
-    /* }}} */
-    /* proxyAuth Field {{{ */
-    private $_proxyAuth = null;
+    
+    // }}}
+    // {{{ getProxyAuth()
+
     /**
      * proxyAuth field getter
      *
@@ -159,6 +252,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_proxyAuth;
     }
+    
+    // }}}
+    // {{{ setProxyAuth()
+    
     /**
      * proxyAuth field setter
      *
@@ -168,9 +265,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_proxyAuth = $value;
     }
-    /* }}} */
-    /* uri Field {{{ */
-    private $_uri;
+    
+    // }}}
+    // {{{ getURI()
+    
     /**
      * uri field getter
      *
@@ -180,6 +278,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_uri;
     }
+    
+    // }}}
+    // {{{ setURI()
+    
     /**
      * uri field setter
      *
@@ -189,8 +291,10 @@ class XML_RPC2_Util_HTTPRequest
     {
         $this->_uri = $value;
     }
-    /* }}} */
-    /* constructor {{{ */
+    
+    // }}}
+    // {{{ constructor
+    
     /**
     * Constructor
     *
@@ -224,8 +328,10 @@ class XML_RPC2_Util_HTTPRequest
             $this->setProxyAuth("{$params['proxy_user']}:{$params['proxy_pass']}");
         }
     }
-    /* }}} */
-    /* sendRequest {{{ */
+    
+    // }}}
+    // {{{ sendRequest()
+    
     /**
     * Sends the request
     *
@@ -264,10 +370,12 @@ class XML_RPC2_Util_HTTPRequest
         } else {
             throw new XML_RPC2_CurlException('Unable to init curl');
         }
-        $this->setBody($result);
-        
+        $this->setBody($result);        
         return true;
     }
-    /* }}} */
+    
+    // }}}
+
 }
+
 ?>
