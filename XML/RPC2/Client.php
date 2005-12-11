@@ -79,14 +79,28 @@ abstract class XML_RPC2_Client
      *
      * @var array
      */
-    protected $_uri = null;
+    protected $uri = null;
     
     /**
      * proxy Field (holds the proxy server data)
      *
      * @var array
      */
-    protected $_proxy = null;
+    protected $proxy = null;
+    
+    /**
+     * Holds the prefix to prepend to method names
+     *
+     * @var string
+     */
+    protected $prefix = null;
+    
+    /** 
+     * Holds the debug flag 
+     *
+     * @var boolean
+     */
+    protected $debug = false;
     
     // }}}
     // {{{ setUri()
@@ -101,11 +115,11 @@ abstract class XML_RPC2_Client
         if (!$uriParse = parse_url($uri)) {
             throw new XML_RPC2_InvalidUriException(sprintf('Client URI \'%s\' is not valid', $uri));
         }
-        $this->_uri = $uriParse;
-        foreach (array_keys($this->_uri) as $key) {
-            $this->_uri[$key] = urldecode($this->_uri[$key]);
+        $this->uri = $uriParse;
+        foreach (array_keys($this->uri) as $key) {
+            $this->uri[$key] = urldecode($this->uri[$key]);
         }
-        $this->_uri['uri'] = $uri;
+        $this->uri['uri'] = $uri;
     }
     
     // }}}
@@ -118,7 +132,7 @@ abstract class XML_RPC2_Client
      */
     protected function getUri()
     {
-        return $this->_uri['uri'];
+        return $this->uri['uri'];
     }
     
     // }}}
@@ -132,15 +146,15 @@ abstract class XML_RPC2_Client
     protected function setProxy($proxy) 
     {
         if (is_null($proxy)) {
-            $this->_proxy = null;
+            $this->proxy = null;
             return;
         }
         if (!$proxyParse = parse_url($proxy)) throw new XML_RPC2_InvalidProxyException(sprintf('Proxy URI \'%s\' is not valid', $proxy));
-        $this->_proxy = $proxyParse;
-        foreach (array_keys($this->_proxy) as $key) {
-            $this->_proxy[$key] = urldecode($this->_proxy[$key]);
+        $this->proxy = $proxyParse;
+        foreach (array_keys($this->proxy) as $key) {
+            $this->proxy[$key] = urldecode($this->proxy[$key]);
         }
-        $this->_proxy['uri'] = $proxy;
+        $this->proxy['uri'] = $proxy;
     }
     
     // }}}
@@ -153,43 +167,64 @@ abstract class XML_RPC2_Client
      */
     protected function getProxy()
     {
-        return $this->_proxy['uri'];
+        return $this->proxy['uri'];
     }
     
     // }}}
+    // {{{ setPrefix()
     
-    // TODO : coding standards bottom this line !!!
-    
-    /* prefix Field {{{ */
-    /** Holds the prefix to prepend to method names */
-    protected $_prefix = null;
-    /** prefix setter */
+    /**
+     * prefix setter
+     *
+     * @param string $prefix
+     */
     protected function setPrefix($prefix) 
     {
-        $this->_prefix = $prefix;
+        $this->prefix = $prefix;
     }
-    /** prefix getter */
+    
+    // }}}
+    // {{{ getPrefix()
+    
+    /** 
+     * prefix getter 
+     *
+     * @return string 
+     */
     protected function getPrefix()
     {
-        return $this->_prefix;
+        return $this->prefix;
     }
-    /* }}} */
-    /* debug Field {{{ */
-    /** Holds the debug flag */
-    protected $_debug = false;
-    /** debug setter */
+    
+    // }}}
+    // {{{ setDebug()
+    
+    /**
+     * debug flag setter
+     * 
+     * @param boolean $debug
+     */
     public function setDebug($debug) 
     {
-        $this->_debug = $debug;
+        $this->debug = $debug;
     }
-    /** debug getter */
+    
+    // }}}
+    // {{{ getDebug()
+    
+    /** 
+     * debug getter 
+     * 
+     * @return boolean
+     */
     public function getDebug()
     {
-        return $this->_debug;
+        return $this->debug;
     }
-    /* }}} */
     
-    /* remoteCall(abstract) {{{ */
+    // }}}
+    // {{{ remoteCall()
+    
     /**
      * remoteCall executes the XML-RPC call, and returns the result
      *
@@ -197,8 +232,10 @@ abstract class XML_RPC2_Client
      * @param   array       Parameters
      */
     public abstract function remoteCall($methodName, $parameters);
-    /* }}} */
-    /* constructor {{{ */
+    
+    // }}}
+    // {{{ constructor
+    
     /**
      * Construct a new XML_RPC2_Client.
      *
@@ -221,8 +258,10 @@ abstract class XML_RPC2_Client
         $this->setProxy($proxy);
         $this->setPrefix($prefix);
     }
-    /* }}} */
-    /* create {{{ */
+    
+    // }}}
+    // {{{ create()
+    
     /**
      * Factory method to select, create and return a XML_RPC2_Client backend
      *
@@ -244,8 +283,10 @@ abstract class XML_RPC2_Client
         $backend = XML_RPC2_Backend::getClientClassname();
         return new $backend($uri, $prefix, $proxy);
     }
-    /* }}} */
-    /* __call {{{ */
+    
+    // }}}
+    // {{{ __call()
+
     /**
      * __call Catchall. This method catches remote method calls and provides for remote forwarding.
      *
@@ -267,6 +308,9 @@ abstract class XML_RPC2_Client
                               $args
                              );
     }
-    /* }}} */
+   
+    // }}}
+    
 }
+
 ?>
