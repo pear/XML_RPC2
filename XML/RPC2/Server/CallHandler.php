@@ -1,37 +1,48 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                              |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * @package XML_RPC2
- */
-/**
- */
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Exception.php';
-/* }}} */
+// }}}
+
 /**
  * A CallHandler is responsible for actually calling the server-exported methods from the exported class.
  *
@@ -49,15 +60,28 @@ require_once 'XML/RPC2/Exception.php';
  *
  * @see XML_RPC2_Server_Callhandler_Class
  * @see XML_RPC2_Server_Callhandler_Instance
- * 
- * @package XML_RPC2
- * @author Sérgio Carvalho <sergio.carvalho@portugalmail.com>
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
  */ 
 abstract class XML_RPC2_Server_CallHandler
 {
-    /* methods Field {{{ */
-    /** Holds server methods */
-    protected $_methods = array();
+    
+    // {{{ properties
+    
+    /**
+     * methods Field : holds server methods 
+     *
+     * @var array
+     */
+    protected $methods = array();
+    
+    // }}}
+    // {{{ setMethods()
+    
     /** 
      * methods setter 
      *
@@ -65,8 +89,12 @@ abstract class XML_RPC2_Server_CallHandler
      */
     protected function setMethods($methods) 
     {
-        $this->_methods = $methods;
+        $this->methods = $methods;
     }
+    
+    // }}}
+    // {{{ getMethods()
+    
     /** 
      * methods getter 
      *
@@ -74,17 +102,25 @@ abstract class XML_RPC2_Server_CallHandler
      */
     public function getMethods()
     {
-        return $this->_methods;
+        return $this->methods;
     }
+    
+    // }}} 
+    // {{{ addMethod()
+    
     /** 
      * method appender 
      *
-     * @param XML_RPC2_Server_Method Method to append to _methods
+     * @param XML_RPC2_Server_Method Method to append to methods
      */
     protected function addMethod(XML_RPC2_Server_Method $method) 
     {
-        $this->_methods[$method->getName()] = $method;
+        $this->methods[$method->getName()] = $method;
     }
+    
+    // }}}
+    // {{{ getMethod()
+    
     /** 
      * method getter
      *
@@ -93,10 +129,12 @@ abstract class XML_RPC2_Server_CallHandler
      */
     public function getMethod($name)
     {
-        return $this->_methods[$name];
+        return $this->methods[$name];
     }
-    /* }}} */
-    /* system_listMethods {{{ */
+    
+    // }}}
+    // {{{ system_listMethods()
+    
     /**
      * Introspect server, returning method list.
      *
@@ -113,8 +151,10 @@ abstract class XML_RPC2_Server_CallHandler
     {
         return array_keys($this->getMethods());
     }
-    /* }}} */
-    /* system_methodHelp {{{ */
+    
+    // }}}
+    // {{{ system_methodHelp()
+    
     /**
      * Introspect server, returning method help text.
      *
@@ -134,8 +174,10 @@ abstract class XML_RPC2_Server_CallHandler
         }
         return $methods[$methodName]->methodHelp();
     }
-    /* }}} */
-    /* system_methodSignature {{{ */
+    
+    // }}}
+    // {{{ system_methodSignature()
+    
     /**
      * Introspect server, returning a method signature.
      *
@@ -162,6 +204,9 @@ abstract class XML_RPC2_Server_CallHandler
         }
         return array($methods[$methodName]->methodSignature());
     }
-    /* }}} */
+    
+    // }}}
+    
 }
+
 ?>
