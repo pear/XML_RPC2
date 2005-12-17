@@ -1,127 +1,193 @@
 <?php
-/* LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
-   vim: set expandtab tabstop=4 softtabstop=4 shiftwidth=4 foldmethod=marker:    
-   +-----------------------------------------------------------------------------+
-   | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
-   +-----------------------------------------------------------------------------+
-   | This file is part of XML_RPC2.                                              |
-   |                                                                             |
-   | XML_RPC is free software; you can redistribute it and/or modify             |
-   | it under the terms of the GNU Lesser General Public License as published by |
-   | the Free Software Foundation; either version 2.1 of the License, or         |
-   | (at your option) any later version.                                         |
-   |                                                                             |
-   | XML_RPC2 is distributed in the hope that it will be useful,         |
-   | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
-   | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
-   | GNU Lesser General Public License for more details.                         |
-   |                                                                             |
-   | You should have received a copy of the GNU Lesser General Public License    |
-   | along with XML_RPC2; if not, write to the Free Software             |
-   | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
-   | 02111-1307 USA                                                              |
-   +-----------------------------------------------------------------------------+
-   | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
-   +-----------------------------------------------------------------------------+
-}}} */      
+
+/* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
+
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+
 /**
- * XML_RPC2_Server_Method
- *
- * @package XML_RPC2
- * @author Sergio Carvalho <sergio.carvalho@portugalmail.com>
-**/
-/** 
- */
-/* dependencies {{{ */
+* +-----------------------------------------------------------------------------+
+* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* +-----------------------------------------------------------------------------+
+* | This file is part of XML_RPC2.                                              |
+* |                                                                             |
+* | XML_RPC2 is free software; you can redistribute it and/or modify            |
+* | it under the terms of the GNU Lesser General Public License as published by |
+* | the Free Software Foundation; either version 2.1 of the License, or         |
+* | (at your option) any later version.                                         |
+* |                                                                             |
+* | XML_RPC2 is distributed in the hope that it will be useful,                 |
+* | but WITHOUT ANY WARRANTY; without even the implied warranty of              |
+* | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the               |
+* | GNU Lesser General Public License for more details.                         |
+* |                                                                             |
+* | You should have received a copy of the GNU Lesser General Public License    |
+* | along with XML_RPC2; if not, write to the Free Software                     |
+* | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
+* | 02111-1307 USA                                                              |
+* +-----------------------------------------------------------------------------+
+* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* +-----------------------------------------------------------------------------+
+*
+* @category   XML
+* @package    XML_RPC2
+* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sérgio Carvalho
+* @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+* @version    CVS: $Id$
+* @link       http://pear.php.net/package/XML_RPC2
+*/
+
+// }}}
+
+// dependencies {{{
 require_once 'XML/RPC2/Exception.php';
-/* }}} */
+// }}}
+
 /**
  * Class representing an XML-RPC exported method. 
  *
  * This class is used internally by XML_RPC2_Server. External users of the 
  * package should not need to ever instantiate XML_RPC2_Server_Method
  *
- * @package XML_RPC2
- * @author Sergio Carvalho <sergio.carvalho@portugalmail.com>
- * @see XML_RPC2_ServerMethodHandler
-**/
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sérgio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
+ */
 class XML_RPC2_Server_Method
 {
-    /* fields {{{ */
-    /** Method signature parameters */
+    // {{{ properties
+    
+    /** 
+     * Method signature parameters 
+     *
+     * @var array
+     */
     public $parameters;
-    /** Method signature return type */
+    
+    /**
+     * Method signature return type 
+     *
+     * @var string
+     */
     public $returns ;
-    /** Method help, for introspection */
+    
+    /** 
+     * Method help, for introspection 
+     * 
+     * @var string
+     */
     public $help;
-    /* }}} */
-    /* internalMethod field {{{ */
-    /** Method name in PHP-land */
-    protected $_internalMethod;
-    /** internalMethod getter 
+    
+    /**
+     * internalMethod field : method name in PHP-land
+     *
+     * @var string
+     */
+    protected $internalMethod;
+    
+    /**
+     * hidden field : true if the method is hidden 
+     *
+     * @var boolean
+     */
+    protected $hidden;
+    
+    /**
+     * name Field : external method name
+     *
+     * @var string 
+     */
+    protected $name;
+    
+    // }}}
+    // {{{ getInternalMethod()
+    
+    /** 
+     * internalMethod getter 
      * 
      * @return string internalMethod
      */
     public function getInternalMethod() 
     {
-        return $this->_internalMethod;
+        return $this->internalMethod;
     }
-    /** internalMethod setter 
+    
+    // }}}
+    // {{{ setInternalMethod()
+    
+    /** 
+     * internalMethod setter 
      * 
      * @param string internalMethod
      */
     public function setInternalMethod($value)
     {
-        $this->_internalMethod = $value;
+        $this->internalMethod = $value;
     }
-    /* }}} */
-    /* hidden field {{{ */
-    /** True if the method is hidden */
-    protected $_hidden;
-    /** hidden getter
+    
+    // }}}
+    // {{{ isHidden()
+    
+    /** 
+     * hidden getter
      * 
      * @return boolean hidden value
      */
     public function isHidden() 
     {
-        return $this->_hidden;
+        return $this->hidden;
     }
-    /** hidden setter
+    
+    // }}}
+    // {{{ setHidden()
+    
+    /** 
+     * hidden setter
      * 
      * @param boolean hidden value
      */
     public function setHidden($hidden) 
     {
-        $this->_hidden = $hidden;
+        $this->hidden = $hidden;
     }
-    /* }}} */
-    /* name Field {{{ */
-    /** External method name */
-    protected $_name;
+    
+    // }}}
+    // {{{ getName()
+    
     /**
-     * _name getter
+     * name getter
      *
-     * @return string _name
+     * @return string name
      */
     public function getName() 
     {
-        return $this->_name;
+        return $this->name;
     }
+    
+    // }}}
+    // {{{ setName()
+    
     /**
-     * _name setter
+     * name setter
      *
-     * @param string _name
+     * @param string name
      */
     public function setName($name) 
     {
-        $this->_name = $name;
+        $this->name = $name;
     }
-    /* }}} */
-    /* constructor {{{ */
+    
+    // }}}
+    // {{{ constructor
+    
     /**
      * Create a new XML-RPC method by introspecting a PHP method
      *
      * @param ReflectionMethod The PHP method to introspect
+     * @param string default prefix
      */
     public function __construct(ReflectionMethod $method, $defaultPrefix)
     {
@@ -212,8 +278,10 @@ class XML_RPC2_Server_Method
         $this->setName($methodname);
         $this->setHidden($hidden);
     }
-    /* }}} */
-    /* matchesSignature {{{ */
+    
+    // }}}
+    // {{{ matchesSignature()
+    
     /** 
      * Check if method matches provided call signature 
      * 
@@ -239,8 +307,10 @@ class XML_RPC2_Server_Method
         }
         return true;
     }
-    /* }}} */
-    /* autoDocument {{{ */
+    
+    // }}}
+    // {{{ autoDocument()
+    
     /**
      * Return HTML snippet documenting method, for XML-RPC server introspection.
      *
@@ -262,6 +332,9 @@ class XML_RPC2_Server_Method
 
         return $result;
     }
-    /* }}} */
+    
+    // }}}
+    
 }
+
 ?>
