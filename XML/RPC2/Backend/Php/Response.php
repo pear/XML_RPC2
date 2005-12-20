@@ -83,8 +83,7 @@ class XML_RPC2_Backend_Php_Response
         }
         ob_start();
         print('<?xml version="1.0"?>');
-?>
-<methodResponse><params><param><value><?= $param->encode() ?></value></param></params></methodResponse><?php
+        print('<methodResponse><params><param><value>' . $param->encode() . '</value></param></params></methodResponse>');
         $result = ob_get_contents();
         ob_end_clean();
         return $result;
@@ -106,8 +105,7 @@ class XML_RPC2_Backend_Php_Response
         $value = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
         ob_start();
         print('<?xml version="1.0"?>');
-?>
-<methodResponse><fault><value><?= $value->encode() ?></value></fault></methodResponse><?php
+        print('<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>');
         $result = ob_get_contents();
         ob_end_clean();
         return $result;
