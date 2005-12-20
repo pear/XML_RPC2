@@ -41,10 +41,7 @@
 
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
-require_once 'XML/RPC2/Value.php';
 require_once 'XML/RPC2/Client.php';
-require_once 'XML/RPC2/Backend/Php/Request.php';
-require_once 'XML/RPC2/Backend/Php/Response.php';
 require_once 'XML/RPC2/Util/HTTPRequest.php';
 //}}}
 
