@@ -243,9 +243,6 @@ abstract class XML_RPC2_Client
      * Optionally, a prefix may be set, wich will be prepended to method names, before calling. 
      * Prefixes are extremely useful namely when method names contain a period '.' turning them invalid
      * under PHP syntax.
-     * Optionally, an encoding may be set. If set, it will be indicated in the request XML document, and 
-     * the response will be converted from its encoding to the designated encoding.
-     * The fifth parameter, optional, allows for debugging to be turned on, by passing a boolean true value. 
      *
      * @param string URI for the XML-RPC server
      * @param string (optional)  Prefix to prepend on all called functions (defaults to '')
@@ -309,6 +306,30 @@ abstract class XML_RPC2_Client
                              );
     }
    
+    // }}}
+	// {{{ displayDebugInformations()
+	
+    /**
+     * Display debug informations
+     *
+     * @var string $request XML client request
+     * @var string $body XML server response
+     * @var mixed $result decoded server response
+     */
+    protected function displayDebugInformations($request, $body, $result) {
+        print '<pre>';
+        print "***** Request *****\n";
+        print htmlspecialchars($request);
+        print "***** End Of request *****\n\n";
+        print "***** Server response *****\n";
+        print htmlspecialchars($body);
+        print "\n***** End of server response *****\n\n";
+        print "***** Decoded result *****\n";
+        print_r($result);
+        print "\n***** End of decoded result *****";
+        print '</pre>';
+    }
+    
     // }}}
     
 }
