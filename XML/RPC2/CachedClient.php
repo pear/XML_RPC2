@@ -242,7 +242,7 @@ class XML_RPC2_CachedClient {
      */
     public static function create($uri, $prefix = '', $proxy = null) 
     {
-        return new XML_RPC2_CachedClient($uri, $prefix = '', $proxy = null);
+        return new XML_RPC2_CachedClient($uri, $prefix, $proxy);
     }
          
     // }}}
@@ -262,7 +262,6 @@ class XML_RPC2_CachedClient {
      */
     public function __call($methodName, $parameters)
     {
-        $cacheId = md5($methodName . serialize($parameters) . serialize($this->_uri) . serialize($this->_prefix) . serialize($this->_proxy) . serialize($this->_debug)); 
         if (!isset($this->_cacheObject)) {
             $this->_cacheObject = new Cache_Lite($this->_cacheOptions);
         }
@@ -290,6 +289,7 @@ class XML_RPC2_CachedClient {
             // there is no specific lifetime, let's use the default one
             $this->_cacheObject->setLifetime($this->_cacheOptions['lifetime']);
         }
+        $cacheId = $this->_makeCacheId();
         $data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup);
         if (is_string($data)) {
             // cache is hit !
