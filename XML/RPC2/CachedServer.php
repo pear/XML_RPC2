@@ -180,7 +180,11 @@ class XML_RPC2_CachedServer {
      */
     public function handleCall()
     {
-        $methodName = $this->_parseMethodName($GLOBALS['HTTP_RAW_POST_DATA']);
+        if (isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
+            $methodName = $this->_parseMethodName($GLOBALS['HTTP_RAW_POST_DATA']);
+        } else {
+            $methodName = null;
+        }
         $weCache = $this->_cacheByDefault;
         $lifetime = $this->_cacheOptions['lifetime'];
         if ($methodName) {
