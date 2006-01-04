@@ -77,14 +77,16 @@ abstract class XML_RPC2_Client
     /**
      * uri Field (holds the uri for the XML_RPC server)
      *
-     * @var array
+     * @var string
      */
     protected $uri = null;
     
     /**
      * proxy Field (holds the proxy server data)
      *
-     * @var array
+     * TODO : work on proxy : seems to be useless for now
+     *
+     * @var string
      */
     protected $proxy = null;
     
@@ -101,127 +103,7 @@ abstract class XML_RPC2_Client
      * @var boolean
      */
     protected $debug = false;
-    
-    // }}}
-    // {{{ setUri()
-    
-    /** 
-     * uri setter 
-     *
-     * @param string $uri
-     */
-    protected function setUri($uri) 
-    {
-        if (!$uriParse = parse_url($uri)) {
-            throw new XML_RPC2_InvalidUriException(sprintf('Client URI \'%s\' is not valid', $uri));
-        }
-        $this->uri = $uriParse;
-        foreach (array_keys($this->uri) as $key) {
-            $this->uri[$key] = urldecode($this->uri[$key]);
-        }
-        $this->uri['uri'] = $uri;
-    }
-    
-    // }}}
-    // {{{ getUri()
-    
-    /**
-     * uri getter
-     *
-     * @return string 
-     */
-    protected function getUri()
-    {
-        return $this->uri['uri'];
-    }
-    
-    // }}}
-    // {{{ setProxy()
-    
-    /**
-     * proxy setter
-     * 
-     * @param string $proxy
-     */
-    protected function setProxy($proxy) 
-    {
-        if (is_null($proxy)) {
-            $this->proxy = null;
-            return;
-        }
-        if (!$proxyParse = parse_url($proxy)) throw new XML_RPC2_InvalidProxyException(sprintf('Proxy URI \'%s\' is not valid', $proxy));
-        $this->proxy = $proxyParse;
-        foreach (array_keys($this->proxy) as $key) {
-            $this->proxy[$key] = urldecode($this->proxy[$key]);
-        }
-        $this->proxy['uri'] = $proxy;
-    }
-    
-    // }}}
-    // {{{ getProxy()
-    
-    /**
-     * proxy getter
-     *
-     * @return string
-     */
-    protected function getProxy()
-    {
-        return $this->proxy['uri'];
-    }
-    
-    // }}}
-    // {{{ setPrefix()
-    
-    /**
-     * prefix setter
-     *
-     * @param string $prefix
-     */
-    protected function setPrefix($prefix) 
-    {
-        $this->prefix = $prefix;
-    }
-    
-    // }}}
-    // {{{ getPrefix()
-    
-    /** 
-     * prefix getter 
-     *
-     * @return string 
-     */
-    protected function getPrefix()
-    {
-        return $this->prefix;
-    }
-    
-    // }}}
-    // {{{ setDebug()
-    
-    /**
-     * debug flag setter
-     * 
-     * @param boolean $debug
-     */
-    public function setDebug($debug) 
-    {
-        $this->debug = $debug;
-    }
-    
-    // }}}
-    // {{{ getDebug()
-    
-    /** 
-     * debug getter 
-     * 
-     * @return boolean
-     */
-    public function getDebug()
-    {
-        return $this->debug;
-    }
-    
+        
     // }}}
     // {{{ remoteCall()
     
@@ -240,20 +122,36 @@ abstract class XML_RPC2_Client
      * Construct a new XML_RPC2_Client.
      *
      * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
-     * Optionally, a prefix may be set, wich will be prepended to method names, before calling. 
-     * Prefixes are extremely useful namely when method names contain a period '.' turning them invalid
-     * under PHP syntax.
-     *
+     * Optionally, some options may be set as an associative array. Accepted keys are :
+     * 'prefix', 'proxy', 'debug' => see correspondant property to get more informations
+     * 
      * @param string URI for the XML-RPC server
-     * @param string (optional)  Prefix to prepend on all called functions (defaults to '')
-     * @param string (optional)  Proxy server URI (defaults to no proxy)
-     *
+     * @param array (optional) Associative array of options
      */
-    protected function __construct($uri, $prefix = '', $proxy = null)
+    protected function __construct($uri, $options = array())
     {
-        $this->setUri($uri);
-        $this->setProxy($proxy);
-        $this->setPrefix($prefix);
+        if (!$uriParse = parse_url($uri)) {
+            throw new XML_RPC2_InvalidUriException(sprintf('Client URI \'%s\' is not valid', $uri));
+        }
+        $this->uri = $uri;
+        if (isset($options['prefix'])) {
+            if (!($this->testMethodName___($options['prefix']))) {
+                throw new XML_RPC2_InvalidPrefixException(sprintf('Prefix \'%s\' is not valid', $options['prefix']));
+            }
+            $this->prefix = $options['prefix'];
+        }
+        if (isset($options['proxy'])) {
+            if (!$proxyParse = parse_url($options['proxy'])) {
+                throw new XML_RPC2_InvalidProxyException(sprintf('Proxy URI \'%s\' is not valid', $options['proxy']));
+            }
+            $this->proxy = $options['proxy'];
+        }
+        if (isset($options['debug'])) {
+            if (!(is_bool($options['debug']))) {
+                throw new XML_RPC2_InvalidDebugException(sprintf('Debug \'%s\' is not valid', $options['debug']));
+            }
+            $this->debug = $options['debug'];
+        }
     }
     
     // }}}
@@ -264,21 +162,15 @@ abstract class XML_RPC2_Client
      *
      * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
      * 
-     * Optionally, a prefix may be set, wich will be prepended to method names, before calling. 
-     * Prefixes are extremely useful namely when method names contain a period '.' turning them invalid
-     * under PHP syntax.
-     *
-     * You may also set a proxy server, through where the requests will be sent. 
+     * Optionally, some options may be set.
      *
      * @param string URI for the XML-RPC server
-     * @param string (optional)  Prefix to prepend on all called functions (defaults to '')
-     * @param string (optional)  Proxy server URI (defaults to no proxy)
-     *
+     * @param array (optional) associative array of options (see constructor)
      */
-    public static function create($uri, $prefix = '', $proxy = null)
+    public static function create($uri, $options = array())
     {
         $backend = XML_RPC2_Backend::getClientClassname();
-        return new $backend($uri, $prefix, $proxy);
+        return new $backend($uri, $options);
     }
     
     // }}}
@@ -300,23 +192,23 @@ abstract class XML_RPC2_Client
     public function __call($methodName, $parameters)
     {
         $args = array($methodName, $parameters);
-        return @call_user_func_array(
-                              array($this, 'remoteCall'),
-                              $args
-                             );
+        return @call_user_func_array(array($this, 'remoteCall'), $args);
     }
    
     // }}}
-	// {{{ displayDebugInformations()
+    // {{{ displayDebugInformations___()
 	
     /**
      * Display debug informations
      *
+     * NB : The '___' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
+     * 
      * @var string $request XML client request
      * @var string $body XML server response
      * @var mixed $result decoded server response
      */
-    protected function displayDebugInformations($request, $body, $result) {
+    protected function displayDebugInformations___($request, $body, $result) {
         print '<pre>';
         print "***** Request *****\n";
         print htmlspecialchars($request);
@@ -328,6 +220,22 @@ abstract class XML_RPC2_Client
         print_r($result);
         print "\n***** End of decoded result *****";
         print '</pre>';
+    }
+    
+    // }}}
+    // {{{ testMethodName___()
+    
+    /**
+     * Return true is the given method name is ok with XML/RPC spec. 
+     *
+     * NB : The '___' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
+     * 
+     * @var string $methodName method name
+     * @return true if ok
+     */
+    protected function testMethodName___($methodName) {
+        return (!preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName)); 
     }
     
     // }}}

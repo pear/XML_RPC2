@@ -69,19 +69,15 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
     /**
      * Construct a new XML_RPC2_Client PHP Backend.
      *
-     * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/).
-     * Optionally, a prefix may be set, wich will be prepended to method names, before calling.
-     * Prefixes are extremely useful namely when method names contain a period '.' turning them invalid
-     * under PHP syntax.
+     * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
+     * Optionally, some options may be set
      *
      * @param string URI for the XML-RPC server
-     * @param string (optional)  Prefix to prepend on all called functions
-     * @param string (optional)  Proxy server URI
-     *
+     * @param array (optional) Associative array of options
      */
-    function __construct($uri, $prefix = '', $proxy = null)
+    function __construct($uri, $options = array())
     {
-        parent::__construct($uri, $prefix, $proxy);
+        parent::__construct($uri, $options);
     }
     
     // }}} 
@@ -95,17 +91,17 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
      */
     public function remoteCall($methodName, $parameters)
     {
-        $request = new XML_RPC2_Backend_Php_Request($this->getPrefix() . $methodName);
+        $request = new XML_RPC2_Backend_Php_Request($this->prefix . $methodName);
         $request->setParameters($parameters);
         $request = $request->encode();
-        $uri = $this->getUri();
+        $uri = $this->uri;
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
         $body = $httpRequest->getBody();
         $result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($body));
-        if ($this->getDebug()) {
-            $this->displayDebugInformations($request, $body, $result);
+        if ($this->debug) {
+            $this->displayDebugInformations___($request, $body, $result);
         }
         return $result;
     }

@@ -63,19 +63,15 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
     /**
      * Construct a new XML_RPC2_Client PHP Backend.
      *
-     * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/).
-     * Optionally, a prefix may be set, wich will be prepended to method names, before calling.
-     * Prefixes are extremely useful namely when method names contain a period '.' turning them invalid
-     * under PHP syntax.
+     * A URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
+     * Optionally, some options may be set.
      *
      * @param string URI for the XML-RPC server
-     * @param string (optional)  Prefix to prepend on all called functions
-     * @param string (optional)  Proxy server URI
-     *
+     * @param array (optional) Associative array of options
      */
-    function __construct($uri, $prefix = '', $proxy = null)
+    function __construct($uri, $options = array())
     {
-        parent::__construct($uri, $prefix, $proxy);
+        parent::__construct($uri, $options);
     }
     
     // }}}
@@ -89,15 +85,15 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      */
     public function remoteCall($methodName, $parameters)
     {
-        $request = xmlrpc_encode_request($this->getPrefix() . $methodName, $parameters);
-        $uri = $this->getUri();
+        $request = xmlrpc_encode_request($this->prefix . $methodName, $parameters);
+        $uri = $this->uri;
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
 		$body = $httpRequest->getBody();
         $result = xmlrpc_decode($body);
-        if ($this->getDebug()) {
-            $this->displayDebugInformations($request, $body, $result);
+        if ($this->debug) {
+            $this->displayDebugInformations___($request, $body, $result);
         }
         if ($result === false) {
             throw new XML_RPC2_Exception('Unable to decode response');

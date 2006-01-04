@@ -58,26 +58,19 @@ class XML_RPC2_CachedClient {
     // {{{ properties
     
     /**
+     * Associative array of options for XML_RPC2_Client
+     *
+     * @var array
+     */
+    private $_options;
+    
+    /**
      * uri Field (holds the uri for the XML_RPC server)
      *
      * @var array
      */
     private $_uri;
-    
-    /**
-     * Holds the prefix to prepend to method names
-     *
-     * @var string
-     */
-    private $_prefix; 
-
-    /**
-     * proxy Field (holds the proxy server data)
-     *
-     * @var array
-     */
-    private $_proxy;
-    
+        
     /** 
      * Holds the debug flag 
      *
@@ -140,91 +133,52 @@ class XML_RPC2_CachedClient {
      * @var string
      */
     private $_defaultCacheGroup = 'xml_rpc2_client';
-    
-    // }}}
-    // {{{ setCacheOptions()
-    
-    /**
-     * Set options for the caching process
-     *
-     * See Cache_Lite constructor for options
-     * Specific options are 'cachedMethods', 'notCachedMethods', 'cacheByDefault', 'defaultCacheGroup'
-     * See corresponding properties for more informations
-     *
-     * @param array $array
-     */
-    public function setCacheOptions($array) 
-    {
-        if (isset($array['defaultCacheGroup'])) {
-            $this->_defaultCacheGroup = $array['defaultCacheGroup'];
-            unset($array['defaultCacheGroup']); // this is a "non standard" option for Cache_Lite
-        }
-        if (isset($array['cachedMethods'])) {
-            $this->_cachedMethods = $array['cachedMethods'];
-            unset($array['cachedMethods']); // this is a "non standard" option for Cache_Lite
-        }  
-        if (isset($array['notCachedMethods'])) {
-            $this->_notCachedMethods = $array['notCachedMethods'];
-            unset($array['notCachedMethods']); // this is a "non standard" option for Cache_Lite
-        } 
-        if (isset($array['cacheByDefault'])) {
-            $this->_cacheByDefault = $array['cacheByDefault'];
-            unset($array['CacheByDefault']); // this is a "non standard" option for Cache_Lite
-        }     
-        $array['automaticSerialization'] = false; // datas are already serialized in this class
-        if (!isset($array['lifetime'])) {
-            $array['lifetime'] = 3600; // we need a default lifetime
-        }
-        $this->_cacheOptions = $array;
-        $this->_cacheObject = new Cache_Lite($this->_cacheOptions);
-    }
-    
-    // }}}
-    // {{{ setDebug()
-    
-    /**
-     * debug flag setter
-     * 
-     * @param boolean $debug
-     */
-    public function setDebug($debug) 
-    {
-        $this->_debug = $debug;
-        if (isset($this->_clientObject)) {
-            // If the XML_RPC2_Client object is already available, let's
-            // really change the debug status
-            $this->_clientObject->setDebug($this->_debug);
-        }
-    }
-    
-    // }}}
-    // {{{ getDebug()
-    
-    /** 
-     * debug getter 
-     * 
-     * @return boolean
-     */
-    public function getDebug()
-    {
-        return $this->_debug;
-    }  
-    
+        
     // }}}
     // {{{ constructor
     
     /**
      * Constructor
      *
+     * TODO : documentations about cache options           
+     *
      * @param string URI for the XML-RPC server
-     * @param string (optional)  Prefix to prepend on all called functions (defaults to '')
-     * @param string (optional)  Proxy server URI (defaults to no proxy)
+     * @param array (optional) Associative array of options
      */
-    protected function __construct($uri, $prefix = '', $proxy = null) 
+    protected function __construct($uri, $options = array()) 
     {
-        $this->_uri = $uri;
-        $this->_prefix = $prefix;
-        $this->_proxy = $proxy;    
+        if (isset($options['cacheOptions'])) {
+            $array = $options['cacheOptions'];
+            if (isset($array['defaultCacheGroup'])) {
+                $this->_defaultCacheGroup = $array['defaultCacheGroup'];
+                unset($array['defaultCacheGroup']); // this is a "non standard" option for Cache_Lite
+            }
+            if (isset($array['cachedMethods'])) {
+                $this->_cachedMethods = $array['cachedMethods'];
+                unset($array['cachedMethods']); // this is a "non standard" option for Cache_Lite
+            }  
+            if (isset($array['notCachedMethods'])) {
+                $this->_notCachedMethods = $array['notCachedMethods'];
+                unset($array['notCachedMethods']); // this is a "non standard" option for Cache_Lite
+            } 
+            if (isset($array['cacheByDefault'])) {
+                $this->_cacheByDefault = $array['cacheByDefault'];
+                unset($array['CacheByDefault']); // this is a "non standard" option for Cache_Lite
+            }     
+            $array['automaticSerialization'] = false; // datas are already serialized in this class
+            if (!isset($array['lifetime'])) {
+                $array['lifetime'] = 3600; // we need a default lifetime
+            }
+            unset($options['cacheOptions']); // this is a "non standard" option for XML/RPC2/Client      
+        } else { // no cache options ?
+            $array = array(
+                'lifetime' => 3600,               // we need a default lifetime
+                'automaticSerialization' => false // datas are already serialized in this class
+            );
+        }
+        $this->_cacheOptions = $array;
+        $this->_cacheObject = new Cache_Lite($this->_cacheOptions);    
+        $this->_options = $options;
     }
     
     // }}}
@@ -240,9 +194,9 @@ class XML_RPC2_CachedClient {
      * @param string (optional)  Proxy server URI (defaults to no proxy)
      *
      */
-    public static function create($uri, $prefix = '', $proxy = null) 
+    public static function create($uri, $options = array()) 
     {
-        return new XML_RPC2_CachedClient($uri, $prefix, $proxy);
+        return new XML_RPC2_CachedClient($uri, $options);
     }
          
     // }}}
@@ -267,19 +221,19 @@ class XML_RPC2_CachedClient {
         }
         if (in_array($methodName, $this->_notCachedMethods)) {
             // if the called method is listed in _notCachedMethods => no cache
-            return $this->_workWithoutCache($methodName, $parameters);
+            return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
         }
         if (!($this->_cacheByDefault)) {
             if ((!(isset($this->_cachedMethods[$methodName]))) and (!(in_array($methodName, $this->_cachedMethods)))) {
                 // if cache is not on by default and if the called method is not described in _cachedMethods array
                 // => no cache
-                return $this->_workWithoutCache($methodName, $parameters);
+                return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
             }
         }
         if (isset($this->_cachedMethods[$methodName])) {
             if ($this->_cachedMethods[$methodName] == -1) {
                 // if a method is described with a lifetime value of -1 => no cache
-                return $this->_workWithoutCache($methodName, $parameters);
+                return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
             } else {
                 // if a method is described with a specific (and <> -1) lifetime
                 // => we fix this new lifetime
@@ -289,77 +243,88 @@ class XML_RPC2_CachedClient {
             // there is no specific lifetime, let's use the default one
             $this->_cacheObject->setLifetime($this->_cacheOptions['lifetime']);
         }
-        $cacheId = $this->_makeCacheId();
+        $cacheId = $this->_makeCacheId-noxmlrpc();
         $data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup);
         if (is_string($data)) {
             // cache is hit !
             return unserialize($data);
         }
         // the cache is not hit, let's call the "real" XML_RPC client
-        $result = $this->_workWithoutCache($methodName, $parameters);
+        $result = $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
         $this->_cacheObject->save(serialize($result)); // save in cache for next time...
         return $result;
     }
     
     // }}}
-    // {{{ _workWithoutCache()
+    // {{{ _workWithoutCache-noxmlrpc()
     
     /**
      * Do the real call if no cache available
+     *
+     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
      *
      * @param   string      Method name
      * @param   array       Parameters
      * @return  mixed       The call result, already decoded into native types
      */
-    private function _workWithoutCache($methodName, $parameters) 
+    private function _workWithoutCache-noxmlrpc($methodName, $parameters) 
     {
         if (!(isset($this->_clientObject))) {
             // If the XML_RPC2_Client object is not available, let's build it
             require_once('XML/RPC2/Client.php');
-            $this->_clientObject = XML_RPC2_Client::create($this->_uri, $this->_prefix, $this->_proxy);
-            $this->_clientObject->setDebug($this->_debug);
+            $this->_clientObject = XML_RPC2_Client::create($this->_uri, $this->_options);
         }               
         // the real function call...
         return call_user_func_array(array($this->_clientObject, $methodName), $parameters);
     }
     
     // }}}
-    // {{{ _makeCacheId()
+    // {{{ _makeCacheId-noxmlrpc()
     
     /** 
      * make a cache id depending on method called (and corresponding parameters) but depending on "environnement" setting too
+     *
+     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
      *
      * @param string $methodName called method
      * @param array $parameters parameters of the called method
      * @return string cache id
      */
-    private function _makeCacheId($methodName, $parameters) 
+    private function _makeCacheId-noxmlrpc($methodName, $parameters) 
     {
-        return md5($methodName . serialize($parameters) . serialize($this->_uri) . serialize($this->_prefix) . serialize($this->_proxy) . serialize($this->_debug)); 
+        return md5($methodName . serialize($parameters) . serialize($this->_uri) . serialize($this->_options)); 
     }
     
     // }}}
-    // {{{ dropCacheFile()
+    // {{{ dropCacheFile-noxmlrpc()
     
     /** 
      * Drop the cache file corresponding to the given method call
      *
+     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
+     *
      * @param string $methodName called method
      * @param array $parameters parameters of the called method
      */
-    public function dropCacheFile($methodName, $parameters) 
+    public function dropCacheFile-noxmlrpc($methodName, $parameters) 
     {
-        $id = $this->_makeCacheId($methodName, $parameters);
+        $id = $this->_makeCacheId-noxmlrpc($methodName, $parameters);
         $this->_clientObject->remove($id, $this->_defaultCacheGroup);
     }
     
     // }}}
-    // {{{ clean()
+    // {{{ clean-noxmlrpc()
     
     /** 
      * Clean all the cache
+     *
+     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
      */
-    public function clean() 
+    public function clean-noxmlrpc() 
     {
         $this->_cacheObject->clean($this->_defaultCacheGroup, 'ingroup');
     }
