@@ -69,7 +69,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      * @param string URI for the XML-RPC server
      * @param array (optional) Associative array of options
      */
-    function __construct($uri, $options = array())
+    public function __construct($uri, $options = array())
     {
         parent::__construct($uri, $options);
     }
@@ -80,10 +80,13 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
     /**
      * remoteCall executes the XML-RPC call, and returns the result
      *
+     * NB : The '___' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
+     *
      * @param   string      Method name
      * @param   array       Parameters
      */
-    public function remoteCall($methodName, $parameters)
+    public function remoteCall___($methodName, $parameters)
     {
         $request = xmlrpc_encode_request($this->prefix . $methodName, $parameters);
         $uri = $this->uri;

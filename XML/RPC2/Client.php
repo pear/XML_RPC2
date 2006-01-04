@@ -105,15 +105,18 @@ abstract class XML_RPC2_Client
     protected $debug = false;
         
     // }}}
-    // {{{ remoteCall()
+    // {{{ remoteCall___()
     
     /**
      * remoteCall executes the XML-RPC call, and returns the result
+     * 
+     * NB : The '___' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
      *
      * @param   string      Method name
      * @param   array       Parameters
      */
-    public abstract function remoteCall($methodName, $parameters);
+    public abstract function remoteCall___($methodName, $parameters);
     
     // }}}
     // {{{ constructor
@@ -192,7 +195,7 @@ abstract class XML_RPC2_Client
     public function __call($methodName, $parameters)
     {
         $args = array($methodName, $parameters);
-        return @call_user_func_array(array($this, 'remoteCall'), $args);
+        return @call_user_func_array(array($this, 'remoteCall___'), $args);
     }
    
     // }}}
