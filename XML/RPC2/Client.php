@@ -238,7 +238,7 @@ abstract class XML_RPC2_Client
      * @return true if ok
      */
     protected function testMethodName___($methodName) {
-        return (!preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName)); 
+        return (preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName)); 
     }
     
     // }}}
