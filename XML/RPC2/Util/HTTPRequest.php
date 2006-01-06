@@ -60,11 +60,18 @@ class XML_RPC2_Util_HTTPRequest
     // {{{ properties
     
     /**
-     * body field
+     * proxy field
      *
      * @var string
      */
-    private $_body;
+    private $_proxy = null;
+    
+    /**
+     * proxyauth field
+     *
+     * @var string
+     */
+    private $_proxyAuth = null;
     
     /**
      * postData field 
@@ -72,41 +79,20 @@ class XML_RPC2_Util_HTTPRequest
      * @var string
      */
     private $_postData;
-   
-    /** 
-     * method Field 
-     *
-     * @var string
-     */
-    private $_method = 'POST';
-    
-    /**
-     * params Field 
-     *
-     * @var array
-     */
-    private $_params;
-    
-    /**
-     * proxy field
-     *
-     * @var array
-     */
-    private $_proxy = null;
-    
-    /**
-     * proxy auth
-     *
-     * @var string
-     */
-    private $_proxyAuth = null;
-    
+               
     /**
      * uri field 
      *
      * @var array
      */
     private $_uri;
+    
+    /**
+     * encoding for the request
+     *
+     * @var string
+     */
+    private $_encoding='iso-8859-1';
     
     // }}}
     // {{{ getBody()
@@ -120,33 +106,7 @@ class XML_RPC2_Util_HTTPRequest
     {
         return $this->_body;
     }
-    
-    // }}}
-    // {{{ setBody()
-    
-    /**
-     * body field setter
-     *
-     * @param string body value
-     */
-    public function setBody($value) 
-    {
-        $this->_body = $value;
-    }
-    
-    // }}}
-    // {{{ getPostData()
-
-    /**
-     * postData field getter
-     *
-     * @return string postData value
-     */
-    public function getPostData() 
-    {
-        return $this->_postData;
-    }
-    
+            
     // }}}
     // {{{ setPostData()
     
@@ -161,138 +121,6 @@ class XML_RPC2_Util_HTTPRequest
     }
     
     // }}}
-    // {{{ getMethod()
-
-    /**
-     * method field getter
-     *
-     * @return array method value
-     */
-    public function getMethod() 
-    {
-        return $this->_method;
-    }
-    
-    // }}}
-    // {{{ setMethod()
-    
-    /**
-     * method field setter (ignored!)
-     * 
-     * This setter is ignored, and method set to POST always. It is here for API compatibility reasons alone.
-     *
-     * @param array method value
-     */
-    public function setMethod($value) 
-    {
-        $this->_method = 'POST';
-    }
-    
-    // }}}
-    // {{{ getParams()
-
-    /**
-     * params field getter
-     *
-     * @return array params value
-     */
-    public function getParams() 
-    {
-        return $this->_params;
-    }
-    
-    // }}}
-    // {{{ setParams()
-    
-    /**
-     * params field setter
-     *
-     * @param array params value
-     */
-    public function setParams($value) 
-    {
-        $this->_params = $value;
-    }
-    
-    // }}} 
-    // {{{ getProxy()
-
-    /**
-     * proxy field getter
-     *
-     * @return string proxy value
-     */
-    public function getProxy() 
-    {
-        return $this->_proxy;
-    }
-    
-    // }}}
-    // {{{ setProxy()
-    
-    /**
-     * proxy field setter
-     *
-     * @param string proxy value
-     */
-    public function setProxy($value) 
-    {
-        $this->_proxy = $value;
-    }
-    
-    // }}}
-    // {{{ getProxyAuth()
-
-    /**
-     * proxyAuth field getter
-     *
-     * @return string proxyAuth value
-     */
-    public function getProxyAuth() 
-    {
-        return $this->_proxyAuth;
-    }
-    
-    // }}}
-    // {{{ setProxyAuth()
-    
-    /**
-     * proxyAuth field setter
-     *
-     * @param string proxyAuth value
-     */
-    public function setProxyAuth($value) 
-    {
-        $this->_proxyAuth = $value;
-    }
-    
-    // }}}
-    // {{{ getURI()
-    
-    /**
-     * uri field getter
-     *
-     * @return string uri value
-     */
-    public function getURI() 
-    {
-        return $this->_uri;
-    }
-    
-    // }}}
-    // {{{ setURI()
-    
-    /**
-     * uri field setter
-     *
-     * @param string uri value
-     */
-    public function setURI($value) 
-    {
-        $this->_uri = $value;
-    }
-    
-    // }}}
     // {{{ constructor
     
     /**
@@ -302,30 +130,32 @@ class XML_RPC2_Util_HTTPRequest
     * @param    string  The uri to fetch/access
     * @param    array   Associative array of parameters which can have the following keys:
     * <ul>
-    *   <li>user           - Basic Auth username (string)</li>
-    *   <li>pass           - Basic Auth password (string)</li>
-    *   <li>proxy_host     - Proxy server host (string)</li>
-    *   <li>proxy_port     - Proxy server port (integer)</li>
-    *   <li>proxy_user     - Proxy auth username (string)</li>
-    *   <li>proxy_pass     - Proxy auth password (string)</li>
+    *   <li>proxy          - Proxy (string)</li>
+    *   <li>encoding       - The request encoding (string)</li>
     * </ul>
     * @access public
     */
     public function __construct($uri = '', $params = array())
     {
-        $this->setUri($uri);
-        if (array_key_exists('user', $params) && array_key_exists('pass', $params)) {
-            if (!preg_match('/(https?:\/\/)(.*)/', $uri, $matches)) throw new XML_RPC2_Exception('Unable to parse URI');
-            $uri = $matches[1] . uriencode($params['user']) . ':' . uriencode($params['pass']) . '@' . $matches[2];
+        if (!preg_match('/(https?:\/\/)(.*)/', $uri)) throw new XML_RPC2_Exception('Unable to parse URI');
+        $this->_uri = $uri;
+        if (isset($params['encoding'])) {
+            $this->_encoding = $params['encoding'];
         }
-        if (array_key_exists('proxy_host', $params)) {
-            if (!array_key_exists('proxy_port', $params)) {
-                $params['proxy_port'] = 3128;
+        if (isset($params['proxy'])) {
+            $proxy = $params['proxy'];
+            $elements = parse_url($proxy);
+            if (is_array($elements)) {
+                if ((isset($elements['scheme'])) and (isset($elements['host']))) { 
+                    $this->_proxy = $elements['scheme'] . '://' . $elements['host'];
+                }
+                if (isset($elements['port'])) {
+                    $this->_proxy = $this->_proxy . ':' . $elements['port'];
+                }
+                if ((isset($elements['user'])) and (isset($elements['pass']))) {
+                    $this->_proxyAuth = $elements['user'] . ':' . $elements['pass'];
+                }
             }
-            $this->setProxy("http://{$params['proxy_host']}:{$params['proxy_port']}");
-        }
-        if (array_key_exists('proxy_user', $params) && array_key_exists('proxy_pass', $params)) {
-            $this->setProxyAuth("{$params['proxy_user']}:{$params['proxy_pass']}");
         }
     }
     
@@ -348,13 +178,13 @@ class XML_RPC2_Util_HTTPRequest
         }
         if ($ch = curl_init()) {
             if (
-                (is_null($this->getProxy())     || curl_setopt($ch, CURLOPT_PROXY, $this->getProxy())) &&
-                (is_null($this->getProxyAuth()) || curl_setopt($ch, CURLOPT_PROXYAUTH, $this->getProxyAuth())) &&
-                curl_setopt($ch, CURLOPT_URL, $this->getUri()) &&
+                (is_null($this->_proxy)     || curl_setopt($ch, CURLOPT_PROXY, $this->_proxy)) &&
+                (is_null($this->_proxyAuth) || curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->_proxyAuth)) &&
+                curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
                 curl_setopt($ch, CURLOPT_POST, 1) &&
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml')) &&
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->getPostData())
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding)) &&
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData)
             ) {
                 $result = curl_exec($ch);
                 if (($errno = curl_errno($ch)) != 0) {
@@ -370,7 +200,7 @@ class XML_RPC2_Util_HTTPRequest
         } else {
             throw new XML_RPC2_CurlException('Unable to init curl');
         }
-        $this->setBody($result);        
+        $this->_body = $result;        
         return true;
     }
     
