@@ -84,8 +84,6 @@ abstract class XML_RPC2_Client
     /**
      * proxy Field (holds the proxy server data)
      *
-     * TODO : work on proxy : seems to be useless for now
-     *
      * @var string
      */
     protected $proxy = null;
@@ -103,6 +101,13 @@ abstract class XML_RPC2_Client
      * @var boolean
      */
     protected $debug = false;
+    
+    /**
+     * Hold the encoding of the client request
+     *
+     * @var string
+     */
+    protected $encoding = 'iso-8859-1';
         
     // }}}
     // {{{ remoteCall___()
@@ -154,6 +159,10 @@ abstract class XML_RPC2_Client
                 throw new XML_RPC2_InvalidDebugException(sprintf('Debug \'%s\' is not valid', $options['debug']));
             }
             $this->debug = $options['debug'];
+        }
+        if (isset($options['encoding'])) {
+            // TODO : control & exception
+            $this->encoding = $options['encoding'];
         }
     }
     
@@ -207,14 +216,16 @@ abstract class XML_RPC2_Client
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      * 
-     * @var string $request XML client request
-     * @var string $body XML server response
-     * @var mixed $result decoded server response
+     * @param string $request XML client request
+     * @param string $body XML server response
+     * @param mixed $result decoded server response
      */
-    protected function displayDebugInformations___($request, $body, $result) {
+    protected function displayDebugInformations___($request, $body, $result) 
+    {
         print '<pre>';
         print "***** Request *****\n";
         print htmlspecialchars($request);
+        print $request;
         print "***** End Of request *****\n\n";
         print "***** Server response *****\n";
         print htmlspecialchars($body);
@@ -234,15 +245,14 @@ abstract class XML_RPC2_Client
      * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      * 
-     * @var string $methodName method name
-     * @return true if ok
+     * @param string $methodName method name
+     * @return boolean true if ok
      */
-    protected function testMethodName___($methodName) {
+    protected function testMethodName___($methodName)
+    {
         return (preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName)); 
     }
-    
-    // }}}
-    
+        
 }
 
 ?>
