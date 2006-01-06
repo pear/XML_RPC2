@@ -106,9 +106,23 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
         $body = $httpRequest->getBody();
-        $result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($body));
         if ($this->debug) {
-            $this->displayDebugInformations___($request, $body, $result);
+            $this->displayDebugInformations___($request, $body);
+        }
+        try {
+            $result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($body));
+        } catch (XML_RPC2_Exception $e) {
+            if ($this->debug) {
+                if (get_class($e)=='XML_RPC2_FaultException') {
+                    print "XML_RPC2_FaultException #" . $e->getFaultCode() . " : " . $e->getMessage();
+                } else {
+                    print get_class($e) . " : " . $e->getMessage();
+                }
+            }
+            throw $e;
+        }
+        if ($this->debug) {
+            $this->displayDebugInformations2___($result);
         }
         return $result;
     }

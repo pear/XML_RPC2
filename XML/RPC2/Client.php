@@ -181,6 +181,9 @@ abstract class XML_RPC2_Client
      */
     public static function create($uri, $options = array())
     {
+        if (isset($options['backend'])) {
+            XML_RPC2_Backend::setBackend($options['backend']);
+        }
         $backend = XML_RPC2_Backend::getClientClassname();
         return new $backend($uri, $options);
     }
@@ -218,9 +221,8 @@ abstract class XML_RPC2_Client
      * 
      * @param string $request XML client request
      * @param string $body XML server response
-     * @param mixed $result decoded server response
      */
-    protected function displayDebugInformations___($request, $body, $result) 
+    protected function displayDebugInformations___($request, $body) 
     {
         print '<pre>';
         print "***** Request *****\n";
@@ -230,6 +232,21 @@ abstract class XML_RPC2_Client
         print "***** Server response *****\n";
         print htmlspecialchars($body);
         print "\n***** End of server response *****\n\n";
+    }
+    
+    // }}}
+    // {{{ displayDebugInformations2___()
+	
+    /**
+     * Display debug informations (part 2)
+     *
+     * NB : The '___' at the end of the method name is to avoid collisions with
+     * XMLRPC __call() 
+     * 
+     * @param mixed $result decoded server response
+     */
+    protected function displayDebugInformations2___($result)
+    {
         print "***** Decoded result *****\n";
         print_r($result);
         print "\n***** End of decoded result *****";

@@ -100,14 +100,24 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
 		$body = $httpRequest->getBody();
         $result = xmlrpc_decode($body);
         if ($this->debug) {
-            $this->displayDebugInformations___($request, $body, $result);
+            $this->displayDebugInformations___($request, $body);
         }
         if ($result === false) {
+            if ($this->debug) {
+                print "XML_RPC2_Exception : unable to decode response !";
+            }
             throw new XML_RPC2_Exception('Unable to decode response');
         }
         if (xmlrpc_is_fault($result)) {
+            if ($this->debug) {
+                print "XML_RPC2_FaultException(${result['faultString']}, ${result['faultCode']})";
+            }
             throw new XML_RPC2_FaultException($result['faultString'], $result['faultCode']);
-        } 
+        } else {
+            if ($this->debug) {
+                $this->displayDebugInformations2___($result);
+            }
+        }
         return $result;
     }
     
