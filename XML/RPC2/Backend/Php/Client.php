@@ -94,11 +94,15 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
      */
     public function remoteCall___($methodName, $parameters)
     {
-        $request = new XML_RPC2_Backend_Php_Request($this->prefix . $methodName);
+        $request = new XML_RPC2_Backend_Php_Request($this->prefix . $methodName, $this->encoding);
         $request->setParameters($parameters);
         $request = $request->encode();
         $uri = $this->uri;
-        $httpRequest = new XML_RPC2_Util_HTTPRequest($uri);
+        $options = array(
+            'encoding' => $this->encoding,
+            'proxy' => $this->proxy
+        );
+        $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
         $body = $httpRequest->getBody();

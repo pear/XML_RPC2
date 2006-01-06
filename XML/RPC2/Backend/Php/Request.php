@@ -73,6 +73,37 @@ class XML_RPC2_Backend_Php_Request
      */
     protected $parameters = null;
     
+    /**
+     * encoding of the request
+     *
+     * @var string
+     */
+    protected $encoding = 'iso-8859-1';
+    
+    // }}}
+    // {{{ setEncoding()
+    
+    /**
+     * Set the encoding
+     *
+     * @param string $encoding
+     */
+    protected function setEncoding($encoding) {
+        $this->encoding = $encoding;
+    }
+    
+    // }}}
+    // {{{ getEncoding()
+    
+    /** 
+     * Get the encoding
+     *
+     * @return string encoding
+     */
+    protected function getEncoding() {
+        return $this->encoding;
+    }
+    
     // }}}
     // {{{ setMethodName()
     
@@ -145,11 +176,13 @@ class XML_RPC2_Backend_Php_Request
      * Create a new xml-rpc request with the provided methodname
      *
      * @param string Name of method targeted by this xml-rpc request
+     * @param string encoding of the request
      */
-    function __construct($methodName)
+    function __construct($methodName, $encoding = 'iso-8859-1')
     {
         $this->setMethodName($methodName);
         $this->setParameters(array());
+        $this->setEncoding($encoding);
     }
     
     // }}} 
@@ -165,7 +198,7 @@ class XML_RPC2_Backend_Php_Request
         $methodName = $this->getMethodName();
         $parameters = $this->getParameters();
 
-        $result = '<?xml version="1.0"?>';
+        $result = '<?xml version="1.0" encoding="' . $this->getEncoding() . '"?>';
         $result .= '<methodCall>';
         $result .= "<methodName>${methodName}</methodName>";
         $result .= '<params>';
