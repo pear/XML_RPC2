@@ -227,7 +227,6 @@ abstract class XML_RPC2_Client
         print '<pre>';
         print "***** Request *****\n";
         print htmlspecialchars($request);
-        print $request;
         print "***** End Of request *****\n\n";
         print "***** Server response *****\n";
         print htmlspecialchars($body);
