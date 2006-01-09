@@ -96,33 +96,7 @@ class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
      * @var mixed
      */
     private $_instance;
-    
-    // }}} 
-    // {{{ setInstance()
-    
-    /** 
-     * instance setter
-     *
-     * @param object target object instance
-     */
-    public function setInstance($instance) 
-    {
-        $this->_instance = $instance;
-    }
-    
-    // }}} 
-    // {{{ getInstance()
-    
-    /** 
-     * instance getter
-     *
-     * @return object target object instance
-     */
-    public function getInstance() 
-    {
-        return $this->_instance;
-    }
-    
+       
     // }}}
     // {{{ constructor 
     
@@ -138,7 +112,7 @@ class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
      */
     public function __construct($instance, $defaultPrefix) 
     {
-        $this->setInstance($instance);
+        $this->_instance = $instance;
         $reflection = new ReflectionClass(get_class($instance));
         foreach ($reflection->getMethods() as $method) {
             if (!$method->isStatic() && $method->isPublic() && !$method->isConstructor())
@@ -164,7 +138,7 @@ class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
         if (!array_key_exists($methodName, $this->getMethods())) {
             throw new XML_RPC2_UnknownMethodException("Method $methodName is not exported by this server");
         }
-        return call_user_func_array(array($this->getInstance(), $this->getMethod($methodName)->getInternalMethod()), $parameters);
+        return call_user_func_array(array($this->_instance, $this->getMethod($methodName)->getInternalMethod()), $parameters);
     }
     
     // }}}

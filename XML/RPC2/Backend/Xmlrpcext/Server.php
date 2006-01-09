@@ -72,48 +72,25 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      * @var resource
      */
     private $_xmlrpcextServer;
-    
-    // }}}
-    // {{{ getXmlrpcextServer()
-    
-    /**
-     * _xmlrpcextServer getter 
-     * 
-     * @return resource xmlrpcext server
-     */
-    private function getXmlrpcextServer() 
-    {
-        return $this->_xmlrpcextServer;
-    }
-   
-    // }}}
-    // {{{ setXmlrpcextServer()
-    
-    /**
-     * _xmlrpcextServer setter
-     * 
-     * @param resource xmlrpcext server
-     */
-    private function setXmlrpcextServer($server) 
-    {
-        $this->_xmlrpcextServer = $server;
-    }
-    
+       
     // }}}
     // {{{ constructor
     
     /**
      * Create a new XML-RPC Server. 
      *
-     * The constructor receives only one parameter: the Call Handler. The call handler executes the actual
+     * The constructor receives a mandatory parameter: the Call Handler. The call handler executes the actual
      * method call. XML_RPC2 server acts as a protocol decoder/encoder between the call handler and the client
+     *
+     * @param object $callHandler
+     * @param array $options associative array of options
      */
-    function __construct($callHandler)
+    function __construct($callHandler, $options = array())
     {
-        parent::__construct($callHandler);
-        $this->setXmlrpcextServer(xmlrpc_server_create());
+        parent::__construct($callHandler, $options);
+        $this->_xmlrpcextServer = xmlrpc_server_create();
         foreach ($callHandler->getMethods() as $method) {
-            if (xmlrpc_server_register_method($this->getXmlrpcextServer(), 
+            if (xmlrpc_server_register_method($this->_xmlrpcextServer, 
                                               $method->getName(), 
                                               array($this, 'epiFunctionHandlerAdapter')) !== true) {
                 throw new XML_RPC2_Exception('Unable to setup XMLRPCext server. xmlrpc_server_register_method returned non-true.');
@@ -132,7 +109,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      * @param array Application data (ignored)
      */
     protected function epiFunctionHandlerAdapter($method_name, $params, $app_data) {
-        return @call_user_func_array(array($this->getCallHandler(), $method_name), $params);
+        return @call_user_func_array(array($this->callHandler, $method_name), $params);
     }
     
     // }}}
@@ -146,24 +123,29 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        try {
-            $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
-            $response = @xmlrpc_server_call_method($this->getXmlrpcextServer(), 
-                                                  $GLOBALS['HTTP_RAW_POST_DATA'],
-                                                  null,
-                                                  array('output_type' => 'xml'));
-            header('Content-type: text/xml');
-            header('Content-length: '.strlen($response));
-            print $response;
-            if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
-        } catch (XML_RPC2_FaultException $e) {
-            print(XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
-        } catch (Exception $e) {
-            print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+        if ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0)) {
+            try {
+                $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
+                $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
+                                                      $GLOBALS['HTTP_RAW_POST_DATA'],
+                                                      null,
+                                                      array('output_type' => 'xml', 'encoding' => $this->encoding));
+                header('Content-type: text/xml; charset=' . $this->encoding);
+                header('Content-length: '.strlen($response));
+                print $response;
+                if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
+            } catch (XML_RPC2_FaultException $e) {
+                print(XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
+            } catch (Exception $e) {
+                print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+            }
+        } else {
+            $this->autoDocument();
         }
     }
     
     // }}}
     
 }
+
 ?>

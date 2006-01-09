@@ -117,31 +117,21 @@ abstract class XML_RPC2_Server
      */
     protected $aliases = null;
     
-    // }}}
-    // {{{ setCallHandler()
-    
-    /** 
-     * callHandler setter 
-     * 
-     * @param object $callHandler object that will receive calls for remote methods
+    /**
+     * prefix field
+     *
+     * @var string
      */
-    protected function setCallHandler($callHandler) 
-    {
-        $this->callHandler = $callHandler;
-    }
+    protected $prefix = '';
     
-    // }}}
-    // {{{ getCallHandler()
-    
-    /** 
-     * callHandler getter 
-     * 
-     * @return object Object that will receive calls for remote methods
+    /**
+     * encoding field
+     *
+     * TODO : work on encoding for this backend
+     *
+     * @var string
      */
-    protected function getCallHandler()
-    {
-        return $this->callHandler;
-    }
+    protected $encoding = 'iso-8859-1';
     
     // }}}
     // {{{ setAliases()
@@ -188,11 +178,19 @@ abstract class XML_RPC2_Server
     /**
      * Create a new XML-RPC Server. 
      *
-     * @param object $callHandler the call handler will receive a method call for each remote call received. 
+     * @param object $callHandler the call handler will receive a method call for each remote call received.
+     * @param array associative array of options
      */
-    protected function __construct($callHandler)
+    protected function __construct($callHandler, $options = array())
     {
         $this->callHandler = $callHandler;
+        if (isset($options['prefix'])) {
+            $this->prefix = $options['prefix'];
+        }
+        if (isset($options['encoding'])) {
+            // TODO : control & exception
+            $this->encoding = $options['encoding'];
+        }
     }
     
     // }}}
@@ -202,15 +200,22 @@ abstract class XML_RPC2_Server
      * Factory method to select a backend and return a new XML_RPC2_Server based on the backend
      *
      * @param mixed $callTarget either a class name or an object instance. 
-     * @param string $prefix this method prefix will be prepended to exported method names. (Defaults to '')
-     * @param object $callHandler defaults to selecting a CallHandler suited to the received call target
+     * @param array associative array of options
      * @return object a server class instance
      */
-    public static function create($callTarget, $prefix = '', $callHandler = null)
-    {
+    public static function create($callTarget, $options = array())
+    {        
+        if (isset($options['backend'])) {
+            XML_RPC2_Backend::setBackend($options['backend']);
+        }
+        if (isset($options['prefix'])) {
+            $prefix = $options['prefix'];
+        } else {
+            $prefix = '';
+        }
         $backend = XML_RPC2_Backend::getServerClassname();
         // Find callHandler class
-        if (is_null($callHandler)) {
+        if (!isset($options['callHandler'])) {
             if (is_object($callTarget)) { // Delegate calls to instance methods
                 require_once 'XML/RPC2/Server/CallHandler/Instance.php';
                 $callHandler = new XML_RPC2_Server_CallHandler_Instance($callTarget, $prefix);
@@ -218,8 +223,10 @@ abstract class XML_RPC2_Server
                 require_once 'XML/RPC2/Server/CallHandler/Class.php';
                 $callHandler = new XML_RPC2_Server_CallHandler_Class($callTarget, $prefix);
             }
+        } else {
+            $callHandler = $options['callHandler'];
         }
-        return new $backend($callHandler);
+        return new $backend($callHandler, $options);
     }
     
     // }}}
@@ -259,6 +266,51 @@ abstract class XML_RPC2_Server
     }
     
     // }}}
+    // {{{ autoDocument()
+    
+    
+    
+    public function autoDocument()
+    {
+        print "<html><head><title>Available XMLRPC methods for this server</title></head>";
+        print "<h1>Available XMLRPC methods for this server</h1>";
+        print "<a name=\"index\"><h2>Index</h2></a>";
+        print "<ul>";
+        foreach ($this->callHandler->getMethods() as $method) {
+            print "<li>";
+            $name = $method->getName();
+            $id = md5($name);
+            $signature = $method->getHTMLSignature();
+            print "<a href=\"#$id\">$signature</a>";
+            print "</li>";
+        }
+        print "</ul>";
+        print "</table>";
+        print "<h2>Details</h2>";
+        foreach ($this->callHandler->getMethods() as $method) {
+            $name = $method->getName();
+            $signature = $method->getHTMLSignature();
+            $id = md5($name);
+            $help = nl2br(htmlentities($method->help));
+            print "<a name=\"$id\"><h3>$signature</h3></a>";
+            print "(return to <a href=\"#index\">index</a>)";
+            print "<p>Description :</p>";
+            print "<ul>";
+            print "<li>$help</li>";
+            print "</ul>";
+            if (count($method->parameters)>0) {
+                print "<p>Parameters : </p>";
+                print "<ul>";
+                while (list($name, $parameter) = each($method->parameters)) {
+                    $type = $parameter['type'];
+                    $doc = htmlentities($parameter['doc']);
+                    print "<li>($type) <b>$name</b> : $doc</li>";
+                }
+                reset($method->parameters);
+                print "</ul>";
+            }
+        }
+    }
 
 }
 

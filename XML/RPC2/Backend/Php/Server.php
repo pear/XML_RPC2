@@ -69,15 +69,16 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     /**
      * Create a new XML-RPC Server. 
      *
-     * The constructor receives only one parameter: the Call Handler. The call handler executes the actual
+     * The constructor receives a mandatory parameter: the Call Handler. The call handler executes the actual
      * method call. XML_RPC2 server acts as a protocol decoder/encoder between the call handler and the client
      *
      * @param object $callHandler
+     * @param array $options associative array of options
      * @access public
      */
-    function __construct($callHandler)
+    function __construct($callHandler, $options = array())
     {
-        parent::__construct($callHandler);
+        parent::__construct($callHandler, $options);
     }
     
     // }}}
@@ -89,22 +90,26 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        try {
-            $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
-            $request = @simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
-            if (!is_object($request)) throw new XML_RPC2_FaultException('Unable to parse request XML', 0);
-            $request = XML_RPC2_Backend_Php_Request::createFromDecode($request);  
-            $method = $request->getMethodName();
-            if (array_key_exists($method, $this->getAliases())) {
-                $method = $this->aliases[$method];
+        if ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0)) {
+            try {
+                $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
+                $request = @simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+                if (!is_object($request)) throw new XML_RPC2_FaultException('Unable to parse request XML', 0);
+                $request = XML_RPC2_Backend_Php_Request::createFromDecode($request);  
+                $method = $request->getMethodName();
+                if (array_key_exists($method, $this->getAliases())) {
+                    $method = $this->aliases[$method];
+                }
+                $arguments = $request->getParameters();
+                print(XML_RPC2_Backend_Php_Response::encode(call_user_func_array(array($this->callHandler, $method), $arguments)));
+                if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
+            } catch (XML_RPC2_FaultException $e) {
+                print(XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
+            } catch (Exception $e) {
+                print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
             }
-            $arguments = $request->getParameters();
-            print(XML_RPC2_Backend_Php_Response::encode(call_user_func_array(array($this->getCallHandler(), $method), $arguments)));
-            if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
-        } catch (XML_RPC2_FaultException $e) {
-            print(XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
-        } catch (Exception $e) {
-            print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+        } else {
+            $this->autoDocument();
         }
     }
     

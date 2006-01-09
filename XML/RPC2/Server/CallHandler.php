@@ -78,20 +78,7 @@ abstract class XML_RPC2_Server_CallHandler
      * @var array
      */
     protected $methods = array();
-    
-    // }}}
-    // {{{ setMethods()
-    
-    /** 
-     * methods setter 
-     *
-     * @param array Array of XML_RPC2_Server_Method instances
-     */
-    protected function setMethods($methods) 
-    {
-        $this->methods = $methods;
-    }
-    
+       
     // }}}
     // {{{ getMethods()
     

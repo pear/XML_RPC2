@@ -86,21 +86,21 @@ class XML_RPC2_Server_Method
      *
      * @var string
      */
-    protected $internalMethod;
+    private $_internalMethod;
     
     /**
      * hidden field : true if the method is hidden 
      *
      * @var boolean
      */
-    protected $hidden;
+    private $_hidden;
     
     /**
      * name Field : external method name
      *
      * @var string 
      */
-    protected $name;
+    private $_name;
     
     // }}}
     // {{{ getInternalMethod()
@@ -112,22 +112,9 @@ class XML_RPC2_Server_Method
      */
     public function getInternalMethod() 
     {
-        return $this->internalMethod;
+        return $this->_internalMethod;
     }
-    
-    // }}}
-    // {{{ setInternalMethod()
-    
-    /** 
-     * internalMethod setter 
-     * 
-     * @param string internalMethod
-     */
-    public function setInternalMethod($value)
-    {
-        $this->internalMethod = $value;
-    }
-    
+        
     // }}}
     // {{{ isHidden()
     
@@ -138,22 +125,9 @@ class XML_RPC2_Server_Method
      */
     public function isHidden() 
     {
-        return $this->hidden;
+        return $this->_hidden;
     }
-    
-    // }}}
-    // {{{ setHidden()
-    
-    /** 
-     * hidden setter
-     * 
-     * @param boolean hidden value
-     */
-    public function setHidden($hidden) 
-    {
-        $this->hidden = $hidden;
-    }
-    
+        
     // }}}
     // {{{ getName()
     
@@ -164,22 +138,9 @@ class XML_RPC2_Server_Method
      */
     public function getName() 
     {
-        return $this->name;
+        return $this->_name;
     }
-    
-    // }}}
-    // {{{ setName()
-    
-    /**
-     * name setter
-     *
-     * @param string name
-     */
-    public function setName($name) 
-    {
-        $this->name = $name;
-    }
-    
+        
     // }}}
     // {{{ constructor
     
@@ -271,12 +232,12 @@ class XML_RPC2_Server_Method
             $methodname = $prefix . $method->getName();
         }
 
-        $this->setInternalMethod($method->getName());
+        $this->_internalMethod = $method->getName();
         $this->parameters = $parameters;
         $this->returns  = $returns;
         $this->help = $shortdesc;
-        $this->setName($methodname);
-        $this->setHidden($hidden);
+        $this->_name = $methodname;
+        $this->_hidden = $hidden;
     }
     
     // }}}
@@ -294,7 +255,7 @@ class XML_RPC2_Server_Method
      */
     public function matchesSignature($methodName, $callParams)
     {
-        if ($methodName != $this->getName()) return false;
+        if ($methodName != $this->_name) return false;
         $paramIndex = 0;
         foreach($this->parameters as $param) {
             if (!($param['optional'] || array_key_exists($paramIndex, $callParams))) { // Missing non-optional param
@@ -334,6 +295,28 @@ class XML_RPC2_Server_Method
     }
     
     // }}}
+    // {{{ 
+    public function getHTMLSignature() 
+    {
+        $name = $this->_name;
+        $returnType = $this->returns;
+        $result  = "<i>($returnType)</i> ";
+        $result .= "<b>$name(</b>";
+        $first = true;
+        while (list($name, $parameter) = each($this->parameters)) {
+            if ($first) {
+                $first = false;
+            } else {
+                $result .= ', ';
+            }
+            $type = $parameter['type'];
+            $result .= "<i>($type) </i>";
+            $result .= "<b>$name</b>";
+        }
+        reset($this->parameters);
+        $result .= "<b>)</b>";
+        return $result;
+    }
     
 }
 
