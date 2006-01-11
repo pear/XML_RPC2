@@ -107,6 +107,13 @@ class XML_RPC2_CachedServer {
      * @var string
      */
     private $_prefix = '';
+    
+    /**
+     * XML_RPC2_Server options
+     *
+     * @var array
+     */
+    private $_options = array();
        
     // }}}
     // {{{ setCacheOptions()
@@ -120,7 +127,7 @@ class XML_RPC2_CachedServer {
      *
      * @param array $array
      */
-    public function setCacheOptions($array) 
+    private function _setCacheOptions($array) 
     {
         if (isset($array['defaultCacheGroup'])) {
             $this->_defaultCacheGroup = $array['defaultCacheGroup'];
@@ -146,11 +153,15 @@ class XML_RPC2_CachedServer {
      *
      * @param object $callHandler the call handler will receive a method call for each remote call received. 
      */
-    protected function __construct($callTarget, $prefix = '', $callHandler = null) 
+    protected function __construct($callTarget, $options = array()) 
     {
-       $this->_callHandler = $callHandler; 
-       $this->_callTarget = $callTarget;
-       $this->_prefix = $prefix;
+        if (isset($options['cacheOptions'])) {
+            $cacheOptions = $options['cacheOptions'];
+            $this->_setCacheOptions($cacheOptions);
+            unset($options['cacheOptions']);
+        }
+        $this->_options = $options;
+        $this->_callTarget = $callTarget;
     }
     
     // }}}
@@ -162,13 +173,12 @@ class XML_RPC2_CachedServer {
      * Here, simply returns a new instance of XML_RPC2_CachedServer class
      *
      * @param mixed $callTarget either a class name or an object instance. 
-     * @param string $prefix this method prefix will be prepended to exported method names. (Defaults to '')
-     * @param object $callHandler defaults to selecting a CallHandler suited to the received call target
+     * @param array $options associative array of options
      * @return object a server class instance
      */
-    public static function create($callTarget, $prefix = '', $callHandler = null) 
+    public static function create($callTarget, $options = array()) 
     {
-        return new XML_RPC2_CachedServer($callTarget, $prefix, $callHandler);
+        return new XML_RPC2_CachedServer($callTarget, $options);
     }
          
     // }}}
@@ -192,10 +202,13 @@ class XML_RPC2_CachedServer {
             list($weCache, $lifetime) = $this->_reflectionWork($methodName);
         }
         if ($weCache) {
-            $cacheId = $this->_makeCacheId($GLOBALS['HTTP_RAW_POST_DATA']);
+            if (isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
+                $cacheId = $this->_makeCacheId($GLOBALS['HTTP_RAW_POST_DATA']);
+            } else {
+                $cacheId = 'norawpostdata';
+            }
             $this->_cacheObject = new Cache_Lite_Output($this->_cacheOptions);
             $this->_cacheObject->setLifetime($lifetime);
-            header('Content-type: text/xml; charset=UTF-8'); // TODO : is the charset ok ?
             if (!($this->_cacheObject->start($cacheId, $this->_defaultCacheGroup))) {
                 // cache is not hit
                 $this->_workWithoutCache();
@@ -277,7 +290,7 @@ class XML_RPC2_CachedServer {
     private function _workWithoutCache() 
     {
         require_once('XML/RPC2/Server.php');
-        $this->_serverObject = XML_RPC2_Server::create($this->_callTarget, $this->_prefix, $this->_callHandler);
+        $this->_serverObject = XML_RPC2_Server::create($this->_callTarget, $this->_options);
         $this->_serverObject->handleCall();
     }
     
@@ -292,7 +305,7 @@ class XML_RPC2_CachedServer {
      */
     private function _makeCacheId($raw_request) 
     {
-        return md5($raw_request . serialize($this->_callTarget) . serialize($this->_prefix) . serialize($this->_callHandler));
+        return md5($raw_request . serialize($this->_options));
     }
        
     // }}}
