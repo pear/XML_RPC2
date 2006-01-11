@@ -102,6 +102,13 @@ class XML_RPC2_Server_Method
      */
     private $_name;
     
+    /**
+     * Number of required parameters
+     *
+     * @var int
+     */
+    private $_numberOfRequiredParameters;
+    
     // }}}
     // {{{ getInternalMethod()
     
@@ -198,7 +205,7 @@ class XML_RPC2_Server_Method
                 }
             }
         }
-
+        $this->_numberOfRequiredParameters = $method->getNumberOfRequiredParameters(); // we don't use isOptional() because of bugs in the reflection API
         // Fill in info for each method parameter
         foreach ($method->getParameters() as $parameterIndex => $parameter) {
             // Parameter defaults
@@ -270,51 +277,35 @@ class XML_RPC2_Server_Method
     }
     
     // }}}
-    // {{{ autoDocument()
-    
-    /**
-     * Return HTML snippet documenting method, for XML-RPC server introspection.
-     *
-     * @return string HTML snippet documenting method
-     */
-    public function autoDocument()
-    {
-        $result = '<dl><dt>Method description</dt><dd>' . $this->help . '</dd>';
-        $result .= '<dt>Method parameters</dt><dd><dl>';
-        foreach ($this->parameters as $paramName => $param) {
-            $result .= '<dt><i>' . $param['type'] . "</i>$paramName</dt><dd>";
-            if ($param['optional']) $result .= '[optional]';
-            $result .= $param['doc'];
-            $result .= '</dd>';
-        }
-        $result .= '</dl></dd>';
-        $result .= '<dt>Returns</dt><dd><i>' . $this->returns . '</i></dd>';
-        $result .= '</dl>';
-
-        return $result;
-    }
-    
-    // }}}
     // {{{ 
     public function getHTMLSignature() 
     {
         $name = $this->_name;
         $returnType = $this->returns;
-        $result  = "<i>($returnType)</i> ";
-        $result .= "<b>$name(</b>";
+        $result  = "<span class=\"type\">($returnType)</span> ";
+        $result .= "<span class=\"name\">$name</span>";
+        $result  .= "<span class=\"other\">(</span>";
         $first = true;
+        $nbr = 0;
         while (list($name, $parameter) = each($this->parameters)) {
+            $nbr++;
+            if ($nbr == $this->_numberOfRequiredParameters + 1) {
+                $result .= "<span class=\"other\"> [ </span>";
+            }
             if ($first) {
                 $first = false;
             } else {
                 $result .= ', ';
             }
             $type = $parameter['type'];
-            $result .= "<i>($type) </i>";
-            $result .= "<b>$name</b>";
+            $result .= "<span class=\"paratype\">($type) </span>";
+            $result .= "<span class=\"paraname\">$name</span>";
         }
         reset($this->parameters);
-        $result .= "<b>)</b>";
+        if ($nbr > $this->_numberOfRequiredParameters) {
+            $result .= "<span class=\"other\"> ] </span>";
+        }
+        $result .= "<span class=\"other\">)</span>";
         return $result;
     }
     

@@ -90,7 +90,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        if ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0)) {
+        if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
             try {
                 $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
                 $request = @simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);

@@ -133,6 +133,20 @@ abstract class XML_RPC2_Server
      */
     protected $encoding = 'iso-8859-1';
     
+    /** 
+     * display html documentation of xmlrpc exported methods when there is no post datas
+     *
+     * @var boolean
+     */
+    protected $autoDocument = true;
+    
+    /**
+     * display external links at the end of autodocumented page
+     *
+     * @var boolean
+     */
+    protected $autoDocumentExternalLinks = true;
+    
     // }}}
     // {{{ setAliases()
 
@@ -190,6 +204,12 @@ abstract class XML_RPC2_Server
         if (isset($options['encoding'])) {
             // TODO : control & exception
             $this->encoding = $options['encoding'];
+        }
+        if ((isset($options['autoDocument'])) && (is_bool($options['autoDocument']))) {
+            $this->autoDocument = $options['autoDocument'];
+        }
+        if ((isset($options['autoDocumentExternalLinks'])) && (is_bool($options['autoDocumentExternalLinks']))) {
+            $this->autoDocumentExternalLinks = $options['autoDocumentExternalLinks'];
         }
     }
     
@@ -272,44 +292,72 @@ abstract class XML_RPC2_Server
     
     public function autoDocument()
     {
-        print "<html><head><title>Available XMLRPC methods for this server</title></head>";
-        print "<h1>Available XMLRPC methods for this server</h1>";
-        print "<a name=\"index\"><h2>Index</h2></a>";
-        print "<ul>";
+        print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
+        print "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n";
+        print "  <head>\n";
+        print "    <meta http-equiv=\"Content-Type\" content=\"text/HTML; charset=" . $this->encoding . "\"  />\n";
+        print "    <title>Available XMLRPC methods for this server</title>\n";
+        print "    <style type=\"text/css\">\n";
+        print "      li,p { font-size: 10pt; font-family: Arial,Helvetia,sans-serif; }\n";
+        print "      a:link { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
+        print "      a:visited { background-color: white; color: blue; text-decoration: underline; font-weight: bold; }\n";
+        print "      table { border-collapse:collapse; width: 100% }\n";
+        print "      table,td { padding: 5px; border: 1px solid black; }\n";
+        print "      div.bloc { border: 1px dashed gray; padding: 10px; margin-bottom: 20px; }\n";
+        print "      div.description { border: 1px solid black; padding: 10px; }\n";
+        print "      span.type { background-color: white; color: gray; font-weight: normal; }\n";
+        print "      span.paratype { background-color: white; color: gray; font-weight: normal; }\n";
+        print "      span.name { background-color: white; color: #660000; }\n";
+        print "      span.paraname { background-color: white; color: #336600; }\n";
+        print "      img { border: 0px; }\n";
+        print "      li { font-size: 12pt; }\n";
+        print "    </style>\n";
+        print "  </head>\n";
+        print "  <body>\n";
+        print "    <h1>Available XMLRPC methods for this server</h1>\n";
+        print "    <h2><a name=\"index\">Index</a></h2>\n";
+        print "    <ul>\n";
         foreach ($this->callHandler->getMethods() as $method) {
-            print "<li>";
             $name = $method->getName();
             $id = md5($name);
             $signature = $method->getHTMLSignature();
-            print "<a href=\"#$id\">$signature</a>";
-            print "</li>";
+            print "      <li><a href=\"#$id\">$name()</a></li>\n";
         }
-        print "</ul>";
-        print "</table>";
-        print "<h2>Details</h2>";
+        print "    </ul>\n";
+        print "    <h2>Details</h2>\n";
         foreach ($this->callHandler->getMethods() as $method) {
+            print "    <div class=\"bloc\">\n";   
             $name = $method->getName();
             $signature = $method->getHTMLSignature();
             $id = md5($name);
             $help = nl2br(htmlentities($method->help));
-            print "<a name=\"$id\"><h3>$signature</h3></a>";
-            print "(return to <a href=\"#index\">index</a>)";
-            print "<p>Description :</p>";
-            print "<ul>";
-            print "<li>$help</li>";
-            print "</ul>";
+            print "      <h3><a name=\"$id\">$signature</a></h3>\n";
+            print "      <p><b>Description :</b></p>\n";
+            print "      <div class=\"description\">\n";
+            print "        $help\n";
+            print "      </div>\n";
             if (count($method->parameters)>0) {
-                print "<p>Parameters : </p>";
-                print "<ul>";
-                while (list($name, $parameter) = each($method->parameters)) {
-                    $type = $parameter['type'];
-                    $doc = htmlentities($parameter['doc']);
-                    print "<li>($type) <b>$name</b> : $doc</li>";
+                print "      <p><b>Parameters : </b></p>\n";
+                if (count($method->parameters)>0) {
+                    print "      <table>\n";
+                    print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
+                    while (list($name, $parameter) = each($method->parameters)) {
+                        $type = $parameter['type'];
+                        $doc = htmlentities($parameter['doc']);
+                        print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
+                    }
+                    reset($method->parameters);
+                    print "      </table>\n";
                 }
-                reset($method->parameters);
-                print "</ul>";
             }
+            print "      <p>(return to <a href=\"#index\">index</a>)</p>\n";
+            print "    </div>\n";
         }
+        if (!($this->autoDocumentExternalLinks)) {
+            print '    <p><a href="http://pear.php.net/packages/XML_RPC2"><img src="http://pear.php.net/gifs/pear-power.png" alt="Powered by PEAR/XML_RPC2" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a> &nbsp; &nbsp; &nbsp; <a href="http://jigsaw.w3.org/css-validator/"><img style="border:0;width:88px;height:31px" src="http://jigsaw.w3.org/css-validator/images/vcss" alt="Valid CSS!" /></a></p>' . "\n";
+        }
+        print "  </body>\n";
+        print "</html>\n";
     }
 
 }

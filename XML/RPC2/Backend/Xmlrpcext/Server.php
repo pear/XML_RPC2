@@ -123,7 +123,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        if ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0)) {
+        if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
             try {
                 $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
                 $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
