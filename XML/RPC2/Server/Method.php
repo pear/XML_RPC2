@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Srgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -51,8 +51,8 @@ require_once 'XML/RPC2/Exception.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Srgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -65,21 +65,21 @@ class XML_RPC2_Server_Method
      *
      * @var array
      */
-    public $parameters;
+    private $_parameters;
     
     /**
      * Method signature return type 
      *
      * @var string
      */
-    public $returns ;
+    private $_returns ;
     
     /** 
      * Method help, for introspection 
      * 
      * @var string
      */
-    public $help;
+    private $_help;
     
     /**
      * internalMethod field : method name in PHP-land
@@ -240,9 +240,9 @@ class XML_RPC2_Server_Method
         }
 
         $this->_internalMethod = $method->getName();
-        $this->parameters = $parameters;
-        $this->returns  = $returns;
-        $this->help = $shortdesc;
+        $this->_parameters = $parameters;
+        $this->_returns  = $returns;
+        $this->_help = $shortdesc;
         $this->_name = $methodname;
         $this->_hidden = $hidden;
     }
@@ -264,7 +264,7 @@ class XML_RPC2_Server_Method
     {
         if ($methodName != $this->_name) return false;
         $paramIndex = 0;
-        foreach($this->parameters as $param) {
+        foreach($this->_parameters as $param) {
             if (!($param['optional'] || array_key_exists($paramIndex, $callParams))) { // Missing non-optional param
                 return false;
             }
@@ -281,13 +281,13 @@ class XML_RPC2_Server_Method
     public function getHTMLSignature() 
     {
         $name = $this->_name;
-        $returnType = $this->returns;
+        $returnType = $this->_returns;
         $result  = "<span class=\"type\">($returnType)</span> ";
         $result .= "<span class=\"name\">$name</span>";
         $result  .= "<span class=\"other\">(</span>";
         $first = true;
         $nbr = 0;
-        while (list($name, $parameter) = each($this->parameters)) {
+        while (list($name, $parameter) = each($this->_parameters)) {
             $nbr++;
             if ($nbr == $this->_numberOfRequiredParameters + 1) {
                 $result .= "<span class=\"other\"> [ </span>";
@@ -301,12 +301,45 @@ class XML_RPC2_Server_Method
             $result .= "<span class=\"paratype\">($type) </span>";
             $result .= "<span class=\"paraname\">$name</span>";
         }
-        reset($this->parameters);
+        reset($this->_parameters);
         if ($nbr > $this->_numberOfRequiredParameters) {
             $result .= "<span class=\"other\"> ] </span>";
         }
         $result .= "<span class=\"other\">)</span>";
         return $result;
+    }
+    
+    // }}}
+    // {{{ autoDocument()
+    
+    /**
+     * 
+     */
+    public function autoDocument() 
+    {
+        $name = $this->getName();
+        $signature = $this->getHTMLSignature();
+        $id = md5($name);
+        $help = nl2br(htmlentities($this->_help));
+        print "      <h3><a name=\"$id\">$signature</a></h3>\n";
+        print "      <p><b>Description :</b></p>\n";
+        print "      <div class=\"description\">\n";
+        print "        $help\n";
+        print "      </div>\n";
+        if (count($this->_parameters)>0) {
+            print "      <p><b>Parameters : </b></p>\n";
+            if (count($this->_parameters)>0) {
+                print "      <table>\n";
+                print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
+                while (list($name, $parameter) = each($this->_parameters)) {
+                    $type = $parameter['type'];
+                    $doc = htmlentities($parameter['doc']);
+                    print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
+                }
+                reset($this->_parameters);
+                print "      </table>\n";
+            }
+        }
     }
     
 }

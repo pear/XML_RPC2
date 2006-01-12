@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Srgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -89,8 +89,8 @@ require_once 'XML/RPC2/Backend.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Srgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -327,29 +327,7 @@ abstract class XML_RPC2_Server
         print "    <h2>Details</h2>\n";
         foreach ($this->callHandler->getMethods() as $method) {
             print "    <div class=\"bloc\">\n";   
-            $name = $method->getName();
-            $signature = $method->getHTMLSignature();
-            $id = md5($name);
-            $help = nl2br(htmlentities($method->help));
-            print "      <h3><a name=\"$id\">$signature</a></h3>\n";
-            print "      <p><b>Description :</b></p>\n";
-            print "      <div class=\"description\">\n";
-            print "        $help\n";
-            print "      </div>\n";
-            if (count($method->parameters)>0) {
-                print "      <p><b>Parameters : </b></p>\n";
-                if (count($method->parameters)>0) {
-                    print "      <table>\n";
-                    print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
-                    while (list($name, $parameter) = each($method->parameters)) {
-                        $type = $parameter['type'];
-                        $doc = htmlentities($parameter['doc']);
-                        print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
-                    }
-                    reset($method->parameters);
-                    print "      </table>\n";
-                }
-            }
+            $method->autoDocument();
             print "      <p>(return to <a href=\"#index\">index</a>)</p>\n";
             print "    </div>\n";
         }
