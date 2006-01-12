@@ -221,19 +221,19 @@ class XML_RPC2_CachedClient {
         }
         if (in_array($methodName, $this->_notCachedMethods)) {
             // if the called method is listed in _notCachedMethods => no cache
-            return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
+            return $this->_workWithoutCache___($methodName, $parameters);
         }
         if (!($this->_cacheByDefault)) {
             if ((!(isset($this->_cachedMethods[$methodName]))) and (!(in_array($methodName, $this->_cachedMethods)))) {
                 // if cache is not on by default and if the called method is not described in _cachedMethods array
                 // => no cache
-                return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
+                return $this->_workWithoutCache___($methodName, $parameters);
             }
         }
         if (isset($this->_cachedMethods[$methodName])) {
             if ($this->_cachedMethods[$methodName] == -1) {
                 // if a method is described with a lifetime value of -1 => no cache
-                return $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
+                return $this->_workWithoutCache___($methodName, $parameters);
             } else {
                 // if a method is described with a specific (and <> -1) lifetime
                 // => we fix this new lifetime
@@ -243,32 +243,32 @@ class XML_RPC2_CachedClient {
             // there is no specific lifetime, let's use the default one
             $this->_cacheObject->setLifetime($this->_cacheOptions['lifetime']);
         }
-        $cacheId = $this->_makeCacheId-noxmlrpc();
+        $cacheId = $this->_makeCacheId___();
         $data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup);
         if (is_string($data)) {
             // cache is hit !
             return unserialize($data);
         }
         // the cache is not hit, let's call the "real" XML_RPC client
-        $result = $this->_workWithoutCache-noxmlrpc($methodName, $parameters);
+        $result = $this->_workWithoutCache___($methodName, $parameters);
         $this->_cacheObject->save(serialize($result)); // save in cache for next time...
         return $result;
     }
     
     // }}}
-    // {{{ _workWithoutCache-noxmlrpc()
+    // {{{ _workWithoutCache___()
     
     /**
      * Do the real call if no cache available
      *
-     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      *
      * @param   string      Method name
      * @param   array       Parameters
      * @return  mixed       The call result, already decoded into native types
      */
-    private function _workWithoutCache-noxmlrpc($methodName, $parameters) 
+    private function _workWithoutCache___($methodName, $parameters) 
     {
         if (!(isset($this->_clientObject))) {
             // If the XML_RPC2_Client object is not available, let's build it
@@ -280,51 +280,51 @@ class XML_RPC2_CachedClient {
     }
     
     // }}}
-    // {{{ _makeCacheId-noxmlrpc()
+    // {{{ _makeCacheId___()
     
     /** 
      * make a cache id depending on method called (and corresponding parameters) but depending on "environnement" setting too
      *
-     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      *
      * @param string $methodName called method
      * @param array $parameters parameters of the called method
      * @return string cache id
      */
-    private function _makeCacheId-noxmlrpc($methodName, $parameters) 
+    private function _makeCacheId___($methodName, $parameters) 
     {
         return md5($methodName . serialize($parameters) . serialize($this->_uri) . serialize($this->_options)); 
     }
     
     // }}}
-    // {{{ dropCacheFile-noxmlrpc()
+    // {{{ dropCacheFile___()
     
     /** 
      * Drop the cache file corresponding to the given method call
      *
-     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      *
      * @param string $methodName called method
      * @param array $parameters parameters of the called method
      */
-    public function dropCacheFile-noxmlrpc($methodName, $parameters) 
+    public function dropCacheFile___($methodName, $parameters) 
     {
-        $id = $this->_makeCacheId-noxmlrpc($methodName, $parameters);
+        $id = $this->_makeCacheId___($methodName, $parameters);
         $this->_clientObject->remove($id, $this->_defaultCacheGroup);
     }
     
     // }}}
-    // {{{ clean-noxmlrpc()
+    // {{{ clean___()
     
     /** 
      * Clean all the cache
      *
-     * NB : The '-noxmlrpc' at the end of the method name is to avoid collisions with
+     * NB : The '___' at the end of the method name is to avoid collisions with
      * XMLRPC __call() 
      */
-    public function clean-noxmlrpc() 
+    public function clean___() 
     {
         $this->_cacheObject->clean($this->_defaultCacheGroup, 'ingroup');
     }
