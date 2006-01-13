@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Srgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -62,8 +62,8 @@ require_once 'XML/RPC2/Exception.php';
  * @see XML_RPC2_Server_Callhandler_Instance
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Srgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */ 
@@ -118,80 +118,7 @@ abstract class XML_RPC2_Server_CallHandler
     {
         return $this->methods[$name];
     }
-    
-    // }}}
-    // {{{ system_listMethods()
-    
-    /**
-     * Introspect server, returning method list.
-     *
-     * This method may be used to
-     * enumerate the methods implemented by the XML-RPC server. The
-     * system.listMethods method requires no parameters. It returns an array
-     * of strings, each of which is the name of a method implemented by the
-     * server.
-     *
-     * @returns array method names
-     *
-     */
-    protected static final function system_listMethods()
-    {
-        return array_keys($this->getMethods());
-    }
-    
-    // }}}
-    // {{{ system_methodHelp()
-    
-    /**
-     * Introspect server, returning method help text.
-     *
-     * If the method does
-     * not exist, returns false. If the method exists, but help text is
-     * not defined, returns an empty string.
-     *
-     * @param   string Method name whose help to return
-     * @returns string Method help
-     *
-     */
-    protected static final function system_methodHelp($methodName)
-    {
-        $methods = $this->getMethods();
-        if (!array_key_exists($methodName, $methods)) {
-            return false;
-        }
-        return $methods[$methodName]->methodHelp();
-    }
-    
-    // }}}
-    // {{{ system_methodSignature()
-    
-    /**
-     * Introspect server, returning a method signature.
-     *
-     * This method takes one
-     * parameter, the name of a method implemented by the XML-RPC server.
-     * It returns an array of possible signatures for this method. A signature
-     * is an array of types. The first of these types is the return type of
-     * the method, the rest are parameters.
-     * Even if the XML-RPC spec supports function overloading, PHP does not.
-     * On this server, this function will either return a one-element array or
-     * false (if the method does not exist).
-     *
-     * @param   string Method name whose signature to return
-     * @returns string Method help
-     *
-     * @xmlrpc.prefix system.
-     *
-     */
-    protected static final function system_methodSignature($methodName)
-    {
-        $methods = $this->getMethods();
-        if (!array_key_exists($methodName, $methods)) {
-            return false;
-        }
-        return array($methods[$methodName]->methodSignature());
-    }
-    
+       
     // }}}
     
 }
