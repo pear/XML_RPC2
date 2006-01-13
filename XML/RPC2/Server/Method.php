@@ -209,7 +209,7 @@ class XML_RPC2_Server_Method
         // Fill in info for each method parameter
         foreach ($method->getParameters() as $parameterIndex => $parameter) {
             // Parameter defaults
-            $newParameter = array('optional' => false, 'type' => 'mixed');
+            $newParameter = array('type' => 'mixed');
 
             // Attempt to extract type and doc from docblock
             if (array_key_exists($parameterIndex, $paramDocs) &&
@@ -219,12 +219,14 @@ class XML_RPC2_Server_Method
                 } else {
                     $newParameter['type'] = $matches[1];
                 }
-                $newParameter['doc'] = $matches[2];
-            }
-
-            // Attempt to extract optional status from Reflection API
-            if (method_exists($method, 'isOptional')) {
-                $newParameter['optional'] = $parameter->isOptional();
+                $tmp = '$' . $parameter->getName() . ' ';
+                if (strpos($matches[2], '$' . $tmp) === 0) {
+                    $newParameter['doc'] = $matches[2];
+                } else {
+                    // The phpdoc comment is something like "@param string $param description of param"    
+                    // Let's keep only "description of param" as documentation (remove $param)
+                    $newParameter['doc'] = substr($matches[2], strlen($tmp));
+                }
             }
 
             // Attempt to extract type from Reflection API
@@ -263,21 +265,29 @@ class XML_RPC2_Server_Method
     public function matchesSignature($methodName, $callParams)
     {
         if ($methodName != $this->_name) return false;
+        if (count($callParams) < $this->_numberOfRequiredParameters) return false;
+        if (count($callParams) > $this->_parameters) return false;
         $paramIndex = 0;
         foreach($this->_parameters as $param) {
-            if (!($param['optional'] || array_key_exists($paramIndex, $callParams))) { // Missing non-optional param
-                return false;
-            }
-            if ((array_key_exists($paramIndex, $callParams)) &&
-                (!($param['type'] == 'mixed' || $param['type'] == gettype($callParams[$paramIndex])))) {
-                return false;
+            $paramIndex++;
+            if ($paramIndex <= $this->_numberOfRequiredParameters) {
+                // the parameter is not optional
+                if ((!($param['type'] == 'mixed')) and ($param['type'] != gettype($callParams[$paramIndex-1]))) {
+                    return false;
+                }
             }
         }
         return true;
     }
     
     // }}}
-    // {{{ 
+    // {{{ getHTMLSignature()
+    
+    /**
+     * Return a HTML signature of the method
+     * 
+     * @return string HTML signature
+     */
     public function getHTMLSignature() 
     {
         $name = $this->_name;
@@ -313,7 +323,7 @@ class XML_RPC2_Server_Method
     // {{{ autoDocument()
     
     /**
-     * 
+     * Print a complete HTML description of the method
      */
     public function autoDocument() 
     {
