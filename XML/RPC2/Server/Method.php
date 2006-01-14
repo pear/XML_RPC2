@@ -215,9 +215,9 @@ class XML_RPC2_Server_Method
             if (array_key_exists($parameterIndex, $paramDocs) &&
                 preg_match('/@param\s+(\S+)(\s+(.+))/', $paramDocs[$parameterIndex], $matches)) {
                 if (strpos($matches[1], '|')) {
-                    $newParameter['type'] = explode('|', $matches[1]);
+                    $newParameter['type'] = XML_RPC2_Server_Method::_limitPHPType(explode('|', $matches[1]));
                 } else {
-                    $newParameter['type'] = $matches[1];
+                    $newParameter['type'] = XML_RPC2_Server_Method::_limitPHPType($matches[1]);
                 }
                 $tmp = '$' . $parameter->getName() . ' ';
                 if (strpos($matches[2], '$' . $tmp) === 0) {
@@ -227,11 +227,6 @@ class XML_RPC2_Server_Method
                     // Let's keep only "description of param" as documentation (remove $param)
                     $newParameter['doc'] = substr($matches[2], strlen($tmp));
                 }
-            }
-
-            // Attempt to extract type from Reflection API
-            if ($parameter->getClass()) {
-                $newParameter['type'] = $parameter->getClass();
             }
 
             $parameters[$parameter->getName()] = $newParameter;
@@ -272,7 +267,8 @@ class XML_RPC2_Server_Method
             $paramIndex++;
             if ($paramIndex <= $this->_numberOfRequiredParameters) {
                 // the parameter is not optional
-                if ((!($param['type'] == 'mixed')) and ($param['type'] != gettype($callParams[$paramIndex-1]))) {
+                $callParamType = XML_RPC2_Server_Method::_limitPHPType(gettype($callParams[$paramIndex-1]));
+                if ((!($param['type'] == 'mixed')) and ($param['type'] != $callParamType)) {
                     return false;
                 }
             }
@@ -349,6 +345,42 @@ class XML_RPC2_Server_Method
                 reset($this->_parameters);
                 print "      </table>\n";
             }
+        }
+    }
+    
+    // }}}
+    // {{{ _limitPHPType()
+    
+    /**
+     * standardise type names between gettype php function and phpdoc comments (and limit to xmlrpc available types)
+     * 
+     * @var string $type
+     * @return string standardised type
+     */
+    private static function _limitPHPType($type)
+    {
+        $tmp = strtolower($type);
+        $convertArray = array(
+            'int' => 'integer',
+            'i4' => 'integer',
+            'integer' => 'integer',
+            'string' => 'string',
+            'str' => 'string',
+            'char' => 'string',
+            'bool' => 'boolean',
+            'boolean' => 'boolean',
+            'array' => 'array',
+            'float' => 'double',
+            'double' => 'double',
+            'array' => 'array',
+            'struct' => 'array',
+            'assoc' => 'array',
+            'structure' => 'array'
+        );	
+        if (isset($convertArray[$tmp])) {
+            return $convertArray[$tmp];	
+        } else {
+            return 'mixed';	
         }
     }
     
