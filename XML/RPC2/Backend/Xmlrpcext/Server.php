@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Srgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -56,8 +56,8 @@ require_once 'XML/RPC2/Exception.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Srgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -125,6 +125,21 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     {
         if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
             try {
+                if ($this->signatureChecking) {
+                    $tmp = xmlrpc_parse_method_descriptions($GLOBALS['HTTP_RAW_POST_DATA']);
+                    $methodName = $tmp['methodName'];
+                    $parameters = xmlrpc_decode($GLOBALS['HTTP_RAW_POST_DATA'], $this->encoding);
+                    $method = $this->callHandler->getMethod($methodName);
+                       if (!($method)) {
+                        // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes 
+                        print(XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found'));
+                        die();
+                    }
+                    if (!($method->matchesSignature($methodName, $parameters))) {
+                        print(XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));		
+                        die();
+                    }
+                }
                 $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
                 $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
                                                       $GLOBALS['HTTP_RAW_POST_DATA'],
