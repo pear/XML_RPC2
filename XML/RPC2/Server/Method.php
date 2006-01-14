@@ -379,9 +379,8 @@ class XML_RPC2_Server_Method
         );	
         if (isset($convertArray[$tmp])) {
             return $convertArray[$tmp];	
-        } else {
-            return 'mixed';	
         }
+        return 'mixed';	
     }
     
 }

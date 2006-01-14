@@ -276,9 +276,8 @@ class XML_RPC2_CachedServer {
         $res = ereg('<methodName>([a-zA-Z0-9\.,\/]*)</methodName>', $request, $results);
         if ($res>0) {
             return $results[1];
-        } else {
-            return false;
         }
+        return false;
     }
      
     // }}}

@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Sï¿½rgio Gonï¿½alves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sï¿½rgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -50,15 +50,15 @@ require_once 'XML/RPC2/Util/HTTPRequest.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sï¿½rgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
 class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
 {
     
-    // {{{ constructor
+    // {{{ï¿½constructor
     
     /**
      * Construct a new XML_RPC2_Client PHP Backend.
@@ -113,10 +113,9 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
                 print "XML_RPC2_FaultException(${result['faultString']}, ${result['faultCode']})";
             }
             throw new XML_RPC2_FaultException($result['faultString'], $result['faultCode']);
-        } else {
-            if ($this->debug) {
-                $this->displayDebugInformations2___($result);
-            }
+        }
+        if ($this->debug) {
+            $this->displayDebugInformations2___($result);
         }
         return $result;
     }
