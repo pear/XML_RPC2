@@ -179,6 +179,7 @@ class XML_RPC2_CachedClient {
         $this->_cacheOptions = $array;
         $this->_cacheObject = new Cache_Lite($this->_cacheOptions);    
         $this->_options = $options;
+        $this->_uri = $uri;
     }
     
     // }}}
@@ -234,11 +235,10 @@ class XML_RPC2_CachedClient {
             if ($this->_cachedMethods[$methodName] == -1) {
                 // if a method is described with a lifetime value of -1 => no cache
                 return $this->_workWithoutCache___($methodName, $parameters);
-            } else {
-                // if a method is described with a specific (and <> -1) lifetime
-                // => we fix this new lifetime
-                $this->_cacheObject->setLifetime($this->_cachedMethods[$methodName]);
             }
+            // if a method is described with a specific (and <> -1) lifetime
+            // => we fix this new lifetime
+            $this->_cacheObject->setLifetime($this->_cachedMethods[$methodName]);
         } else {
             // there is no specific lifetime, let's use the default one
             $this->_cacheObject->setLifetime($this->_cacheOptions['lifetime']);
