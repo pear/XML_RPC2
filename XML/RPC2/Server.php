@@ -147,6 +147,16 @@ abstract class XML_RPC2_Server
      */
     protected $autoDocumentExternalLinks = true;
     
+    /**
+     * signature checking flag
+     * 
+     * if set to true, the server will check the method signature before
+     * calling the corresponding php method
+     * 
+     * @var boolean
+     */
+    protected $signatureChecking = true;
+    
     // }}}
     // {{{ setAliases()
 
@@ -198,11 +208,10 @@ abstract class XML_RPC2_Server
     protected function __construct($callHandler, $options = array())
     {
         $this->callHandler = $callHandler;
-        if (isset($options['prefix'])) {
+        if ((isset($options['prefix'])) && (is_string($options['prefix']))) {
             $this->prefix = $options['prefix'];
         }
-        if (isset($options['encoding'])) {
-            // TODO : control & exception
+        if ((isset($options['encoding'])) && (is_string($options['encoding']))) {
             $this->encoding = $options['encoding'];
         }
         if ((isset($options['autoDocument'])) && (is_bool($options['autoDocument']))) {
@@ -210,6 +219,9 @@ abstract class XML_RPC2_Server
         }
         if ((isset($options['autoDocumentExternalLinks'])) && (is_bool($options['autoDocumentExternalLinks']))) {
             $this->autoDocumentExternalLinks = $options['autoDocumentExternalLinks'];
+        }
+        if ((isset($options['signatureChecking'])) && (is_bool($options['signatureChecking']))) {
+            $this->signatureChecking = $options['signatureChecking'];
         }
     }
     
@@ -336,7 +348,7 @@ abstract class XML_RPC2_Server
         }
         print "  </body>\n";
         print "</html>\n";
-    }
+    }    
 
 }
 
