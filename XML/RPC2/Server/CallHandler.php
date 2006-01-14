@@ -116,7 +116,10 @@ abstract class XML_RPC2_Server_CallHandler
      */
     public function getMethod($name)
     {
-        return $this->methods[$name];
+        if (isset($this->methods[$name])) {
+            return $this->methods[$name];
+        }
+        return false;	
     }
        
     // }}}
