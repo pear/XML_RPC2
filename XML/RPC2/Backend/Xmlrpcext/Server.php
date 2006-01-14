@@ -130,7 +130,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
                     $methodName = $tmp['methodName'];
                     $parameters = xmlrpc_decode($GLOBALS['HTTP_RAW_POST_DATA'], $this->encoding);
                     $method = $this->callHandler->getMethod($methodName);
-                       if (!($method)) {
+                    if (!($method)) {
                         // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes 
                         print(XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found'));
                         die();
