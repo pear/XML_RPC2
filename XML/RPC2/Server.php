@@ -107,16 +107,7 @@ abstract class XML_RPC2_Server
      * @var mixed
      */
     protected $callHandler = null;
-    
-    /**
-     * aliases field
-     * 
-     * Holds method aliases
-     *
-     * @var mixed
-     */
-    protected $aliases = null;
-    
+       
     /**
      * prefix field
      *
@@ -156,46 +147,7 @@ abstract class XML_RPC2_Server
      * @var boolean
      */
     protected $signatureChecking = true;
-    
-    // }}}
-    // {{{ setAliases()
-
-    /**
-     * aliases setter
-     * 
-     * @param mixed $aliases
-     */
-    protected function setAliases($aliases) 
-    {
-        $this->aliases = $aliases;
-    }
-    
-    // }}}
-    // {{{ addAlias()
-    
-    /**
-     * aliases appender
-     * 
-     * @param mixed $alias
-     */
-    protected function addAlias($alias) 
-    {
-        $this->aliases[] = $alias;
-    }
-    
-    // }}}
-    // {{{ getAliases()
-    
-    /**
-     * aliases getter
-     * 
-     * @return mixed aliases
-     */
-    protected function getAliases()
-    {
-        return $this->aliases;
-    }
-    
+      
     // }}}
     // {{{ constructor
     
