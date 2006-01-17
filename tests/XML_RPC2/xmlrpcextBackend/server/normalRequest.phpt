@@ -28,10 +28,7 @@ $GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
 </methodCall>
 EOS
 ;
-ob_start();
-$server->handleCall();
-$response = ob_get_contents();
-ob_end_clean();
+$response = $server->getResponse();
 var_dump(XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
 ?>
 --EXPECT--

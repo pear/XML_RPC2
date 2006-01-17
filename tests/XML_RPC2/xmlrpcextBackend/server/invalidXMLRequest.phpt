@@ -34,10 +34,7 @@ $GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
 EOS
 ;
 try {
-    ob_start();
-    $server->handleCall();
-    $response = ob_get_contents();
-    ob_end_clean();
+    $response = $server->getResponse();
     //print($response);
     //XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 } catch (XML_RPC2_FaultException $e) {
