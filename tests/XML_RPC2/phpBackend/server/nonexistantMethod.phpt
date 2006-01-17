@@ -28,15 +28,14 @@ $GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
 </methodCall>
 EOS
 ;
-ob_start();
-$server->handleCall();
-$response = ob_get_contents();
-ob_end_clean();
+$response = $server->getResponse();
 try {
     XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response));
 } catch (XML_RPC2_FaultException $e) {
+	var_dump($e->getFaultCode());
     var_dump($e->getMessage());
 }
 ?>
 --EXPECT--
-string(97) "Unhandled XML_RPC2_UnknownMethodException exception:Method example is not exported by this server"
+int(-32601)
+string(40) "server error. requested method not found"
