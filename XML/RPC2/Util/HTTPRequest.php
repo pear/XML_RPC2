@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Sï¿½rgio Gonï¿½alves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sï¿½rgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,15 +49,15 @@ require_once 'XML/RPC2/Exception.php';
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sï¿½rgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sï¿½rgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_Util_HTTPRequest
 {
 
-    // {{{ properties
+    // {{{ï¿½properties
     
     /**
      * proxy field
@@ -121,7 +121,7 @@ class XML_RPC2_Util_HTTPRequest
     }
     
     // }}}
-    // {{{ constructor
+    // {{{ï¿½constructor
     
     /**
     * Constructor
@@ -183,7 +183,7 @@ class XML_RPC2_Util_HTTPRequest
                 curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
                 curl_setopt($ch, CURLOPT_POST, 1) &&
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding)) &&
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR_XML_RCP2/0.0.x')) &&
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData)
             ) {
                 $result = curl_exec($ch);
