@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Srgio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,8 +49,8 @@ require_once 'XML/RPC2/Backend.php';
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Srgio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -67,7 +67,11 @@ abstract class XML_RPC2_Value
      */
     public static function createFromNative($value, $explicitType = null)
     {
-        return @call_user_func(array(XML_RPC2_Backend::getValueClassname(), 'createFromNative'), $value, $explicitType);
+        $xmlrpcTypes = array('int', 'boolean', 'string', 'double', 'datetime', 'base64', 'struct', 'array');
+        if (in_array($explicitType, $xmlrpcTypes)) {
+            return @call_user_func(array(XML_RPC2_Backend::getValueClassname(), 'createFromNative'), $value, $explicitType);
+        }
+        return $value; 
     }
     
     // }}}
