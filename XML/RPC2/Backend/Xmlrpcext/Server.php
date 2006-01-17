@@ -124,42 +124,53 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     public function handleCall()
     {
         if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
-            try {
-                if ($this->signatureChecking) {
-                    $tmp = xmlrpc_parse_method_descriptions($GLOBALS['HTTP_RAW_POST_DATA']);
-                    $methodName = $tmp['methodName'];
-                    $parameters = xmlrpc_decode($GLOBALS['HTTP_RAW_POST_DATA'], $this->encoding);
-                    $method = $this->callHandler->getMethod($methodName);
-                    if (!($method)) {
-                        // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes 
-                        print(XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found'));
-                        die();
-                    }
-                    if (!($method->matchesSignature($methodName, $parameters))) {
-                        print(XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));		
-                        die();
-                    }
-                }
-                $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
-                $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
-                                                      $GLOBALS['HTTP_RAW_POST_DATA'],
-                                                      null,
-                                                      array('output_type' => 'xml', 'encoding' => $this->encoding));
-                header('Content-type: text/xml; charset=' . $this->encoding);
-                header('Content-length: '.strlen($response));
-                print $response;
-                if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
-            } catch (XML_RPC2_FaultException $e) {
-                print(XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
-            } catch (Exception $e) {
-                print(XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
-            }
+            $response = $this->getResponse();
+            header('Content-type: text/xml; charset=' . $this->encoding);
+            header('Content-length: '.strlen($response));
+            print $response;
         } else {
             $this->autoDocument();
         }
     }
     
     // }}}
+    // {{{ getResponse()
+    
+    /**
+     * get the XML response of the XMLRPC server
+     *
+     * @return string the XML response
+     */
+    public function getResponse()
+    {
+        try {
+            if ($this->signatureChecking) {
+                $tmp = xmlrpc_parse_method_descriptions($GLOBALS['HTTP_RAW_POST_DATA']);
+                $methodName = $tmp['methodName'];
+                $parameters = xmlrpc_decode($GLOBALS['HTTP_RAW_POST_DATA'], $this->encoding);
+                $method = $this->callHandler->getMethod($methodName);
+                if (!($method)) {
+                    // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes 
+                    return (XML_RPC2_Backend_Php_Response::encodeFault(-32601, 'server error. requested method not found'));
+                }
+                if (!($method->matchesSignature($methodName, $parameters))) {
+                    return (XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));		
+                }
+            }
+            $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
+            $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
+                                                  $GLOBALS['HTTP_RAW_POST_DATA'],
+                                                  null,
+                                                  array('output_type' => 'xml', 'encoding' => $this->encoding));
+            if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
+            return $response;
+        } catch (XML_RPC2_FaultException $e) {
+            return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
+        } catch (Exception $e) {
+            return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+        }
+    }
+     
     
 }
 
