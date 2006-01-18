@@ -57,7 +57,7 @@ require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
 class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scalar
 {
     
-    // {{{ constructor
+    // {{{ constructor
     
     /**
      * Constructor. Will build a new XML_RPC2_Backend_Php_Value_String with the given value
@@ -84,7 +84,7 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
     }
     
     // }}}
-    // {{{ decode()
+    // {{{ decode()
     
     /**
      * Decode transport XML and set the instance value accordingly

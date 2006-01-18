@@ -88,7 +88,7 @@ require_once 'XML/RPC2/Server/CallHandler.php';
 class XML_RPC2_Server_Callhandler_Instance extends XML_RPC2_Server_CallHandler
 {
     
-    // {{{ properties
+    // {{{ properties
     
     /**
      * instance of target object

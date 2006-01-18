@@ -58,7 +58,7 @@ require_once 'XML/RPC2/Util/HTTPRequest.php';
 class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
 {
     
-    // {{{�constructor
+    // {{{ constructor
     
     /**
      * Construct a new XML_RPC2_Client PHP Backend.

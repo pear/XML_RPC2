@@ -110,7 +110,7 @@ abstract class XML_RPC2_Client
     protected $encoding = 'iso-8859-1';
         
     // }}}
-    // {{{ remoteCall___()
+    // {{{ remoteCall___()
     
     /**
      * remoteCall executes the XML-RPC call, and returns the result
@@ -124,7 +124,7 @@ abstract class XML_RPC2_Client
     public abstract function remoteCall___($methodName, $parameters);
     
     // }}}
-    // {{{ constructor
+    // {{{ constructor
     
     /**
      * Construct a new XML_RPC2_Client.

@@ -90,7 +90,7 @@ class XML_RPC2_Backend_Php_Response
     }
     
     // }}}
-    // {{{ encodeFault()
+    // {{{ encodeFault()
     
     /**
      * Encode a fault XML-RPC response, containing the provided code and message

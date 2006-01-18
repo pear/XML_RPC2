@@ -57,7 +57,7 @@ require_once 'XML/RPC2/Backend/Php/Value.php';
  */
 class XML_RPC2_Backend_Php_Request
 {
-    // {{{ properties
+    // {{{ properties
     
     /** 
      * Name of requested method 

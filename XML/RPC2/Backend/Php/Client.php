@@ -64,7 +64,7 @@ require_once 'XML/RPC2/Backend/Php/Response.php';
 class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
 {
 
-    // {{{ constructor
+    // {{{ constructor
 
     /**
      * Construct a new XML_RPC2_Client PHP Backend.
@@ -81,7 +81,7 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
     }
     
     // }}} 
-    // {{{ remoteCall___()
+    // {{{ remoteCall___()
     
     /**
      * remoteCall executes the XML-RPC call, and returns the result

@@ -90,7 +90,7 @@ require_once 'XML/RPC2/Server/CallHandler.php';
 class XML_RPC2_Server_Callhandler_Class extends XML_RPC2_Server_CallHandler
 {
 
-    // {{{ properties
+    // {{{ properties
     
     /** 
      * name of target class 
@@ -100,7 +100,7 @@ class XML_RPC2_Server_Callhandler_Class extends XML_RPC2_Server_CallHandler
     private $_className;
     
     // }}}
-    // {{{ constructor
+    // {{{ constructor
     
     /**
      * XML_RPC2_Server_Callhandler_Class Constructor. Creates a new call handler exporting the give static class' methods

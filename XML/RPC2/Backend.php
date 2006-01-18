@@ -117,7 +117,7 @@ abstract class XML_RPC2_Backend
     }
     
     // }}}
-    // {{{ getBackend()
+    // {{{ getBackend()
     
     /**
      * Backend getter. 
