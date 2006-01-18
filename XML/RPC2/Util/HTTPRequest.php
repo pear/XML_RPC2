@@ -57,7 +57,7 @@ require_once 'XML/RPC2/Exception.php';
 class XML_RPC2_Util_HTTPRequest
 {
 
-    // {{{�properties
+    // {{{ properties
     
     /**
      * proxy field
@@ -121,7 +121,7 @@ class XML_RPC2_Util_HTTPRequest
     }
     
     // }}}
-    // {{{�constructor
+    // {{{ constructor
     
     /**
     * Constructor
