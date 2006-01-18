@@ -375,7 +375,11 @@ class XML_RPC2_Server_Method
             'array' => 'array',
             'struct' => 'array',
             'assoc' => 'array',
-            'structure' => 'array'
+            'structure' => 'array',
+            'datetime' => 'mixed',
+            'datetime.iso8601' => 'mixed',
+            'iso8601' => 'mixed',
+            'base64' => 'string'
         );	
         if (isset($convertArray[$tmp])) {
             return $convertArray[$tmp];	
