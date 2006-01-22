@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -44,8 +44,8 @@
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -59,8 +59,8 @@ class XML_RPC2_Exception extends Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -73,8 +73,8 @@ class XML_RPC2_InvalidTypeException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -87,8 +87,8 @@ class XML_RPC2_InvalidDateFormatException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -101,8 +101,8 @@ class XML_RPC2_EncodeException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -116,8 +116,8 @@ class XML_RPC2_DecodeException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -131,8 +131,8 @@ class XML_RPC2_InvalidTypeEncodeException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -145,8 +145,8 @@ class XML_RPC2_InvalidUriException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -159,8 +159,8 @@ class XML_RPC2_InvalidPrefixException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -173,8 +173,8 @@ class XML_RPC2_InvalidDebugException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -248,8 +248,8 @@ class XML_RPC2_FaultException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -262,8 +262,8 @@ class XML_RPC2_UnknownMethodException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -276,8 +276,8 @@ class XML_RPC2_TransportException extends XML_RPC2_Exception
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -290,8 +290,8 @@ class XML_RPC2_ReceivedInvalidStatusCodeException extends XML_RPC2_TransportExce
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */

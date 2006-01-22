@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Srgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -56,8 +56,8 @@ require_once 'XML/RPC2/Exception.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Srgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
