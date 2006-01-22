@@ -133,6 +133,13 @@ class XML_RPC2_CachedClient {
      * @var string
      */
     private $_defaultCacheGroup = 'xml_rpc2_client';
+    
+    /**
+     * "cache debug" flag (for debugging the caching process)
+     * 
+     * @var boolean
+     */
+    private $_cacheDebug = false;
         
     // }}}
     // {{{ constructor
@@ -175,6 +182,10 @@ class XML_RPC2_CachedClient {
                 'lifetime' => 3600,               // we need a default lifetime
                 'automaticSerialization' => false // datas are already serialized in this class
             );
+        }
+        if (isset($options['cacheDebug'])) {
+            $this->_cacheDebug = $options['cacheDebug'];
+            unset($options['cacheDebug']); // this a "non standard" option for XML/RPC2/Client
         }
         $this->_cacheOptions = $array;
         $this->_cacheObject = new Cache_Lite($this->_cacheOptions);    
@@ -222,18 +233,27 @@ class XML_RPC2_CachedClient {
         }
         if (in_array($methodName, $this->_notCachedMethods)) {
             // if the called method is listed in _notCachedMethods => no cache
+            if ($this->_cacheDebug) {
+                print "CACHE DEBUG : the called method is listed in _notCachedMethods => no cache !\n";    
+            }
             return $this->_workWithoutCache___($methodName, $parameters);
         }
         if (!($this->_cacheByDefault)) {
             if ((!(isset($this->_cachedMethods[$methodName]))) and (!(in_array($methodName, $this->_cachedMethods)))) {
                 // if cache is not on by default and if the called method is not described in _cachedMethods array
                 // => no cache
+                if ($this->_cacheDebug) {
+                    print "CACHE DEBUG : cache is not on by default and the called method is not listed in _cachedMethods => no cache !\n";    
+                }
                 return $this->_workWithoutCache___($methodName, $parameters);
             }
         }
         if (isset($this->_cachedMethods[$methodName])) {
             if ($this->_cachedMethods[$methodName] == -1) {
                 // if a method is described with a lifetime value of -1 => no cache
+                if ($this->_cacheDebug) {
+                    print "CACHE DEBUG : called method has a -1 lifetime value => no cache !\n";    
+                }
                 return $this->_workWithoutCache___($methodName, $parameters);
             }
             // if a method is described with a specific (and <> -1) lifetime
@@ -243,13 +263,19 @@ class XML_RPC2_CachedClient {
             // there is no specific lifetime, let's use the default one
             $this->_cacheObject->setLifetime($this->_cacheOptions['lifetime']);
         }
-        $cacheId = $this->_makeCacheId___();
+        $cacheId = $this->_makeCacheId___($methodName, $parameters);
         $data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup);
         if (is_string($data)) {
             // cache is hit !
+            if ($this->_cacheDebug) {
+                print "CACHE DEBUG : cache is hit !\n";
+            }
             return unserialize($data);
         }
         // the cache is not hit, let's call the "real" XML_RPC client
+        if ($this->_cacheDebug) {
+            print "CACHE DEBUG : cache is not hit !\n";
+        }
         $result = $this->_workWithoutCache___($methodName, $parameters);
         $this->_cacheObject->save(serialize($result)); // save in cache for next time...
         return $result;
@@ -312,7 +338,7 @@ class XML_RPC2_CachedClient {
     public function dropCacheFile___($methodName, $parameters) 
     {
         $id = $this->_makeCacheId___($methodName, $parameters);
-        $this->_clientObject->remove($id, $this->_defaultCacheGroup);
+        $this->_cacheObject->remove($id, $this->_defaultCacheGroup);
     }
     
     // }}}
