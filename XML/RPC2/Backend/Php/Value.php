@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 S�rgio Gon�alves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: S�rgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     S�rgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 S�rgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2005 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,8 +49,8 @@ require_once 'XML/RPC2/Value.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     S�rgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 S�rgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2005 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
@@ -63,7 +63,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      * 
      * @var mixed
      */
-    protected $nativeValue = null;
+    private $_nativeValue = null;
     
     // }}}
     // {{{ getNativeValue()
@@ -75,7 +75,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      */
     public function getNativeValue() 
     {
-        return $this->nativeValue;
+        return $this->_nativeValue;
     } 
 
     // }}}
@@ -88,7 +88,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      */
     protected function setNativeValue($value)
     {
-        $this->nativeValue = $value;
+        $this->_nativeValue = $value;
     }
     
     // }}}  
@@ -148,8 +148,14 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                     } while (array_key_exists($i, $keys) && $explicitType == 'array');
                     break;
                 case 'object':
-                    $nativeValue = serialize($nativeValue);
-                    $explicitType = 'base64';
+                    if ((strtolower(get_class($nativeValue)) == 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+                        // In this case, we have a "stdclass native value" (emulate xmlrpcext)
+                        // the type 'base64' or 'datetime' is given by xmlrpc_type public property 
+                        $explicitType = $nativeValue->xmlrpc_type;
+                    } else {
+	                    $nativeValue = serialize($nativeValue);
+	                    $explicitType = 'base64';
+                    }
                     break;
                 case 'resource':
                 case 'NULL':
@@ -162,8 +168,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                         gettype($nativeValue),
                         (string) $nativeValue));
             }
-        }
-        
+        }        
         $explicitType = ucfirst(strtolower($explicitType));
         switch ($explicitType) {
             case 'I4':
@@ -175,6 +180,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                 return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue);
                 break;
             case 'Datetime.iso8601':
+            case 'Datetime':    
                 require_once 'XML/RPC2/Backend/Php/Value/Datetime.php';
                 return new XML_RPC2_Backend_Php_Value_Datetime($nativeValue);
                 break;
