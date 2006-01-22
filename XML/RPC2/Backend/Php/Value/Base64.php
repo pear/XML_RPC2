@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -47,14 +47,21 @@ require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
 /**
  * XML_RPC base64 value class. Instances of this class represent base64-encoded string scalars in XML_RPC
  * 
+ * To work on a compatible way with the xmlrpcext backend, we introduce a particular "nativeValue" which is
+ * a standard class (stdclass) with two public properties :
+ * scalar => the string (non encoded)
+ * xmlrpc_type => 'base64'
+ * 
+ * The constructor can be called with a "classic" string or with a such object 
+ * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
-class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value_Scalar
+class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value
 {
     
     // {{{ constructor
@@ -65,12 +72,22 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value_Scala
      * This class handles encoding-decoding internally. Do not provide the
      * native string base64-encoded
      * 
-     * @param mixed String to be transmited base64-encoded
+     * @param mixed String $nativeValue to be transmited base64-encoded or "stdclass native value"  
      */
     public function __construct($nativeValue) 
     {
-        $this->setScalarType('base64');
-        $this->setNativeValue($nativeValue);
+        if ((is_object($nativeValue)) &&(strtolower(get_class($nativeValue)) == 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
+            $scalar = $nativeValue->scalar;
+        } else {
+            if (!is_string($nativeValue)) {
+                throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Base64 from type \'%s\'.', gettype($nativeValue)));
+           }
+            $scalar = $nativeValue;
+        }
+        $tmp              = new stdclass();
+        $tmp->scalar      = $scalar;
+        $tmp->xmlrpc_type = 'base64';
+        $this->setNativeValue($tmp);
     }
     
     // }}}
@@ -83,7 +100,8 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value_Scala
      */
     public function encode() 
     {
-        return '<' . $this->getScalarType() . '>' . base64_encode($this->getNativeValue()) . '</' . $this->getScalarType() . '>';
+        $native = $this->getNativeValue();
+        return '<base64>' . base64_encode($native->scalar) . '</base64>';
     }
     
     // }}}
@@ -92,7 +110,7 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value_Scala
     /**
      * Decode transport XML and set the instance value accordingly
      *
-     * @param mixed The encoded XML-RPC value,
+     * @param mixed $xml The encoded XML-RPC value,
      */
     public static function decode($xml) 
     {
@@ -103,7 +121,11 @@ class XML_RPC2_Backend_Php_Value_Base64 extends XML_RPC2_Backend_Php_Value_Scala
         if (!array_key_exists(0, $value)) {
             $value = $xml->xpath('/value/text()');
         }
-        return base64_decode($value[0]);
+        // Emulate xmlrpcext results (to be able to switch from a backend to another)
+        $result = new stdclass();
+        $result->scalar = base64_decode($value[0]);
+        $result->xmlrpc_type = 'base64';
+        return $result;
     }
     
     // }}}
