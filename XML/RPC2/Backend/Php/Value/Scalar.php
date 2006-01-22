@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,8 +49,8 @@ require_once 'XML/RPC2/Backend/Php/Value.php';
  * 
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -64,7 +64,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
      *
      * @var string
      */
-    protected $scalarType = null;
+    private $_scalarType = null;
     
     // }}}
     // {{{ setScalarType()
@@ -81,10 +81,10 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
             case 'i4':
             case 'boolean':
             case 'string':
-            case 'double':
+            case 'double': 
             case 'dateTime.iso8601':
             case 'base64':
-                $this->scalarType = $value;
+                $this->_scalarType = $value;
                 break;
             default:
                 throw new XML_RPC2_InvalidTypeException(sprintf('Type \'%s\' is not an XML-RPC scalar type', $value));
@@ -101,7 +101,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
      */
     public function getScalarType() 
     {
-        return $this->scalarType;
+        return $this->_scalarType;
     }
     
     // }}}

@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -50,8 +50,8 @@ require_once 'XML/RPC2/Backend/Php/Value.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
@@ -64,72 +64,22 @@ class XML_RPC2_Backend_Php_Request
      * 
      * @var mixed
      */
-    protected $methodName = '';
+    private $_methodName = '';
     
     /**
      * request parameters
      *
      * @var array
      */
-    protected $parameters = null;
+    private $_parameters = null;
     
     /**
      * encoding of the request
      *
      * @var string
      */
-    protected $encoding = 'iso-8859-1';
-    
-    // }}}
-    // {{{ setEncoding()
-    
-    /**
-     * Set the encoding
-     *
-     * @param string $encoding
-     */
-    protected function setEncoding($encoding) {
-        $this->encoding = $encoding;
-    }
-    
-    // }}}
-    // {{{ getEncoding()
-    
-    /** 
-     * Get the encoding
-     *
-     * @return string encoding
-     */
-    protected function getEncoding() {
-        return $this->encoding;
-    }
-    
-    // }}}
-    // {{{ setMethodName()
-    
-    /**
-     * methodName property setter
-     *
-     * @param mixed value The new methodName
-     */
-    protected function setMethodName($value) 
-    {
-        $this->methodName = $value;
-    }
-    
-    // }}}
-    // {{{ getMethodName()
-
-    /**
-     * methodName property getter
-     *
-     * @return mixed The current methodName
-     */
-    public function getMethodName() 
-    {
-        return $this->methodName;
-    }
-    
+    private $_encoding = 'iso-8859-1';
+        
     // }}}
     // {{{ setParameters()
     
@@ -140,7 +90,7 @@ class XML_RPC2_Backend_Php_Request
      */
     public function setParameters($value) 
     {
-        $this->parameters = $value;
+        $this->_parameters = $value;
     }
     
     // }}}
@@ -153,7 +103,7 @@ class XML_RPC2_Backend_Php_Request
      */
     public function addParameter($value) 
     {
-        $this->parameters[] = $value;
+        $this->_parameters[] = $value;
     }
     
     // }}}
@@ -166,9 +116,22 @@ class XML_RPC2_Backend_Php_Request
      */
     public function getParameters() 
     {
-        return $this->parameters;
+        return $this->_parameters;
     }
     
+    // }}}
+    // {{{ getMethodName()
+    
+    /**
+     * method name getter
+     * 
+     * @return string method name
+     */
+    public function getMethodName() 
+    {
+        return $this->_methodName;
+    }
+           
     // }}}
     // {{{ constructor
     
@@ -180,12 +143,12 @@ class XML_RPC2_Backend_Php_Request
      */
     function __construct($methodName, $encoding = 'iso-8859-1')
     {
-        $this->setMethodName($methodName);
+        $this->_methodName = $methodName;
         $this->setParameters(array());
-        $this->setEncoding($encoding);
+        $this->_encoding = $encoding;
     }
     
-    // }}} 
+    // }}}
     // {{{ encode()
     
     /**
@@ -195,10 +158,10 @@ class XML_RPC2_Backend_Php_Request
      */
     public function encode()
     {
-        $methodName = $this->getMethodName();
+        $methodName = $this->_methodName;
         $parameters = $this->getParameters();
 
-        $result = '<?xml version="1.0" encoding="' . $this->getEncoding() . '"?>';
+        $result = '<?xml version="1.0" encoding="' . $this->_encoding . '"?>';
         $result .= '<methodCall>';
         $result .= "<methodName>${methodName}</methodName>";
         $result .= '<params>';

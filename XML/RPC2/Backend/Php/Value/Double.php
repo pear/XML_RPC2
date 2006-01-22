@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,8 +49,8 @@ require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -84,7 +84,6 @@ class XML_RPC2_Backend_Php_Value_Double extends XML_RPC2_Backend_Php_Value_Scala
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $value = $xml->xpath('/value/double/text()');
-
         return (double) $value[0];
     }
     

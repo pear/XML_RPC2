@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Sérgio Gonçalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Sérgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Sérgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -53,8 +53,8 @@ require_once 'XML/RPC2/Backend/Php/Value/Struct.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sérgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Sérgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
@@ -73,19 +73,17 @@ class XML_RPC2_Backend_Php_Response
      *
      * @see http://www.xmlrpc.com/spec
      * @see XML_RPC2_Backend_Php_Value::createFromNative
-     * @param mixed The result value which the response will envelop
+     * @param mixed $param The result value which the response will envelop
+     * @param string $encoding encoding
      * @return string The XML payload
      */
-    public static function encode($param) 
+    public static function encode($param, $encoding = 'iso-8859-1') 
     {
         if (!$param instanceof XML_RPC2_Backend_Php_Value) {
             $param = XML_RPC2_Backend_Php_Value::createFromNative($param);
         }
-        ob_start();
-        print('<?xml version="1.0"?>');
-        print('<methodResponse><params><param><value>' . $param->encode() . '</value></param></params></methodResponse>');
-        $result = ob_get_contents();
-        ob_end_clean();
+        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>';
+        $result .= '<methodResponse><params><param><value>' . $param->encode() . '</value></param></params></methodResponse>';
         return $result;
     }
     
@@ -96,18 +94,16 @@ class XML_RPC2_Backend_Php_Response
      * Encode a fault XML-RPC response, containing the provided code and message
      *
      * @see http://www.xmlrpc.com/spec
-     * @param int    Response code
-     * @param string Response message
+     * @param int $code Response code
+     * @param string $message Response message
+     * @param string $encoding encoding
      * @return string The XML payload
      */
-    public static function encodeFault($code, $message)
+    public static function encodeFault($code, $message, $encoding = 'iso-8859-1')
     {
         $value = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
-        ob_start();
-        print('<?xml version="1.0"?>');
-        print('<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>');
-        $result = ob_get_contents();
-        ob_end_clean();
+        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>';
+        $result .= '<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>';
         return $result;
     }
     
@@ -119,7 +115,7 @@ class XML_RPC2_Backend_Php_Response
      *
      * This method receives an XML-RPC response document, in SimpleXML format, decodes it and returns the payload value.
      *
-     * @param  SimpleXmlElement The Transport XML
+     * @param SimpleXmlElement $xml The Transport XML
      * @return mixed The response payload
      *
      * @see http://www.xmlrpc.com/spec

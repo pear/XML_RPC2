@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 S�rgio Gon�alves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: S�rgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     S�rgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 S�rgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -47,7 +47,7 @@ require_once 'XML/RPC2/Backend/Php/Value.php';
 /**
  * XML_RPC array value class. Represents values of type array
  * 
- * @author S�rgio Carvalho
+ * @author Sergio Carvalho
  * @package XML_RPC2
  */
 class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
@@ -65,7 +65,7 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
         if (!is_array($value)) {
             throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Value_Array from type \'%s\'.', gettype($nativeValue)));
         }
-        $this->nativeValue = $value;
+        parent::setNativeValue($value);
     }
     
     // }}}
@@ -80,19 +80,7 @@ class XML_RPC2_Backend_Php_Value_Array extends XML_RPC2_Backend_Php_Value
     {
         $this->setNativeValue($nativeValue);
     }
-    
-    // }}}
-    // {{{ createFromDecode()
-    
-    /**
-     * Decode an encoded value and build the applicable XML_RPC2_Value subclass
-     * 
-     * @param string The encoded XML-RPC value,
-     */
-    public static function createFromDecode($encodedString) 
-    {
-    }
-    
+       
     // }}}
     // {{{ encode()
     
