@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 Srgio Gonalves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Gonalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: Srgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 Srgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -49,8 +49,8 @@ require_once 'XML/RPC2/Backend.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     Srgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 Srgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
@@ -62,14 +62,34 @@ class XML_RPC2_Backend_Xmlrpcext_Value
     /**
      * Factory method that constructs the appropriate XML-RPC encoded type value
      *
-     * @param mixed  Value to be encode
+     * @param mixed Value to be encode
      * @param string Explicit XML-RPC type as enumerated in the XML-RPC spec (defaults to automatically selected type)
      * @return mixed The encoded value
      */
     public static function createFromNative($value, $explicitType)
     {
-        if (!xmlrpc_set_type($value, $explicitType)) {
-            throw new XML_RPC2_Exception('Error returned from xmlrpc_set_type');
+        $type = strtolower($explicitType);
+        $availableTypes = array('datetime', 'base64', 'struct');
+        if (in_array($type, $availableTypes))  {
+            if ($type=='struct') {
+                if (!(is_array($value))) {
+                    throw new XML_RPC2_Exception('With struct type, value has to be an array');                    
+                }
+                // Because of http://bugs.php.net/bug.php?id=21949
+                // is some cases (structs with numeric indexes), we need to be able to force the "struct" type
+                // (xmlrpc_set_type doesn't help for this, so we need this ugly hack)
+                $new = array();
+                while (list($k, $v) = each($value)) {
+                    $new["xml_rpc2_ugly_struct_hack_$k"] = $v;
+                    // with this "string" prefix, we are sure that the array will be seen as a "struct"
+                }
+                return $new;
+            }
+            $value2 = (string) $value;
+            if (!xmlrpc_set_type($value2, $type)) {
+                throw new XML_RPC2_Exception('Error returned from xmlrpc_set_type');
+	        }
+            return $value2;
         }
         return $value;
     }

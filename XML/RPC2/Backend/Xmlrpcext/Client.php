@@ -6,7 +6,7 @@
 
 /**
 * +-----------------------------------------------------------------------------+
-* | Copyright (c) 2004 S�rgio Gon�alves Carvalho                                |
+* | Copyright (c) 2004-2006 Sergio Goncalves Carvalho                                |
 * +-----------------------------------------------------------------------------+
 * | This file is part of XML_RPC2.                                              |
 * |                                                                             |
@@ -25,13 +25,13 @@
 * | Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA                    |
 * | 02111-1307 USA                                                              |
 * +-----------------------------------------------------------------------------+
-* | Author: S�rgio Carvalho <sergio.carvalho@portugalmail.com>                  |
+* | Author: Sergio Carvalho <sergio.carvalho@portugalmail.com>                  |
 * +-----------------------------------------------------------------------------+
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     S�rgio Carvalho <sergio.carvalho@portugalmail.com>  
-* @copyright  2004-2005 S�rgio Carvalho
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
 * @link       http://pear.php.net/package/XML_RPC2
@@ -50,8 +50,8 @@ require_once 'XML/RPC2/Util/HTTPRequest.php';
  *
  * @category   XML
  * @package    XML_RPC2
- * @author     S�rgio Carvalho <sergio.carvalho@portugalmail.com>  
- * @copyright  2004-2005 S�rgio Carvalho
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2 
  */
@@ -88,7 +88,14 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      */
     public function remoteCall___($methodName, $parameters)
     {
-        $request = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('encoding' => $this->encoding));
+        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('encoding' => $this->encoding));
+        if ($this->uglyStructHack) {
+	        // ugly hack because of http://bugs.php.net/bug.php?id=21949
+	        // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
+	        $request = preg_replace('~<name>xml_rpc2_ugly_struct_hack_(.*)</name>~', '<name>\1</name>', $tmp);
+        } else {
+            $request = $tmp;
+        }
         $uri = $this->uri;
         $options = array(
             'encoding' => $this->encoding,
