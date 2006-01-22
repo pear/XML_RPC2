@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC client against phpxmlrpc validator1 (nestedStructTest)
+PHP Backend XML-RPC client against phpxmlrpc validator1 (nestedStructTest)
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
@@ -12,18 +12,7 @@ $options = array(
 $client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
 
 $year1999 = array(
-  '01' => array(),
-  '02' => array(),
-  '03' => array(),
-  '04' => array(),
-  '05' => array(),
-  '06' => array(),
-  '07' => array(),
-  '08' => array(),
-  '09' => array(),
-  '10' => array(),
-  '11' => array(),
-  '12' => array()
+  '04' => array()
 );
 $year2001 = $year1999;
 $year2000 = $year1999;
@@ -37,14 +26,12 @@ $index1999 = '1999 ';
 $index2000 = '2000 ';
 $index2001 = '2001 ';
 $cal = array();
-$cal[(string) $index1999] = $year1999;
-$cal[(string) $index2000] = $year2000;
-$cal[(string) $index2001] = $year2001;
+$cal['1999'] = $year1999;
+$cal['2000'] = $year2000;
+$cal['2001'] = $year2001;
 
-var_dump($cal);
-
-// TODO : not working !!! because struct is seen as an array because of numeric indexes
-// TODO : no solution for now !
+require_once('XML/RPC2/Value.php');
+$cal = XML_RPC2_Value::createFromNative($cal, 'struct');
 $result = $client->nestedStructTest($cal);
 var_dump($result);
 

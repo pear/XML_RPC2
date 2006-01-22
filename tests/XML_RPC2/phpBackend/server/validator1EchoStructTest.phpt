@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC server Validator1 test (echoStructTest)
+PHP Backend XML-RPC server Validator1 test (echoStructTest)
 --FILE--
 <?php
 class TestServer {

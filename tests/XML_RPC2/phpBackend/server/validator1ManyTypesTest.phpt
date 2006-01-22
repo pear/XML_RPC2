@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC server Validator1 test (manyTypesTest)
+PHP Backend XML-RPC server Validator1 test (manyTypesTest)
 --FILE--
 <?php
 class TestServer {
@@ -70,21 +70,24 @@ EOS
 ;
 $response = $server->getResponse();
 $result = (XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($response)));
-var_dump($result);
+var_dump($result[0]);
+var_dump($result[1]);
+var_dump($result[2]);
+var_dump($result[3]);
+var_dump($result[4]->xmlrpc_type);
+var_dump($result[4]->scalar);
+var_dump($result[4]->timestamp);
+var_dump($result[5]->xmlrpc_type);
+var_dump($result[5]->scalar);
 
 ?>
 --EXPECT--
-array(6) {
-  [0]=>
-  int(1)
-  [1]=>
-  bool(true)
-  [2]=>
-  string(3) "foo"
-  [3]=>
-  float(3.14159)
-  [4]=>
-  float(1137438843)
-  [5]=>
-  string(6) "foobar"
-}
+int(1)
+bool(true)
+string(3) "foo"
+float(3.14159)
+string(8) "datetime"
+string(17) "20060116T19:14:03"
+int(1137435243)
+string(6) "base64"
+string(6) "foobar"

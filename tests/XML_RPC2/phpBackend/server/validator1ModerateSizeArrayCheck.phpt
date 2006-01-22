@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC server Validator1 test (moderateSizeArrayCheck)
+PHP Backend XML-RPC server Validator1 test (moderateSizeArrayCheck)
 --FILE--
 <?php
 class TestServer {

@@ -12,8 +12,21 @@ class TestServer {
      * @return int result
      */
     public static function nestedStructTest($struct) {
-        $day = $struct['2000']['04']['01'];
-        return $day['moe'] + $day['larry'] + $day['curly'];
+    	// just to avoir problems with numeric indexes...
+    	$struct2 = array();
+    	while (list($key, $year) = each($struct)) {
+    		if ($key=='2000') {
+    			while (list($key2, $month) = each($year)) {
+    				if ($key2=='04') {
+    					while (list($key3, $day) = each($month)) {
+    						if ($key3=='01') {
+    							return $day['moe'] + $day['larry'] + $day['curly'];
+    						}
+    					}
+    				}
+    			} 
+    		}
+    	}
     }
 }
 
@@ -26,9 +39,87 @@ $options = array(
 
 $server = XML_RPC2_Server::create('TestServer', $options);
 $GLOBALS['HTTP_RAW_POST_DATA'] = <<<EOS
-TODO
-TODO
-TODO
+<?xml version="1.0" encoding="iso-8859-1"?>
+<methodCall>
+<methodName>validator1.nestedStructTest</methodName>
+<params>
+ <param>
+  <value>
+   <struct>
+    <member>
+     <name>1999</name>
+     <value>
+      <struct>
+       <member>
+        <name>04</name>
+        <value>
+         <array>
+          <data/>
+         </array>
+        </value>
+       </member>
+      </struct>
+     </value>
+    </member>
+    <member>
+     <name>2000</name>
+     <value>
+      <struct>
+       <member>
+        <name>04</name>
+        <value>
+         <struct>
+          <member>
+           <name>01</name>
+           <value>
+            <struct>
+             <member>
+              <name>moe</name>
+              <value>
+               <int>12</int>
+              </value>
+             </member>
+             <member>
+              <name>larry</name>
+              <value>
+               <int>14</int>
+              </value>
+             </member>
+             <member>
+              <name>curly</name>
+              <value>
+               <int>9</int>
+              </value>
+             </member>
+            </struct>
+           </value>
+          </member>
+         </struct>
+        </value>
+       </member>
+      </struct>
+     </value>
+    </member>
+    <member>
+     <name>2001</name>
+     <value>
+      <struct>
+       <member>
+        <name>04</name>
+        <value>
+         <array>
+          <data/>
+         </array>
+        </value>
+       </member>
+      </struct>
+     </value>
+    </member>
+   </struct>
+  </value>
+ </param>
+</params>
+</methodCall>
 EOS
 ;
 $response = $server->getResponse();
@@ -37,4 +128,4 @@ var_dump($result);
 
 ?>
 --EXPECT--
-int()
+int(35)

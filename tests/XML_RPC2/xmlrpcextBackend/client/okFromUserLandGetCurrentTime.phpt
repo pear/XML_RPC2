@@ -15,7 +15,7 @@ if (!(is_object($result))) {
 	die('result is not an object !');
 }
 $timestamp = $result->timestamp;
-if (is_integer($timestamp)) {
+if (is_numeric($timestamp)) {
 	print "1\n";	
 }
 ?>

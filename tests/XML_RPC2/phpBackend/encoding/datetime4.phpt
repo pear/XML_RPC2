@@ -8,4 +8,4 @@ $time = new XML_RPC2_Backend_Php_Value_Datetime('1997-01-16');
 var_dump($time->encode());
 ?>
 --EXPECT--
-string(46) "<dateTime.iso8601>853372800</dateTime.iso8601>"
+string(47) "<dateTime.iso8601>1997-01-16</dateTime.iso8601>"

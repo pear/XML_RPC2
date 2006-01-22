@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC server Validator1 test (countTheEntities)
+PHP Backend XML-RPC server Validator1 test (countTheEntities)
 --FILE--
 <?php
 class TestServer {

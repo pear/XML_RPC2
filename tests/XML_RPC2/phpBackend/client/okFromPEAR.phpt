@@ -1,5 +1,5 @@
 --TEST--
-XMLRPCext Backend XML-RPC client against pear.php.net XMLRPC server
+PHP Backend XML-RPC client against pear.php.net XMLRPC server
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
