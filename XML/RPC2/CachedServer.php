@@ -40,7 +40,7 @@
 // }}}
 
 // dependencies {{{
-require_once('Cache/Lite/Output.php');
+require_once('Cache/Lite.php');
 // }}}
 
 /**
@@ -114,6 +114,20 @@ class XML_RPC2_CachedServer {
      * @var array
      */
     private $_options = array();
+    
+    /**
+     * "cache debug" flag (for debugging the caching process)
+     * 
+     * @var boolean
+     */
+    private $_cacheDebug = false;
+        
+    /**
+     * encoding
+     * 
+     * @var string
+     */
+    private $_encoding = 'iso-8859-1';
        
     // }}}
     // {{{ setCacheOptions()
@@ -142,7 +156,7 @@ class XML_RPC2_CachedServer {
             $array['lifetime'] = 3600; // we need a default lifetime
         }
         $this->_cacheOptions = $array;
-        $this->_cacheObject = new Cache_Lite_Output($this->_cacheOptions);
+        $this->_cacheObject = new Cache_Lite($this->_cacheOptions);
     }
     
     // }}}
@@ -160,8 +174,18 @@ class XML_RPC2_CachedServer {
             $this->_setCacheOptions($cacheOptions);
             unset($options['cacheOptions']);
         }
+        if (isset($options['cacheDebug'])) {
+            $this->_cacheDebug = $options['cacheDebug'];
+            unset($options['cacheDebug']); // 'cacheDebug' is not a standard option for XML/RPC2/Server
+        }
         $this->_options = $options;
         $this->_callTarget = $callTarget;
+        if (isset($this->_options['encoding'])) {
+            $this->_encoding = $this->_options['encoding'];
+        }
+        if (isset($this->_options['prefix'])) {
+            $this->_prefix = $this->_options['prefix'];
+        }
     }
     
     // }}}
@@ -190,6 +214,23 @@ class XML_RPC2_CachedServer {
      */
     public function handleCall()
     {
+        $response = $this->getResponse();
+        $encoding = 'iso-8859-1';
+        if (isset($this->_options['encoding'])) {
+            $encoding = $this->_options['encoding'];
+        }
+        header('Content-type: text/xml; charset=' . $encoding);
+        header('Content-length: '.strlen($response));
+        print $response;
+    }
+    
+    /**
+     * get the XML response of the XMLRPC server
+     *
+     * @return string the XML response
+     */
+    public function getResponse()
+    {
         if (isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
             $methodName = $this->_parseMethodName($GLOBALS['HTTP_RAW_POST_DATA']);
         } else {
@@ -197,26 +238,52 @@ class XML_RPC2_CachedServer {
         }
         $weCache = $this->_cacheByDefault;
         $lifetime = $this->_cacheOptions['lifetime'];
+        if ($this->_cacheDebug) {
+            if ($weCache) {
+                print "CACHE DEBUG : default values  => weCache=true, lifetime=$lifetime\n";
+            } else {
+                print "CACHE DEBUG : default values  => weCache=false, lifetime=$lifetime\n";
+            }
+        }
         if ($methodName) {
             // work on reflection API to search for @xmlrpc.caching tags into PHPDOC comments
             list($weCache, $lifetime) = $this->_reflectionWork($methodName);
+            if ($this->_cacheDebug) {
+                if ($weCache) {
+                    print "CACHE DEBUG : phpdoc comments => weCache=true, lifetime=$lifetime\n";
+                } else {
+                    print "CACHE DEBUG : phpdoc comments => weCache=false, lifetime=$lifetime\n";
+                }
+            }
         }
-        if ($weCache) {
+        if (($weCache) and ($lifetime!=-1)) {
             if (isset($GLOBALS['HTTP_RAW_POST_DATA'])) {
                 $cacheId = $this->_makeCacheId($GLOBALS['HTTP_RAW_POST_DATA']);
             } else {
                 $cacheId = 'norawpostdata';
             }
-            $this->_cacheObject = new Cache_Lite_Output($this->_cacheOptions);
+            $this->_cacheObject = new Cache_Lite($this->_cacheOptions);
             $this->_cacheObject->setLifetime($lifetime);
-            if (!($this->_cacheObject->start($cacheId, $this->_defaultCacheGroup))) {
+            if ($data = $this->_cacheObject->get($cacheId, $this->_defaultCacheGroup)) {
+                // cache id hit
+                if ($this->_cacheDebug) {
+                    print "CACHE DEBUG : cache is hit !\n";
+                }
+            } else {
                 // cache is not hit
-                $this->_workWithoutCache();
-                $this->_cacheObject->end();
+                if ($this->_cacheDebug) {
+                    print "CACHE DEBUG : cache is not hit !\n";
+                }
+                $data = $this->_workWithoutCache();
+                $this->_cacheObject->save($data);
             }
         } else {
-            $this->_workWithoutCache();
+            if ($this->_cacheDebug) {
+                print "CACHE DEBUG : we don't cache !\n";
+            }
+            $data = $this->_workWithoutCache();
         }
+        return $data;
     }
     
     // }}}
@@ -237,7 +304,7 @@ class XML_RPC2_CachedServer {
             $className = get_class($this->_callTarget);
         }
         $class = new ReflectionClass($className);
-        $method = $class->getMethod($methodName); // FIXME : problem with prefix ?
+        $method = $class->getMethod($methodName);
         $docs = explode("\n", $method->getDocComment());
         foreach ($docs as $i => $doc) {
             $doc = trim($doc, " \r\t/*");
@@ -267,13 +334,15 @@ class XML_RPC2_CachedServer {
     /**
      * Parse the method name from the raw XMLRPC client request
      *
+     * NB : the prefix is removed from the method name
+     *
      * @param string $request raw XMLRPC client request
      * @return string method name
      */
     private function _parseMethodName($request)
     {
         // TODO : change for "simplexml"
-        $res = ereg('<methodName>([a-zA-Z0-9\.,\/]*)</methodName>', $request, $results);
+        $res = ereg('<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)</methodName>', $request, $results);
         if ($res>0) {
             return $results[1];
         }
@@ -285,12 +354,14 @@ class XML_RPC2_CachedServer {
     
     /**
      * Do the real stuff if no cache available
+     * 
+     * @return string the response of the real XML/RPC2 server
      */
     private function _workWithoutCache() 
     {
         require_once('XML/RPC2/Server.php');
         $this->_serverObject = XML_RPC2_Server::create($this->_callTarget, $this->_options);
-        $this->_serverObject->handleCall();
+        return $this->_serverObject->getResponse();
     }
     
     // }}}
