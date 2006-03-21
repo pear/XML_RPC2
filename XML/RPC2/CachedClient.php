@@ -41,6 +41,7 @@
 
 // dependencies {{{
 require_once('Cache/Lite.php');
+require_once('XML/RPC2/Exception.php');
 // }}}
 
 /**
