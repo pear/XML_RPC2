@@ -93,14 +93,14 @@ class XML_RPC2_Backend_Php_Value_String extends XML_RPC2_Backend_Php_Value_Scala
      */
     public static function decode($xml) 
     {
-        // TODO Remove reparsing of XML fragment, when SimpleXML proves more solid. Currently it segfaults when
-        // xpath is used both in an element and in one of its children
-        $xml = simplexml_load_string($xml->asXML());
-        $value = $xml->xpath('/value/string/text()');
-        if (!array_key_exists(0, $value)) {
-            $value = $xml->xpath('/value/text()');
+        /* Stupid way of testing for the presence of string element. I don't know another one.
+           At least got rid of the xpath and consequent reparsing of the XML 
+        */
+        if ($xml->string->asXML() === FALSE) { 
+            return (string) $xml;
+        } else {
+            return (string) $xml->string;
         }
-        return (string) $value[0];
     }
     
     // }}}

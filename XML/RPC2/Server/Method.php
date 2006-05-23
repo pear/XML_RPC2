@@ -190,7 +190,7 @@ class XML_RPC2_Server_Method
             if ((strpos($doc, '@xmlrpc.prefix') === 0) && preg_match('/@xmlrpc.prefix( )*(.*)/', $doc, $matches)) {
                 $prefix = $matches[2];
             }
-            if ((strpos($doc, '@xmlrpc.methodname') === 0) && preg_match('/@xmlrpc.prefix( )*(.*)/', $doc, $matches)) {
+            if ((strpos($doc, '@xmlrpc.methodname') === 0) && preg_match('/@xmlrpc.methodname( )*(.*)/', $doc, $matches)) {
                 $methodname = $matches[2];
             }
             if (strpos($doc, '@param') === 0) { // Save doctag for usage later when filling parameters

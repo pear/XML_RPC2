@@ -249,6 +249,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                     throw new XML_RPC2_DecodeException(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename));
             }
         } elseif (count($valueType) == 0) { // Default type is string
+            $nodename = null;
             $nativeType = 'String';
         } else {
             throw new XML_RPC2_DecodeException(sprintf('Unable to decode XML-RPC value. Value presented %s type nodes: %s.', count($valueType), $simpleXML->asXML()));
