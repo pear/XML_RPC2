@@ -10,6 +10,6 @@ phpdoc:
 	rm -f XML/CHANGELOG
 
 clean: 
-	make -C tests/XML_RPC2 clean
+	make -C tests clean
 	rm -Rf docs/phpdoc
 	rm -f CHANGELOG

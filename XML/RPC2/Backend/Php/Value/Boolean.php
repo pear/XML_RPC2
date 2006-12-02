@@ -97,7 +97,8 @@ class XML_RPC2_Backend_Php_Value_Boolean extends XML_RPC2_Backend_Php_Value_Scal
         $xml = simplexml_load_string($xml->asXML());
         $value = $xml->xpath('/value/boolean/text()');
 
-        return (boolean) $value[0];
+        // Double cast explanation: http://pear.php.net/bugs/bug.php?id=8644   
+        return (boolean) ((string) $value[0]);
     }
     
     // }}}

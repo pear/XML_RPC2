@@ -317,7 +317,6 @@ class XML_RPC2_Server_Method
     
     // }}}
     // {{{ autoDocument()
-    
     /**
      * Print a complete HTML description of the method
      */
@@ -350,7 +349,6 @@ class XML_RPC2_Server_Method
     
     // }}}
     // {{{ _limitPHPType()
-    
     /**
      * standardise type names between gettype php function and phpdoc comments (and limit to xmlrpc available types)
      * 

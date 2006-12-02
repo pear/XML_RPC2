@@ -84,7 +84,9 @@ class XML_RPC2_Backend_Php_Value_Double extends XML_RPC2_Backend_Php_Value_Scala
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $value = $xml->xpath('/value/double/text()');
-        return (double) $value[0];
+        
+        // Double cast explanation: http://pear.php.net/bugs/bug.php?id=8644
+        return (double) ((string) $value[0]);
     }
     
     // }}}

@@ -267,7 +267,8 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      * 
      * @return string The encoded XML-RPC value,
      */
-    public abstract function encode();
+     // Declaration commented because of: http://pear.php.net/bugs/bug.php?id=8499
+//    public abstract function encode();
     
     // }}}
     // {{{ decode()
@@ -277,10 +278,10 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      * 
      * @param mixed The encoded XML-RPC value,
      */
-    public static abstract function decode($xml);
+     // Declaration commented because of: http://pear.php.net/bugs/bug.php?id=8499
+//    public static abstract function decode($xml);
     
     // }}}
-    
 }
 
 ?>

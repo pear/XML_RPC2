@@ -251,10 +251,14 @@ abstract class XML_RPC2_Server
     
     // }}}
     // {{{ autoDocument()
-    
-    
-    
+    /*     autoDocument {{{ */
+    /**
+     *     autoDocument. Produce an HTML page from the result of server introspection
+     *
+     * @return string HTML document describing this server
+     */
     public function autoDocument()
+    /* }}} */
     {
         print "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n";
         print "<html xmlns=\"http://www.w3.org/1999/xhtml\" lang=\"en\" xml:lang=\"en\">\n";
@@ -301,7 +305,7 @@ abstract class XML_RPC2_Server
         print "  </body>\n";
         print "</html>\n";
     }    
-
+    // }}}
 }
 
 ?>

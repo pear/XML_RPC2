@@ -218,6 +218,21 @@ class XML_RPC2_FaultException extends XML_RPC2_Exception
     }
     
     // }}}
+    // {{{ getFaultString()
+
+    /** 
+     * FaultString getter 
+     *
+     * This is an alias to getMessage() in order to respect XML-RPC nomenclature for faults
+     *
+     * @return string fault code
+     */
+    public function getFaultString()
+    {
+        return $this->getMessage();
+    }
+    
+    // }}}
     // {{{ createFromDecode()
     
     /**

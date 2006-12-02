@@ -111,7 +111,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     public function getResponse()
     {
         try {
-            $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
+            set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
             $request = @simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
             // TODO : do not use exception but a XMLRPC error !
             if (!is_object($request)) throw new XML_RPC2_FaultException('Unable to parse request XML', 0);
@@ -128,7 +128,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
                     return (XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));		
                 }
             }
-            if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);         
+            restore_error_handler();
             return (XML_RPC2_Backend_Php_Response::encode(call_user_func_array(array($this->callHandler, $methodName), $arguments)));              
         } catch (XML_RPC2_FaultException $e) {
             return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));

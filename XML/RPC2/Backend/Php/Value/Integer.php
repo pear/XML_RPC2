@@ -84,7 +84,9 @@ class XML_RPC2_Backend_Php_Value_Integer extends XML_RPC2_Backend_Php_Value_Scal
         // xpath is used both in an element and in one of its children
         $xml = simplexml_load_string($xml->asXML());
         $value = $xml->xpath('/value/int/text()|/value/i4/text()');
-        return (int) $value[0];
+        
+        // Double cast explanation: http://pear.php.net/bugs/bug.php?id=8644
+        return (int) ((string) $value[0]);
     }
    
     // }}}

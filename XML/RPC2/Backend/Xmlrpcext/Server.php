@@ -157,12 +157,12 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
                     return (XML_RPC2_Backend_Php_Response::encodeFault(-32602, 'server error. invalid method parameters'));		
                 }
             }
-            $oldErrorHandler = set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
+            set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
             $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
                                                   $GLOBALS['HTTP_RAW_POST_DATA'],
                                                   null,
                                                   array('output_type' => 'xml', 'encoding' => $this->encoding));
-            if ($oldErrorHandler !== FALSE) set_error_handler($oldErrorHandler);
+            restore_error_handler();
             return $response;
         } catch (XML_RPC2_FaultException $e) {
             return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
