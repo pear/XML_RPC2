@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.3 2006-03-21 21:17:09 fab Exp $ -->
+<!-- $Id: package.xml,v 1.4 2006-12-05 15:41:46 sergiosgc Exp $ -->
  <name>XML_RPC2</name>
  <summary>XML-RPC client/server library</summary>
  <description>
@@ -18,20 +18,24 @@
   </maintainer>
   <maintainer>
    <user>fab</user>
-   <role>lead</role>
+   <role>developer</role>
    <name>Fabien MARTY</name>
    <email>fab@php.net</email>
   </maintainer>
+  <maintainer>
+   <user>instance</user>
+   <role>developer</role>
+   <name>Alan Langford</name>
+   <email>jal@ambitonline.com</email>
+  </maintainer>
  </maintainers>
  <release>
-  <version>0.0.7</version>
-  <state>alpha</state>
-  <date>2006-03-21</date>
+  <version>0.0.8</version>
+  <state>beta</state>
+  <date>2006-12-02</date>
   <notes>
-   - Big API changes
-   - A lot of refactoring
-   - A lot of new unit tests
-   - Cache Introduction (on the client and on the server side)
+   - Minor bug fixes
+   - Move to beta status
   </notes>
   <filelist>
    <dir name="XML" role="php">
@@ -216,6 +220,7 @@
   </filelist>
   <deps>
    <dep type="php" rel="ge" version="5.0.0"/>
+   <dep type="ext" rel="has">curl</dep>
    <dep type="pkg" rel="ge" version="1.0b1">PEAR</dep>
    <dep type="pkg" rel="ge" version="1.6.0">Cache_Lite</dep>
   </deps>
