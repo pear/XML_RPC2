@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.4 2006-12-05 15:41:46 sergiosgc Exp $ -->
+<!-- $Id: package.xml,v 1.5 2007-03-02 02:30:57 sergiosgc Exp $ -->
  <name>XML_RPC2</name>
  <summary>XML-RPC client/server library</summary>
  <description>
@@ -30,12 +30,11 @@
   </maintainer>
  </maintainers>
  <release>
-  <version>0.0.8</version>
-  <state>beta</state>
-  <date>2006-12-02</date>
+  <version>1.0.0</version>
+  <state>stable</state>
+  <date>2007-01-15</date>
   <notes>
-   - Minor bug fixes
-   - Move to beta status
+   - Move out of beta. No significant runtime code changes
   </notes>
   <filelist>
    <dir name="XML" role="php">
