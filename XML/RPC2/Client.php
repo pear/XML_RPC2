@@ -108,6 +108,13 @@ abstract class XML_RPC2_Client
      * @var string
      */
     protected $encoding = 'iso-8859-1';
+    
+    /**
+     * Hold the SSL verify flag
+     *
+     * @var boolean
+     */
+    protected $sslverify = true;
         
     // }}}
     // {{{ remoteCall___()
@@ -173,6 +180,12 @@ abstract class XML_RPC2_Client
         }
         if (isset($options['uglyStructHack'])) {  
             $this->uglyStructHack = $options['uglyStructHack'];
+        }
+        if (isset($options['sslverify'])) {
+            if (!(is_bool($options['sslverify']))) {
+                throw new XML_RPC2_InvalidSslverifyException(sprintf('SSL verify \'%s\' is not valid', $options['sslverify']));
+            }
+            $this->sslverify = $options['sslverify'];
         }
     }
     

@@ -100,7 +100,8 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         $uri = $this->uri;
         $options = array(
             'encoding' => $this->encoding,
-            'proxy' => $this->proxy
+            'proxy' => $this->proxy,
+            'sslverify' => $this->sslverify
         );
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);

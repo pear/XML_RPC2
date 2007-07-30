@@ -94,6 +94,13 @@ class XML_RPC2_Util_HTTPRequest
      */
     private $_encoding='iso-8859-1';
     
+    /**
+     * SSL verify flag
+     *
+     * @var boolean
+     */
+    private $_sslverify=true;
+    
     // }}}
     // {{{ getBody()
 
@@ -157,6 +164,9 @@ class XML_RPC2_Util_HTTPRequest
                 }
             }
         }
+        if (isset($params['sslverify'])) {
+            $this->_sslverify = $params['sslverify'];
+        }
     }
     
     // }}}
@@ -183,6 +193,7 @@ class XML_RPC2_Util_HTTPRequest
                 curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
                 curl_setopt($ch, CURLOPT_POST, 1) &&
+                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR_XML_RCP2/0.0.x')) &&
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData)
             ) {
