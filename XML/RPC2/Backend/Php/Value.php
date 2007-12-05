@@ -139,13 +139,15 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                 case 'array':
                     $explicitType = 'array';
                     $keys = array_keys($nativeValue);
-                    if (($keys[0] !== 0) && ($keys[0] !== 1)) $explicitType = 'struct';
-                    $i=0;
-                    do {
-                        $previous = $keys[$i];
-                        $i++;
-                        if (array_key_exists($i, $keys) && ($keys[$i] !== $keys[$i - 1] + 1)) $explicitType = 'struct';
-                    } while (array_key_exists($i, $keys) && $explicitType == 'array');
+                    if (count($keys) > 0) {
+                        if ($keys[0] !== 0 && ($keys[0] !== 1)) $explicitType = 'struct';
+                        $i=0;
+                        do {
+                            $previous = $keys[$i];
+                            $i++;
+                            if (array_key_exists($i, $keys) && ($keys[$i] !== $keys[$i - 1] + 1)) $explicitType = 'struct';
+                        } while (array_key_exists($i, $keys) && $explicitType == 'array');
+                    }
                     break;
                 case 'object':
                     if ((strtolower(get_class($nativeValue)) == 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
