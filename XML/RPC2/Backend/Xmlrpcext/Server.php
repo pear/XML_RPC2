@@ -126,7 +126,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
         if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
             $response = $this->getResponse();
             header('Content-type: text/xml; charset=' . $this->encoding);
-            header('Content-length: '.strlen($response));
+            header('Content-length: ' . $this->getContentLength($response));
             print $response;
         } else {
             $this->autoDocument();

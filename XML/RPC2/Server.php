@@ -306,6 +306,27 @@ abstract class XML_RPC2_Server
         print "</html>\n";
     }    
     // }}}
+    // {{{ getContentLength()
+
+    /**
+     * Gets the content legth of a serialized XML-RPC message in bytes
+     *
+     * @param string $content the serialized XML-RPC message.
+     *
+     * @return integer the content length in bytes.
+     */
+    protected function getContentLength($content)
+    {
+        if (extension_loaded('mbstring') && (ini_get('mbstring.func_overload') & 2) == 2) {
+            $length = mb_strlen($content, '8bit');
+        } else {
+            $length = strlen((binary)$content);
+        }
+
+        return $length;
+    }
+
+    // }}}
 }
 
 ?>

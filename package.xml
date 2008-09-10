@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.10 2008-09-10 18:51:25 sergiosgc Exp $ -->
+<!-- $Id: package.xml,v 1.11 2008-09-10 19:03:55 sergiosgc Exp $ -->
  <name>XML_RPC2</name>
  <summary>XML-RPC client/server library</summary>
  <description>
@@ -30,12 +30,11 @@
   </maintainer>
  </maintainers>
  <release>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <state>stable</state>
   <date>2008-09-10</date>
   <notes>
-  - Fixed bug 12249: Php Server backend does not pass encoding to response object 
-  - Fixed bug 12884: Bogus User-agent header
+  - Fixed bug 13145: Server sends the wrong content-length header if mbstring is used
   </notes>
   <filelist>
    <dir name="XML" role="php">
