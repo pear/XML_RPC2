@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.8 2008-09-10 18:00:02 sergiosgc Exp $ -->
+<!-- $Id: package.xml,v 1.9 2008-09-10 18:02:40 sergiosgc Exp $ -->
  <name>XML_RPC2</name>
  <summary>XML-RPC client/server library</summary>
  <description>
@@ -30,23 +30,11 @@
   </maintainer>
  </maintainers>
  <release>
-<<<<<<< package.xml
-  <version>1.0.2</version>
-=======
-  <version>1.0.3</version>
->>>>>>> 1.7
+  <version>1.0.4</version>
   <state>stable</state>
-<<<<<<< package.xml
-  <date>2007-07-30</date>
-=======
-  <date>2007-12-05</date>
->>>>>>> 1.7
+  <date>2008-09-10</date>
   <notes>
-<<<<<<< package.xml
-  - Added support for sslverify option in the http request
-=======
-  - Fixed bug 11135: Empty array should not give a notice
->>>>>>> 1.7
+  - Fixed byg 12249: Php Server backend does not pass encoding to response object 
   </notes>
   <filelist>
    <dir name="XML" role="php">
