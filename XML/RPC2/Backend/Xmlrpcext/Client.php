@@ -88,7 +88,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
      */
     public function remoteCall___($methodName, $parameters)
     {
-        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('encoding' => $this->encoding));
+        $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('escaping' => $this->escaping, 'encoding' => $this->encoding));
         if ($this->uglyStructHack) {
 	        // ugly hack because of http://bugs.php.net/bug.php?id=21949
 	        // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos

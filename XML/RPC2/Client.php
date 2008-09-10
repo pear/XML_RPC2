@@ -108,6 +108,13 @@ abstract class XML_RPC2_Client
      * @var string
      */
     protected $encoding = 'iso-8859-1';
+
+    /**
+     * Holds the escaping method(s) of the client request
+     *
+     * @var string
+     */
+    protected $escaping = array('non-ascii', 'non-print', 'markup');
     
     /**
      * Hold the SSL verify flag
@@ -177,6 +184,10 @@ abstract class XML_RPC2_Client
         if (isset($options['encoding'])) {
             // TODO : control & exception
             $this->encoding = $options['encoding'];
+        }
+        if (isset($options['escaping'])) {
+            // TODO : control & exception
+            $this->escaping = $options['escaping'];
         }
         if (isset($options['uglyStructHack'])) {  
             $this->uglyStructHack = $options['uglyStructHack'];
