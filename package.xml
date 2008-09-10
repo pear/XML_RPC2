@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package version="1.0">
-<!-- $Id: package.xml,v 1.9 2008-09-10 18:02:40 sergiosgc Exp $ -->
+<!-- $Id: package.xml,v 1.10 2008-09-10 18:51:25 sergiosgc Exp $ -->
  <name>XML_RPC2</name>
  <summary>XML-RPC client/server library</summary>
  <description>
@@ -34,7 +34,8 @@
   <state>stable</state>
   <date>2008-09-10</date>
   <notes>
-  - Fixed byg 12249: Php Server backend does not pass encoding to response object 
+  - Fixed bug 12249: Php Server backend does not pass encoding to response object 
+  - Fixed bug 12884: Bogus User-agent header
   </notes>
   <filelist>
    <dir name="XML" role="php">
