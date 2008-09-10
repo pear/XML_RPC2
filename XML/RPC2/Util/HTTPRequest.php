@@ -41,6 +41,7 @@
 
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
+require_once 'XML/RPC2/Client.php';
 // }}}
 
 /**
@@ -194,7 +195,7 @@ class XML_RPC2_Util_HTTPRequest
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
                 curl_setopt($ch, CURLOPT_POST, 1) &&
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR_XML_RCP2/0.0.x')) &&
+                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR_XML_RCP2/' . XML_RPC2_Client::VERSION)) &&
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData)
             ) {
                 $result = curl_exec($ch);
