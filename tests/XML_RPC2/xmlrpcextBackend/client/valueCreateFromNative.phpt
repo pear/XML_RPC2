@@ -1,5 +1,11 @@
 --TEST--
 XMLRPCext backend test setting explicit type for value
+--SKIPIF--
+<?php
+if (!function_exists('xmlrpc_server_create')) {
+    print "Skip XMLRPC extension unavailable";
+}
+?>
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());

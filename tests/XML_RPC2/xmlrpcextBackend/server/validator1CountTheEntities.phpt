@@ -1,10 +1,12 @@
 --TEST--
 XMLRPCext Backend XML-RPC server Validator1 test (countTheEntities)
 --SKIPIF--
+<?php
 if (!function_exists('xmlrpc_server_create')) {
     print "Skip XMLRPC extension unavailable";
 }
---FILE-
+?>
+--FILE--
 <?php
 class TestServer {
     /**
