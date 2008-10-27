@@ -1,5 +1,10 @@
 --TEST--
 XMLRPCext Backend XML-RPC cachedClient against phpxmlrpc validator1 (easyStructTest with cache on by default 3)
+--SKIPIF--
+<?php
+if (!function_exists('curl_init')) {
+    print "Skip no CURI extension available";
+}
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());

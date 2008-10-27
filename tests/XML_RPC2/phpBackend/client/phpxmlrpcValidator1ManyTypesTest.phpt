@@ -1,5 +1,11 @@
 --TEST--
 PHP Backend XML-RPC client against phpxmlrpc validator1 (manyTypesTest)
+--SKIPIF--
+<?php
+if (!function_exists('curl_init')) {
+    print "Skip no CURI extension available";
+}
+?>
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
