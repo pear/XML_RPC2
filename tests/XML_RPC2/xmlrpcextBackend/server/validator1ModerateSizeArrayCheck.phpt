@@ -1,5 +1,11 @@
 --TEST--
 XMLRPCext Backend XML-RPC server Validator1 test (moderateSizeArrayCheck)
+--SKIPIF--
+<?php
+if (!function_exists('xmlrpc_server_create')) {
+    print "Skip XMLRPC extension unavailable";
+}
+?>
 --FILE--
 <?php
 class TestServer {

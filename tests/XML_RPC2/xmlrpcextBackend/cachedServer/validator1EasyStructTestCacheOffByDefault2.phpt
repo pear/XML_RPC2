@@ -1,5 +1,11 @@
 --TEST--
 XMLRPCext Backend XML-RPC cachedServer Validator1 test (easyStructTest with cache off by default 2)
+--SKIPIF--
+<?php
+if (!function_exists('xmlrpc_server_create')) {
+    print "Skip XMLRPC extension unavailable";
+}
+?>
 --FILE--
 <?php
 class TestServer {
