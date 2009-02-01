@@ -9,6 +9,7 @@ if (!function_exists('curl_init')) {
 --FILE--
 <?php
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
+date_default_timezone_set('UTC');
 require_once 'XML/RPC2/Client.php';
 require_once 'XML/RPC2/Value.php';
 $options = array(
@@ -39,6 +40,6 @@ string(3) "foo"
 float(3.14159)
 string(17) "20060116T19:14:03"
 string(8) "datetime"
-int(1137435243)
+int(1137438843)
 string(6) "foobar"
 string(6) "base64"
