@@ -5,6 +5,9 @@ XMLRPCext Backend XML-RPC client against phpxmlrpc validator1 (easyStructTest)
 if (!function_exists('xmlrpc_server_create')) {
     print "Skip XMLRPC extension unavailable";
 }
+if (!function_exists('curl_init')) {
+    print "Skip CURL extension unavailable";
+}
 ?>
 --FILE--
 <?php

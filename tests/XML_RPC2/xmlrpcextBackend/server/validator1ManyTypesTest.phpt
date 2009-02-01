@@ -28,6 +28,7 @@ class TestServer {
 }
 
 set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR . get_include_path());
+date_default_timezone_set('UTC');
 require_once 'XML/RPC2/Server.php';
 $options = array(
 	'prefix' => 'validator1.',
@@ -94,6 +95,6 @@ string(3) "foo"
 float(3.14159)
 string(8) "datetime"
 string(17) "20060116T19:14:03"
-int(1137435243)
+int(1137438843)
 string(6) "base64"
 string(6) "foobar"
