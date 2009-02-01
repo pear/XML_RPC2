@@ -20,7 +20,7 @@ set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR 
 require_once 'XML/RPC2/Server.php';
 $options = array(
 	'prefix' => 'validator1.',
-	'backend' => 'Xmlrpcext'
+	'backend' => 'Php'
 );
 
 $server = XML_RPC2_Server::create('TestServer', $options);
