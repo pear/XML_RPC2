@@ -101,7 +101,14 @@ class XML_RPC2_Util_HTTPRequest
      * @var boolean
      */
     private $_sslverify=true;
-    
+
+    /**
+     * HTTP timeout length in seconds.
+     *
+     * @var integer
+     */
+    private $_connectionTimeout = null;
+
     // }}}
     // {{{ getBody()
 
@@ -138,8 +145,10 @@ class XML_RPC2_Util_HTTPRequest
     * @param    string  The uri to fetch/access
     * @param    array   Associative array of parameters which can have the following keys:
     * <ul>
-    *   <li>proxy          - Proxy (string)</li>
-    *   <li>encoding       - The request encoding (string)</li>
+    *   <li>proxy                  - Proxy (string)</li>
+    *   <li>encoding               - The request encoding (string)</li>
+    *   <li>sslverify</li>         - The SSL verify flag (boolean)</li>
+    *   <li>connectionTimeout</li> - The connection timeout in milliseconds (integer)</li>
     * </ul>
     * @access public
     */
@@ -167,6 +176,9 @@ class XML_RPC2_Util_HTTPRequest
         }
         if (isset($params['sslverify'])) {
             $this->_sslverify = $params['sslverify'];
+        }
+        if (isset($params['connectionTimeout'])) {
+            $this->_connectionTimeout = $params['connectionTimeout'];
         }
     }
     
@@ -196,7 +208,8 @@ class XML_RPC2_Util_HTTPRequest
                 curl_setopt($ch, CURLOPT_POST, 1) &&
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR::XML_RPC2/@package_version@')) &&
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData)
+                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData) &&
+                (!isset($this->_connectionTimeout) || curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $this->_connectionTimeout))
             ) {
                 $result = curl_exec($ch);
                 if (($errno = curl_errno($ch)) != 0) {

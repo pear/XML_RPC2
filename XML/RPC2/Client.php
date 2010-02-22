@@ -116,12 +116,19 @@ abstract class XML_RPC2_Client
     protected $escaping = array('non-ascii', 'non-print', 'markup');
     
     /**
-     * Hold the SSL verify flag
+     * Holds the SSL verify flag
      *
      * @var boolean
      */
     protected $sslverify = true;
-        
+    
+    /**
+     * Holds the connection timeout in milliseconds of the client request.
+     *
+     * @var integer
+     */
+    protected $connectionTimeout = null;
+
     // }}}
     // {{{ remoteCall___()
     
@@ -152,7 +159,7 @@ abstract class XML_RPC2_Client
      * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
      * Optionally, some options may be set as an associative array. Accepted keys are :
      * 'prefix', 'proxy', 'debug' => see correspondant property to get more informations
-     * 
+     *
      * @param string URI for the XML-RPC server
      * @param array (optional) Associative array of options
      */
@@ -196,6 +203,12 @@ abstract class XML_RPC2_Client
                 throw new XML_RPC2_InvalidSslverifyException(sprintf('SSL verify \'%s\' is not valid', $options['sslverify']));
             }
             $this->sslverify = $options['sslverify'];
+        }
+        if (isset($options['connectionTimeout'])) {
+            if (!(is_int($options['connectionTimeout']))) {
+                throw new XML_RPC2_InvalidConnectionTimeoutException(sprintf('Connection timeout \'%s\' is not valid', $options['connectionTimeout']));
+            }
+            $this->connectionTimeout = $options['connectionTimeout'];
         }
     }
     
