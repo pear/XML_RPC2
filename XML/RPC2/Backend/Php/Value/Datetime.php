@@ -85,13 +85,13 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
             $scalar = $nativeValue->scalar;
             $timestamp = $nativeValue->timestamp;  
         } else {
-	        if ((is_int($nativeValue)) or (is_float($nativeValue))) {
-	            $scalar = XML_RPC2_Backend_Php_Value_Datetime::_timestampToIso8601($nativeValue);
-	            $timestamp = (int) $nativeValue;
-	        } elseif (is_string($nativeValue)) {
-	            $scalar= $nativeValue;
-	            $timestamp = (int) XML_RPC2_Backend_Php_Value_Datetime::_iso8601ToTimestamp($nativeValue);
-	        } else {
+            if ((is_int($nativeValue)) or (is_float($nativeValue))) {
+                $scalar = XML_RPC2_Backend_Php_Value_Datetime::_timestampToIso8601($nativeValue);
+                $timestamp = (int) $nativeValue;
+            } elseif (is_string($nativeValue)) {
+                $scalar= $nativeValue;
+                $timestamp = (int) XML_RPC2_Backend_Php_Value_Datetime::_iso8601ToTimestamp($nativeValue);
+            } else {
                 throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Datetime from type \'%s\'.', gettype($nativeValue)));
             }
         }

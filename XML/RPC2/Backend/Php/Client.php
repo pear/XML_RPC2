@@ -91,6 +91,9 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
      *
      * @param   string      Method name
      * @param   array       Parameters
+     *
+     * @throws XML_RPC2_Exception
+     * @throws Exception On failed XML parsing from response
      */
     public function remoteCall___($methodName, $parameters)
     {
@@ -111,7 +114,8 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
             $this->displayDebugInformations___($request, $body);
         }
         try {
-            $result = XML_RPC2_Backend_Php_Response::decode(simplexml_load_string($body));
+            $document = new SimpleXMLElement($body);
+            $result   = XML_RPC2_Backend_Php_Response::decode($document);
         } catch (XML_RPC2_Exception $e) {
             if ($this->debug) {
                 if (get_class($e)=='XML_RPC2_FaultException') {

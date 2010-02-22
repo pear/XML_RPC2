@@ -119,7 +119,7 @@ abstract class XML_RPC2_Server_CallHandler
         if (isset($this->methods[$name])) {
             return $this->methods[$name];
         }
-        return false;	
+        return false;
     }
        
     // }}}

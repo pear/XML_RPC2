@@ -88,7 +88,7 @@ class XML_RPC2_Backend_Xmlrpcext_Value
             $value2 = (string) $value;
             if (!xmlrpc_set_type($value2, $type)) {
                 throw new XML_RPC2_Exception('Error returned from xmlrpc_set_type');
-	        }
+            }
             return $value2;
         }
         return $value;

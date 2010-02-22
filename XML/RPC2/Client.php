@@ -246,7 +246,7 @@ abstract class XML_RPC2_Client
    
     // }}}
     // {{{ displayDebugInformations___()
-	
+    
     /**
      * Display debug informations
      *
@@ -269,7 +269,7 @@ abstract class XML_RPC2_Client
     
     // }}}
     // {{{ displayDebugInformations2___()
-	
+    
     /**
      * Display debug informations (part 2)
      *

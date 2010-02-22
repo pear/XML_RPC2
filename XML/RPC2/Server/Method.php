@@ -378,11 +378,11 @@ class XML_RPC2_Server_Method
             'datetime.iso8601' => 'mixed',
             'iso8601' => 'mixed',
             'base64' => 'string'
-        );	
+        );
         if (isset($convertArray[$tmp])) {
-            return $convertArray[$tmp];	
+            return $convertArray[$tmp];
         }
-        return 'mixed';	
+        return 'mixed';
     }
     
 }

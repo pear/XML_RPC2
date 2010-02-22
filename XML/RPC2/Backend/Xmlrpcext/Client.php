@@ -90,9 +90,9 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
     {
         $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('escaping' => $this->escaping, 'encoding' => $this->encoding));
         if ($this->uglyStructHack) {
-	        // ugly hack because of http://bugs.php.net/bug.php?id=21949
-	        // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
-	        $request = preg_replace('~<name>xml_rpc2_ugly_struct_hack_(.*)</name>~', '<name>\1</name>', $tmp);
+            // ugly hack because of http://bugs.php.net/bug.php?id=21949
+            // see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
+            $request = preg_replace('~<name>xml_rpc2_ugly_struct_hack_(.*)</name>~', '<name>\1</name>', $tmp);
         } else {
             $request = $tmp;
         }
@@ -105,7 +105,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();
-		$body = $httpRequest->getBody();
+        $body = $httpRequest->getBody();
         if ($this->debug) {
             $this->displayDebugInformations___($request, $body);
         }

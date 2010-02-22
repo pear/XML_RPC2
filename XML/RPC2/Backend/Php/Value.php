@@ -155,8 +155,8 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                         // the type 'base64' or 'datetime' is given by xmlrpc_type public property 
                         $explicitType = $nativeValue->xmlrpc_type;
                     } else {
-	                    $nativeValue = serialize($nativeValue);
-	                    $explicitType = 'base64';
+                        $nativeValue = serialize($nativeValue);
+                        $explicitType = 'base64';
                     }
                     break;
                 case 'resource':
