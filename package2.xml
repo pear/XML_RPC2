@@ -212,7 +212,9 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
       <file name="Method.php" role="php" />
      </dir> <!-- /XML/RPC2/Server -->
      <dir name="Util">
-      <file name="HTTPRequest.php" role="php" />
+      <file name="HTTPRequest.php" role="php">
+       <tasks:replace from="@package_version@" to="version" type="package-info" />
+      </file>
      </dir> <!-- /XML/RPC2/Util -->
      <file name="Backend.php" role="php" />
      <file name="CachedClient.php" role="php" />

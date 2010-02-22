@@ -71,7 +71,6 @@ require_once 'XML/RPC2/Backend.php';
  */
 abstract class XML_RPC2_Client 
 {
-    const VERSION = '1.0.4';
     // {{{ properties
     
     /**
