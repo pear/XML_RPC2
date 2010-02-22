@@ -2,7 +2,7 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
 
-// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{
 
 /**
 * +-----------------------------------------------------------------------------+
@@ -30,7 +30,7 @@
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>
 * @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
@@ -47,10 +47,10 @@ require_once 'XML/RPC2/Client.php';
 /**
  * XML_RPC utility HTTP request class. This class mimics a subset of PEAR's HTTP_Request
  * and is to be refactored out of the package once HTTP_Request releases an E_STRICT version.
- * 
+ *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
@@ -59,42 +59,42 @@ class XML_RPC2_Util_HTTPRequest
 {
 
     // {{{ properties
-    
+
     /**
      * proxy field
      *
      * @var string
      */
     private $_proxy = null;
-    
+
     /**
      * proxyauth field
      *
      * @var string
      */
     private $_proxyAuth = null;
-    
+
     /**
-     * postData field 
+     * postData field
      *
      * @var string
      */
     private $_postData;
-               
+
     /**
-     * uri field 
+     * uri field
      *
      * @var array
      */
     private $_uri;
-    
+
     /**
      * encoding for the request
      *
      * @var string
      */
     private $_encoding='iso-8859-1';
-    
+
     /**
      * SSL verify flag
      *
@@ -117,27 +117,27 @@ class XML_RPC2_Util_HTTPRequest
      *
      * @return string body value
      */
-    public function getBody() 
+    public function getBody()
     {
         return $this->_body;
     }
-            
+
     // }}}
     // {{{ setPostData()
-    
+
     /**
      * postData field setter
      *
      * @param string postData value
      */
-    public function setPostData($value) 
+    public function setPostData($value)
     {
         $this->_postData = $value;
     }
-    
+
     // }}}
     // {{{ constructor
-    
+
     /**
     * Constructor
     *
@@ -163,7 +163,7 @@ class XML_RPC2_Util_HTTPRequest
             $proxy = $params['proxy'];
             $elements = parse_url($proxy);
             if (is_array($elements)) {
-                if ((isset($elements['scheme'])) and (isset($elements['host']))) { 
+                if ((isset($elements['scheme'])) and (isset($elements['host']))) {
                     $this->_proxy = $elements['scheme'] . '://' . $elements['host'];
                 }
                 if (isset($elements['port'])) {
@@ -181,10 +181,10 @@ class XML_RPC2_Util_HTTPRequest
             $this->_connectionTimeout = $params['connectionTimeout'];
         }
     }
-    
+
     // }}}
     // {{{ sendRequest()
-    
+
     /**
     * Sends the request
     *
@@ -207,6 +207,7 @@ class XML_RPC2_Util_HTTPRequest
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
                 curl_setopt($ch, CURLOPT_POST, 1) &&
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
+                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $this->_sslverify) &&
                 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR::XML_RPC2/@package_version@')) &&
                 curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData) &&
                 (!isset($this->_connectionTimeout) || curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $this->_connectionTimeout))
@@ -225,10 +226,10 @@ class XML_RPC2_Util_HTTPRequest
         } else {
             throw new XML_RPC2_CurlException('Unable to init curl');
         }
-        $this->_body = $result;        
+        $this->_body = $result;
         return true;
     }
-    
+
     // }}}
 
 }
