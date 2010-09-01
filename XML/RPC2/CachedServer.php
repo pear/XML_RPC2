@@ -308,7 +308,7 @@ class XML_RPC2_CachedServer {
         $docs = explode("\n", $method->getDocComment());
         foreach ($docs as $i => $doc) {
             $doc = trim($doc, " \r\t/*");
-            $res = ereg('@xmlrpc.caching ([+-]{0,1}[a-zA-Z0-9]*)', $doc, $results); // TODO : better/faster regexp ?
+            $res = preg_match('/@xmlrpc.caching ([+-]{0,1}[a-zA-Z0-9]*)/', $doc, $results); // TODO : better/faster regexp ?
             if ($res>0) {
                 $value = $results[1];
                 if (($value=='yes') or ($value=='true') or ($value=='on')) {
@@ -342,7 +342,7 @@ class XML_RPC2_CachedServer {
     private function _parseMethodName($request)
     {
         // TODO : change for "simplexml"
-        $res = ereg('<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)</methodName>', $request, $results);
+        $res = preg_match('/<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)</methodName>/', $request, $results);
         if ($res>0) {
             return $results[1];
         }
