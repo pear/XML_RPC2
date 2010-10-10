@@ -1,237 +1,263 @@
-<?xml version="1.0"?>
-<package version="1.0">
-<!-- $Id: package.xml,v 1.11 2008-09-10 19:03:55 sergiosgc Exp $ -->
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>XML_RPC2</name>
+ <channel>pear.php.net</channel>
  <summary>XML-RPC client/server library</summary>
- <description>
- XML_RPC2 is a pear package providing XML_RPC client and server services. XML-RPC is a simple remote procedure call protocol built using HTTP as transport and XML as encoding.
-
- As a client library, XML_RPC2 is capable of creating a proxy class which exposes the methods exported by the server. As a server library, XML_RPC2 is capable of exposing methods from a class or object instance, seamlessly exporting local methods as remotely callable procedures.
- </description>
- <license>LGPL</license>
- <maintainers>
-  <maintainer>
-   <user>sergiosgc</user>
-   <role>lead</role>
-   <name>Sergio Carvalho</name>
-   <email>sergio.carvalho@portugalmail.com</email>
-  </maintainer>
-  <maintainer>
-   <user>fab</user>
-   <role>developer</role>
-   <name>Fabien MARTY</name>
-   <email>fab@php.net</email>
-  </maintainer>
-  <maintainer>
-   <user>instance</user>
-   <role>developer</role>
-   <name>Alan Langford</name>
-   <email>jal@ambitonline.com</email>
-  </maintainer>
- </maintainers>
- <release>
-  <version>1.0.5</version>
-  <state>stable</state>
-  <date>2008-09-10</date>
-  <notes>
-  - Fixed bug 13145: Server sends the wrong content-length header if mbstring is used
-  </notes>
-  <filelist>
-   <dir name="XML" role="php">
-    <dir name="RPC2" role="php">
-     <dir name="Backend" role="php">
-      <dir name="Php" role="php">
-       <file name="Client.php"/>
-       <file name="Request.php"/>
-       <file name="Response.php"/>
-       <file name="Server.php"/>
-       <file name="Value.php"/>
-       <dir name="Value" role="php">
-        <file name="Array.php"/>
-        <file name="Base64.php"/>
-        <file name="Boolean.php"/>
-        <file name="Datetime.php"/>
-        <file name="Double.php"/>
-        <file name="Integer.php"/>
-        <file name="Scalar.php"/>
-        <file name="String.php"/>
-        <file name="Struct.php"/>
-       </dir>
-      </dir>
-      <dir name="Xmlrpcext" role="php">
-       <file name="Client.php"/>
-       <file name="Server.php"/>
-       <file name="Value.php"/>
-      </dir>
-     </dir>
-     <file name="Backend.php"/>
-     <file name="CachedClient.php"/>
-     <file name="CachedServer.php"/>
-     <file name="Client.php"/>
-     <file name="Exception.php"/>
-     <file name="Server.php"/>
-     <file name="Value.php"/>
-     <dir name="Server" role="php">
-      <dir name="CallHandler" role="php">
-       <file name="Class.php"/>
-       <file name="Instance.php"/>
-      </dir>
-      <file name="CallHandler.php"/>
-      <file name="Method.php"/>
-     </dir>
-     <dir name="Util" role="php">
-      <file name="HTTPRequest.php"/>
-     </dir>
-    </dir>
-   </dir>
-   <dir name="tests" role="test">
-    <dir name="XML_RPC2" role="test">
-     <dir name="phpBackend" role="test">
-      <dir name="client" role="test">
-       <file name="faultFromPython.phpt"/>
-       <file name="okFromPython.phpt"/>
-       <file name="protocolError.phpt"/>
-       <file name="phpxmlrpcValidator1ArrayOfStructsTest.phpt"/>
-       <file name="phpxmlrpcValidator1CountTheEntities.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTest.phpt"/>
-       <file name="phpxmlrpcValidator1EchoStructTest.phpt"/>
-       <file name="phpxmlrpcValidator1ManyTypesTest.phpt"/>
-       <file name="phpxmlrpcValidator1ModerateSizeArrayCheck.phpt"/>
-       <file name="phpxmlrpcValidator1NestedStructTest.phpt"/>
-       <file name="phpxmlrpcValidator1SimpleStructReturnTest.phpt"/>
-       <file name="okFromPEAR.phpt"/>
-       <file name="okFromUserLandGetCurrentTime.phpt"/>
-      </dir>
-      <dir name="server" role="test">
-       <file name="invalidXMLRequest.phpt"/>
-       <file name="nonexistantMethod.phpt"/>
-       <file name="normalRequest.phpt"/>
-       <file name="normalRequestWithPrefix.phpt"/>
-       <file name="normalRequestWithPrefix2.phpt"/>
-       <file name="validator1ArrayOfStructsTest.phpt"/>
-       <file name="validator1CountTheEntities.phpt"/>
-       <file name="validator1EasyStructTest.phpt"/>
-       <file name="validator1EchoStructTest.phpt"/>
-       <file name="validator1ManyTypesTest.phpt"/>
-       <file name="validator1ModerateSizeArrayCheck.phpt"/>
-       <file name="validator1NestedStructTest.phpt"/>
-       <file name="validator1SimpleStructReturnTest.phpt"/>
-      </dir>
-      <dir name="encoding" role="test">
-       <file name="array.phpt"/>
-       <file name="base64.phpt"/>
-       <file name="boolean.phpt"/>
-       <file name="datetime.phpt"/>
-       <file name="datetime1.phpt"/>
-       <file name="datetime2.phpt"/>
-       <file name="datetime3.phpt"/>
-       <file name="datetime4.phpt"/>
-       <file name="double.phpt"/>
-       <file name="integer.phpt"/>
-       <file name="request.phpt"/>
-       <file name="response.phpt"/>
-       <file name="response2.phpt"/>
-       <file name="string.phpt"/>
-       <file name="struct.phpt"/>
-      </dir>
-      <dir name="decoding" role="test">
-       <file name="array.phpt"/>
-       <file name="base64.phpt"/>
-       <file name="boolean.phpt"/>
-       <file name="datetime.phpt"/>
-       <file name="double.phpt"/>
-       <file name="faultResponse.phpt"/>
-       <file name="integer.phpt"/>
-       <file name="integer2.phpt"/>
-       <file name="request.phpt"/>
-       <file name="response.phpt"/>
-       <file name="string.phpt"/>
-       <file name="struct.phpt"/>
-      </dir>
-      <dir name="cachedClient" role="test">
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOffByDefault1.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOffByDefault2.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault1.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt"/>
-      </dir>
-      <dir name="cachedServer" role="test">
-       <file name="validator1EasyStructTestCacheOffByDefault1.phpt"/>
-       <file name="validator1EasyStructTestCacheOffByDefault2.phpt"/>
-       <file name="validator1EasyStructTestCacheOffByDefault3.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault1.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault2.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault3.phpt"/>
-      </dir>
-     </dir>
-     <dir name="xmlrpcextBackend" role="test">
-      <dir name="client" role="test">
-       <file name="faultFromPython.phpt"/>
-       <file name="okFromPython.phpt"/>
-       <file name="protocolError.phpt"/>
-       <file name="valueCreateFromNative.phpt"/>
-       <file name="phpxmlrpcValidator1ArrayOfStructsTest.phpt"/>
-       <file name="phpxmlrpcValidator1CountTheEntities.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTest.phpt"/>
-       <file name="phpxmlrpcValidator1EchoStructTest.phpt"/>
-       <file name="phpxmlrpcValidator1ManyTypesTest.phpt"/>
-       <file name="phpxmlrpcValidator1SimpleStructReturnTest.phpt"/>
-       <file name="phpxmlrpcValidator1NestedStructTest.phpt"/>
-       <file name="okFromUserLandGetCurrentTime.phpt"/>
-       <file name="okFromPEAR.phpt"/>
-       <file name="phpxmlrpcValidator1ModerateSizeArrayCheck.phpt"/>
-      </dir>
-      <dir name="server" role="test">
-       <file name="invalidXMLRequest.phpt"/>
-       <file name="nonexistantMethod.phpt"/>
-       <file name="normalRequest.phpt"/>
-       <file name="normalRequestWithPrefix.phpt"/>
-       <file name="normalRequestWithPrefix2.phpt"/>
-       <file name="validator1ArrayOfStructsTest.phpt"/>
-       <file name="validator1CountTheEntities.phpt"/>
-       <file name="validator1EasyStructTest.phpt"/>
-       <file name="validator1EchoStructTest.phpt"/>
-       <file name="validator1ManyTypesTest.phpt"/>
-       <file name="validator1ModerateSizeArrayCheck.phpt"/>
-       <file name="validator1SimpleStructReturnTest.phpt"/>
-       <file name="validator1NestedStructTest.phpt"/>
-      </dir>
-      <dir name="cachedClient" role="test">
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOffByDefault2.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOffByDefault1.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault1.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt"/>
-       <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt"/>
-      </dir>
-      <dir name="cachedServer" role="test">
-       <file name="validator1EasyStructTestCacheOffByDefault1.phpt"/>
-       <file name="validator1EasyStructTestCacheOffByDefault2.phpt"/>
-       <file name="validator1EasyStructTestCacheOffByDefault3.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault1.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault2.phpt"/>
-       <file name="validator1EasyStructTestCacheOnByDefault3.phpt"/>
-      </dir>
-     </dir>
-    </dir>
-   </dir>
-  </filelist>
-  <deps>
-   <dep type="php" rel="ge" version="5.0.0"/>
-   <dep type="ext" rel="has">curl</dep>
-   <dep type="pkg" rel="ge" version="1.0b1">PEAR</dep>
-   <dep type="pkg" rel="ge" version="1.6.0">Cache_Lite</dep>
-  </deps>
- </release>
+ <description>XML_RPC2 is a pear package providing XML_RPC client and server services. XML-RPC is a simple remote procedure call protocol built using HTTP as transport and XML as encoding.
+As a client library, XML_RPC2 is capable of creating a proxy class which exposes the methods exported by the server. As a server library, XML_RPC2 is capable of exposing methods from a class or object instance, seamlessly exporting local methods as remotely callable procedures.</description>
+ <lead>
+  <name>Sergio Carvalho</name>
+  <user>sergiosgc</user>
+  <email>sergio.carvalho@portugalmail.com</email>
+  <active>yes</active>
+ </lead>
+ <developer>
+  <name>Fabien MARTY</name>
+  <user>fab</user>
+  <email>fab@php.net</email>
+  <active>yes</active>
+ </developer>
+ <developer>
+  <name>Alan Langford</name>
+  <user>instance</user>
+  <email>jal@ambitonline.com</email>
+  <active>yes</active>
+ </developer>
+ <date>2010-10-11</date>
+ <time>00:21:36</time>
+ <version>
+  <release>1.0.6</release>
+  <api>1.0.5</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+ <notes>
+QA release
+Package 2.0
+Bug #11280 Xmlrpcext escapes UTF-8 	sergiosgc
+Bug #12884 Bogus User-agent header 	sergiosgc
+Bug #13145 Server sends the wrong content-length header if mbstring is used 	sergiosgc
+Bug #13597 XML_RPC2_Backend_Xmlrpcext_Client::remoteCall___ unable to handle FALSE response 	sergiosgc
+Request #14822 Make use of SKIPIF when xmlrpc extension not loaded (unit tests) 	doconnor
+Bug #14896 validator1EasyStructTest.phpt fails when no xmlrpc extension 	doconnor
+Request #15633 Add timeout 	doconnor
+Bug #16145 Exception Codes not being used by class &quot;XML_RPC2_FaultException&quot; 	sergiosgc
+Bug #16301 Invalid XML response from server will crash PHP 	doconnor
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="/" md5sum="0387630caaf6bb9139a729dfcf9fa06e" name="docs/Makefile" role="doc" />
+   <file baseinstalldir="/" md5sum="5a82c87c6fc02cb64738521bd86dad40" name="docs/tutorials/XML_RPC2.lyx" role="doc" />
+   <file baseinstalldir="/" md5sum="b275cebb7e1e336b5c695563705f725f" name="tests/Makefile" role="test" />
+   <file baseinstalldir="/" md5sum="5130d5f512a3948c749f8f84290e314a" name="tests/lib/run-tests" role="test" />
+   <file baseinstalldir="/" md5sum="b0e9ae45308b88583c052466c3bc2a6d" name="tests/lib/tests-config" role="test" />
+   <file baseinstalldir="/" md5sum="64e92c9b074391b1d084b4a33f9f5ed7" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1d2c51bc0779ee9a4068670808c72b34" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c0cec668ac88c4d46f64ef90436ef7ae" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1de590439475a5ecad2a311a65f9efdc" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="50aae6d7ae8a782f36be18ba7209820a" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="adf9ffc44db6d2fff4b5c668fddb16ea" name="tests/XML_RPC2/phpBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b59be5741e8f3ee07fc1d077c9018ae3" name="tests/XML_RPC2/phpBackend/cachedClient/tmpdir.inc" role="test" />
+   <file baseinstalldir="/" md5sum="b59be5741e8f3ee07fc1d077c9018ae3" name="tests/XML_RPC2/phpBackend/cachedServer/tmpdir.inc" role="test" />
+   <file baseinstalldir="/" md5sum="714a9c6375e67c536071d6ce1ba2646b" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6b9733cf50bea4ab43ee2d365a163410" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b3d1c2969a142aff89999a15716b66ce" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOffByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ae03145db726a62ec570470db77b31fc" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOnByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="4fbf563d4a68eb9dba92d3e64a6c7c08" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="2bb11a3a967b329e430abaeb53837f11" name="tests/XML_RPC2/phpBackend/cachedServer/validator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="447d07ca85bd6cc657bd7fbba7350baf" name="tests/XML_RPC2/phpBackend/client/faultFromPython.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5330aadd55429611d5397501b002e644" name="tests/XML_RPC2/phpBackend/client/okFromPython.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6e75ac5c2c316dfce1a4631dbbdcbab0" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1ArrayOfStructsTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="a3d9ab48e1d2fad1be8e568db1e66ff2" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1CountTheEntities.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ea553a4746b2c4c2c19c565d3c098a0c" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1EasyStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="90f266b8f893dfd5b714606b6f3899fc" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1EchoStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="153f2e813d50cded89568864dfca1543" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1ManyTypesTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ed3755a35b1b28baf485b46da93ef3f3" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1ModerateSizeArrayCheck.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ab98ad270bb68cc9362ab6564cc328e0" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1NestedStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="7e609d8b5af8a8000dd026e62bfdf6f4" name="tests/XML_RPC2/phpBackend/client/phpxmlrpcValidator1SimpleStructReturnTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="024c0608022dda6fd4709607c4f3382c" name="tests/XML_RPC2/phpBackend/client/protocolError.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1d376f36c8c306b08c16b710d8880a89" name="tests/XML_RPC2/phpBackend/decoding/array.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="f8400cf32a86118cd1ff22def8c73104" name="tests/XML_RPC2/phpBackend/decoding/base64.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="be6f7b33de0ce2dbff4be58e33552375" name="tests/XML_RPC2/phpBackend/decoding/boolean.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ec7dede537678fd0abb4d9101d1b4d1f" name="tests/XML_RPC2/phpBackend/decoding/datetime.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="a3d8828d2dcd7a2d6f92ea3cf0fcaf4b" name="tests/XML_RPC2/phpBackend/decoding/double.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5fab9e9079f415f12ef1c0b96eb9b7ec" name="tests/XML_RPC2/phpBackend/decoding/faultResponse.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8b41918d9e50ee7c7403a1b7771f9f4a" name="tests/XML_RPC2/phpBackend/decoding/integer.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="7152cc02e282d21c4edb1e1c2a32e5eb" name="tests/XML_RPC2/phpBackend/decoding/integer2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="876386d4d711e6013d389b997466ca50" name="tests/XML_RPC2/phpBackend/decoding/request.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="387db7d6d81e9d13a3bcd0c5682a0e12" name="tests/XML_RPC2/phpBackend/decoding/response.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5d0b3eb3b9ca99ba7d84dae406bf4f1e" name="tests/XML_RPC2/phpBackend/decoding/string.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="99ec43f9b8c882a5a2cad39f73b6af37" name="tests/XML_RPC2/phpBackend/decoding/struct.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8fbe67ead49f47097aa424fa15d2e9cb" name="tests/XML_RPC2/phpBackend/encoding/array.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="df7de4cf8ab97c939abd576e31ff3883" name="tests/XML_RPC2/phpBackend/encoding/base64.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b1f4013e10c78cd9580483bc2d01754e" name="tests/XML_RPC2/phpBackend/encoding/boolean.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0e723e39d8a881b2ba25837f93a872b1" name="tests/XML_RPC2/phpBackend/encoding/datetime.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b3a7ce89bc75d314b44fdab90ffff924" name="tests/XML_RPC2/phpBackend/encoding/datetime1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e5a29ee896dac4909d7d5866170c0ecd" name="tests/XML_RPC2/phpBackend/encoding/datetime2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="58c9dba3875cdecd256d714b73ecf9d1" name="tests/XML_RPC2/phpBackend/encoding/datetime3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b0304fa6930828e9d1759fa8756cd07d" name="tests/XML_RPC2/phpBackend/encoding/datetime4.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="05ec0a86ac16ec22668fd75175ede2f9" name="tests/XML_RPC2/phpBackend/encoding/double.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="515ac6a5fcaeb6bdff9cf24234cc3ce4" name="tests/XML_RPC2/phpBackend/encoding/integer.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="d85bb9218c1185e48427c152368e4dd2" name="tests/XML_RPC2/phpBackend/encoding/request.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8749ecf0afc0ea2047522951244e420c" name="tests/XML_RPC2/phpBackend/encoding/response.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="26c951b177e0e0ad47a94321140b2a1e" name="tests/XML_RPC2/phpBackend/encoding/response2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="63b11263927d2f729e0f6dabf79cdba6" name="tests/XML_RPC2/phpBackend/encoding/string.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="390d359440c840fcbd71cc9de8fd0c35" name="tests/XML_RPC2/phpBackend/encoding/struct.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="94676bdf7771ec414d393260e993a991" name="tests/XML_RPC2/phpBackend/regressions/11135.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="012e523a9a93cabcfec0f43c749f4ee8" name="tests/XML_RPC2/phpBackend/server/invalidXMLRequest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6d1829077175055cb0a6492a88209ec3" name="tests/XML_RPC2/phpBackend/server/nonexistantMethod.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e68b863c49b744c0f334767b47d8559f" name="tests/XML_RPC2/phpBackend/server/normalRequest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="9c8e5053d0b03375929c1235540e477c" name="tests/XML_RPC2/phpBackend/server/normalRequestWithPrefix.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="135f9588e64f562f39d7fb0b4fd25dab" name="tests/XML_RPC2/phpBackend/server/normalRequestWithPrefix2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="67b31df6cdb19a167daade99e28cdefe" name="tests/XML_RPC2/phpBackend/server/validator1ArrayOfStructsTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3adf7fdf98c763282b1ec498140e29ea" name="tests/XML_RPC2/phpBackend/server/validator1CountTheEntities.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="7d78739dc6b83c9a59189d9f07dcdfcc" name="tests/XML_RPC2/phpBackend/server/validator1EasyStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ea9fd84a1dbdad909a678b121842143b" name="tests/XML_RPC2/phpBackend/server/validator1EchoStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3d0770817ea8b0ea2f61481489d221f2" name="tests/XML_RPC2/phpBackend/server/validator1ManyTypesTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="dd575711c0acc05c3d73ad93ea90b31a" name="tests/XML_RPC2/phpBackend/server/validator1ModerateSizeArrayCheck.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3085277243f71728e52134714469a36c" name="tests/XML_RPC2/phpBackend/server/validator1NestedStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="d48793fdacb8a63173323931a13475e1" name="tests/XML_RPC2/phpBackend/server/validator1SimpleStructReturnTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0d785dd75870fe782d1d14d7943e9e3a" name="tests/XML_RPC2/regressions/14038.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5b40494cfdea2698a1f897543ed8fa19" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="d85a7791df14ef8402ccded4b2d763af" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0b3bae7415587fa4f436d41dfaf70f6d" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="0206797091c0784b859973a09641f17b" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3305f1f23ed17132d568264a3e718992" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="7fd06c8395c2c17feef220e9fe0074c5" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="b59be5741e8f3ee07fc1d077c9018ae3" name="tests/XML_RPC2/xmlrpcextBackend/cachedClient/tmpdir.inc" role="test" />
+   <file baseinstalldir="/" md5sum="b59be5741e8f3ee07fc1d077c9018ae3" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/tmpdir.inc" role="test" />
+   <file baseinstalldir="/" md5sum="c108fc35f2f29bf1b8ab55e92ec96e63" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e71cd1c90abeea59400abb63efdf324a" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="dc2a5fae72016fc373a0e597e0836f02" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOffByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e0c10c96deb02caa8e1b99a4687b0246" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOnByDefault1.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="6fa7f7f48f5670f50e3e117ede1b8f71" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="4b4fc6390ff59fa7d1086b7b7c523614" name="tests/XML_RPC2/xmlrpcextBackend/cachedServer/validator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="51854d0d6d1a2cd85dc08cdbb642d928" name="tests/XML_RPC2/xmlrpcextBackend/client/faultFromPython.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c5bf45d2bbeb900177ffcac62ccfc4a4" name="tests/XML_RPC2/xmlrpcextBackend/client/okFromPython.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="50c83fa2912911ec2f11562fac7fc6d3" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1ArrayOfStructsTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="ffb4f6399d07d6a3db52c9bedaf0c774" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1CountTheEntities.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="99c407fd829a7f57c0782d52324be05c" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1EasyStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="fb60a2f93eaf212f8268b6999cf7a70b" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1EchoStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="177c110b9e998a37ce85b706e2e62f97" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1ManyTypesTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c594f2fd3610827fb3b863e92f6e0332" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1ModerateSizeArrayCheck.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="1c9839c2689f66fb9f4477a9711c8eef" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1NestedStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="977bbc90046b909fba691bb509f1b603" name="tests/XML_RPC2/xmlrpcextBackend/client/phpxmlrpcValidator1SimpleStructReturnTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="c90d69db60d0f7ec827d52a4968aaa8f" name="tests/XML_RPC2/xmlrpcextBackend/client/protocolError.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="644077a3e2e7e1262429f14cf4ae0e4c" name="tests/XML_RPC2/xmlrpcextBackend/client/valueCreateFromNative.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="2877803c080159bfa592ced24c0f82a2" name="tests/XML_RPC2/xmlrpcextBackend/server/invalidXMLRequest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="5d923ac368e2e2ab878765bca3f64103" name="tests/XML_RPC2/xmlrpcextBackend/server/nonexistantMethod.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="48c36c159d53780b11c97d929316fa7b" name="tests/XML_RPC2/xmlrpcextBackend/server/normalRequest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="d0e70a2c7c43330e18cf85d0d72a43b3" name="tests/XML_RPC2/xmlrpcextBackend/server/normalRequestWithPrefix.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="3142ce060dcdfc97c98922ac66cec187" name="tests/XML_RPC2/xmlrpcextBackend/server/normalRequestWithPrefix2.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8f4af3ee0e66256982155b1bd42ecf0b" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1ArrayOfStructsTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="88d4f114647c1f785ffb49f42bc80c0b" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1CountTheEntities.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="a9c961554769ff2f7e7e219571f03b4c" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1EasyStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="003a329740bb2d3e0410d30fdcdda2a5" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1EchoStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="8bd9cfc2dd6ea373b2318aab29f8cd14" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1ManyTypesTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="cd45c2a7c22b75dc4f1caebb0b6b52be" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1ModerateSizeArrayCheck.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="e45dff86d8e3dccc6b6398d4508afaa8" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1NestedStructTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="50888c598989c5fc9d1fbe72eae1445f" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1SimpleStructReturnTest.phpt" role="test" />
+   <file baseinstalldir="/" md5sum="26219244c7b6be2e415c48707ccb9c2d" name="util/filelist.sh" role="data" />
+   <file baseinstalldir="/" md5sum="afadeac4ed3c600fc5f926343e53665a" name="util/indent.xsl" role="data" />
+   <file baseinstalldir="/" md5sum="8e35ea3ff18ec060ac52a3f6d5da719a" name="XML/RPC2/Backend.php" role="php" />
+   <file baseinstalldir="/" md5sum="31d93793aa50fa73db0cc1dd7583438e" name="XML/RPC2/CachedClient.php" role="php" />
+   <file baseinstalldir="/" md5sum="61572a00bb747971a5440dbff17a6c67" name="XML/RPC2/CachedServer.php" role="php" />
+   <file baseinstalldir="/" md5sum="458cf3ea60c34eb05b182f402beed205" name="XML/RPC2/Client.php" role="php" />
+   <file baseinstalldir="/" md5sum="03e6a530183884f3b3de85443666f1bf" name="XML/RPC2/Exception.php" role="php" />
+   <file baseinstalldir="/" md5sum="ff21af7679c309534bedcf4b7cadc97f" name="XML/RPC2/Server.php" role="php" />
+   <file baseinstalldir="/" md5sum="7b6ce951556c983cc67fd6c1742362b2" name="XML/RPC2/Value.php" role="php" />
+   <file baseinstalldir="/" md5sum="b716266169b64a3b5182f6b34ec68685" name="XML/RPC2/Backend/Php/Client.php" role="php" />
+   <file baseinstalldir="/" md5sum="1b3fbdd7cc0b147dbffe8dd36197b119" name="XML/RPC2/Backend/Php/Request.php" role="php" />
+   <file baseinstalldir="/" md5sum="6991039464a4f79cdf7113c1db743a56" name="XML/RPC2/Backend/Php/Response.php" role="php" />
+   <file baseinstalldir="/" md5sum="41f81dabcdcc8da9692c36634c757d12" name="XML/RPC2/Backend/Php/Server.php" role="php" />
+   <file baseinstalldir="/" md5sum="fd7a7fa584c74ba07d445b10abfe0b0a" name="XML/RPC2/Backend/Php/Value.php" role="php" />
+   <file baseinstalldir="/" md5sum="f5385a38c860e9b778616820e7e266c1" name="XML/RPC2/Backend/Php/Value/Array.php" role="php" />
+   <file baseinstalldir="/" md5sum="a85af76c8566ffb755b1a21c596c2d4d" name="XML/RPC2/Backend/Php/Value/Base64.php" role="php" />
+   <file baseinstalldir="/" md5sum="c8c660d5439d176fa64bf22c2cd1959e" name="XML/RPC2/Backend/Php/Value/Boolean.php" role="php" />
+   <file baseinstalldir="/" md5sum="1cce81b1cbbcaaceccd223540e566aac" name="XML/RPC2/Backend/Php/Value/Datetime.php" role="php" />
+   <file baseinstalldir="/" md5sum="1f07434878998b7330f5334281fae095" name="XML/RPC2/Backend/Php/Value/Double.php" role="php" />
+   <file baseinstalldir="/" md5sum="4ed55bcf2d10967cca931a3c9cb8ec9f" name="XML/RPC2/Backend/Php/Value/Integer.php" role="php" />
+   <file baseinstalldir="/" md5sum="eb835813d71e16989db9c45558d807c2" name="XML/RPC2/Backend/Php/Value/Scalar.php" role="php" />
+   <file baseinstalldir="/" md5sum="f50b46c25e733b621e04577138e35c32" name="XML/RPC2/Backend/Php/Value/String.php" role="php" />
+   <file baseinstalldir="/" md5sum="840d3622311c7fc946fa03a0e20aeacc" name="XML/RPC2/Backend/Php/Value/Struct.php" role="php" />
+   <file baseinstalldir="/" md5sum="e8759530fd2be4dbc6252c6df14cdcaf" name="XML/RPC2/Backend/Xmlrpcext/Client.php" role="php" />
+   <file baseinstalldir="/" md5sum="106792afb2c88c0f4fd2d76728557f2d" name="XML/RPC2/Backend/Xmlrpcext/Server.php" role="php" />
+   <file baseinstalldir="/" md5sum="f1b11e54807694211fa8a96309e59e8e" name="XML/RPC2/Backend/Xmlrpcext/Value.php" role="php" />
+   <file baseinstalldir="/" md5sum="2bd6afa125c8c753cad1ce41bee42bc5" name="XML/RPC2/Server/CallHandler.php" role="php" />
+   <file baseinstalldir="/" md5sum="13ac38fb45693ebe8ddeb44f41cb8f40" name="XML/RPC2/Server/Method.php" role="php" />
+   <file baseinstalldir="/" md5sum="97d87aa23247682d710b6f384ac77433" name="XML/RPC2/Server/CallHandler/Class.php" role="php" />
+   <file baseinstalldir="/" md5sum="b87b63cf3c0fd75d8dc5d7542bf022a9" name="XML/RPC2/Server/CallHandler/Instance.php" role="php" />
+   <file baseinstalldir="/" md5sum="bfd305f3e8483e35572d09bfd36a4ed0" name="XML/RPC2/Util/HTTPRequest.php" role="php" />
+   <file baseinstalldir="/" md5sum="b4c70d73300f317ee8a6dfb54e053077" name="Makefile" role="data" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>5.0.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.4.0b1</min>
+   </pearinstaller>
+   <package>
+    <name>PEAR</name>
+    <channel>pear.php.net</channel>
+    <min>1.0b1</min>
+   </package>
+   <package>
+    <name>Cache_Lite</name>
+    <channel>pear.php.net</channel>
+    <min>1.6.0</min>
+   </package>
+   <extension>
+    <name>curl</name>
+   </extension>
+  </required>
+ </dependencies>
+ <phprelease />
  <changelog>
   <release>
-   <version>0.0.6</version>
-   <state>alpha</state>
+   <version>
+    <release>0.0.6</release>
+    <api>0.0.6</api>
+   </version>
+   <stability>
+    <release>alpha</release>
+    <api>alpha</api>
+   </stability>
    <date>2005-11-29</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
    <notes>
-    Initial PEAR release
-   </notes> 
+Initial PEAR release
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.6</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-11</date>
+   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+   <notes>
+QA release
+Package 2.0
+Bug #11280 Xmlrpcext escapes UTF-8 	sergiosgc
+Bug #12884 Bogus User-agent header 	sergiosgc
+Bug #13145 Server sends the wrong content-length header if mbstring is used 	sergiosgc
+Bug #13597 XML_RPC2_Backend_Xmlrpcext_Client::remoteCall___ unable to handle FALSE response 	sergiosgc
+Request #14822 Make use of SKIPIF when xmlrpc extension not loaded (unit tests) 	doconnor
+Bug #14896 validator1EasyStructTest.phpt fails when no xmlrpc extension 	doconnor
+Request #15633 Add timeout 	doconnor
+Bug #16145 Exception Codes not being used by class &quot;XML_RPC2_FaultException&quot; 	sergiosgc
+Bug #16301 Invalid XML response from server will crash PHP 	doconnor
+   </notes>
   </release>
  </changelog>
 </package>
