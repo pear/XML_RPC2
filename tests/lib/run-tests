@@ -223,7 +223,7 @@ if (isset($argc) && $argc > 1) {
 		foreach($test_files AS $name) {
 			$test_results[$name] = run_test($php,$name);
 		}
-		if (getenv('REPORT_EXIT_STATUS') == 1 and ereg('FAILED( |$)', implode(' ', $test_results))) {
+		if (getenv('REPORT_EXIT_STATUS') == 1 and @ereg('FAILED( |$)', implode(' ', $test_results))) {
 			exit(1);
 		}
 		exit(0);
@@ -574,7 +574,7 @@ TEST $file
 		$line = fgets($fp);
 
 		// Match the beginning of a section.
-		if (ereg('^--([A-Z]+)--',$line,$r)) {
+		if (@ereg('^--([A-Z]+)--',$line,$r)) {
 			$section = $r[1];
 			$section_text[$section] = '';
 			continue;
@@ -601,7 +601,7 @@ TEST $file
         $tmp = dirname($file);
     }
 	$tmp_skipif = $tmp . uniqid('/phpt.');
-	$tmp_file   = ereg_replace('\.phpt$','.php',$file);
+	$tmp_file   = @ereg_replace('\.phpt$','.php',$file);
 	$tmp_post   = $tmp . uniqid('/phpt.');
 
 	@unlink($tmp_skipif);
@@ -609,10 +609,10 @@ TEST $file
 	@unlink($tmp_post);
 
 	// unlink old test results	
-	@unlink(ereg_replace('\.phpt$','.diff',$file));
-	@unlink(ereg_replace('\.phpt$','.log',$file));
-	@unlink(ereg_replace('\.phpt$','.exp',$file));
-	@unlink(ereg_replace('\.phpt$','.out',$file));
+	@unlink(@ereg_replace('\.phpt$','.diff',$file));
+	@unlink(@ereg_replace('\.phpt$','.log',$file));
+	@unlink(@ereg_replace('\.phpt$','.exp',$file));
+	@unlink(@ereg_replace('\.phpt$','.out',$file));
 
 	// Reset environment from any previous test.
 	putenv("REDIRECT_STATUS=");
@@ -636,9 +636,9 @@ TEST $file
 			$output = `"$php" $info_params -f $t_s`;
             chdir($curdir);
 			@unlink($tmp_skipif);
-			if (eregi("^skip", trim($output))) {
+			if (@eregi("^skip", trim($output))) {
 				echo "SKIP $tested";
-				$reason = (eregi("^skip[[:space:]]*(.+)\$", trim($output))) ? eregi_replace("^skip[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
+				$reason = (@eregi("^skip[[:space:]]*(.+)\$", trim($output))) ? @eregi_replace("^skip[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
 				if ($reason) {
 					echo " (reason: $reason)\n";
 				} else {
@@ -649,14 +649,14 @@ TEST $file
 				}
 				return 'SKIPPED';
 			}
-			if (eregi("^info", trim($output))) {
-				$reason = (ereg("^info[[:space:]]*(.+)\$", trim($output))) ? ereg_replace("^info[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
+			if (@eregi("^info", trim($output))) {
+				$reason = (@ereg("^info[[:space:]]*(.+)\$", trim($output))) ? @ereg_replace("^info[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
 				if ($reason) {
 					$info = " (info: $reason)";
 				}
 			}
-			if (eregi("^warn", trim($output))) {
-				$reason = (ereg("^warn[[:space:]]*(.+)\$", trim($output))) ? ereg_replace("^warn[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
+			if (@eregi("^warn", trim($output))) {
+				$reason = (@ereg("^warn[[:space:]]*(.+)\$", trim($output))) ? @ereg_replace("^warn[[:space:]]*(.+)\$", "\\1", trim($output)) : FALSE;
 				if ($reason) {
 					$warn = true; /* only if there is a reason */
 					$info = " (warn: $reason)";
@@ -795,14 +795,14 @@ COMMAND $cmd
 	$GLOBALS['__PHP_FAILED_TESTS__'][] = array(
 						'name' => $file,
 						'test_name' => $tested,
-						'output' => ereg_replace('\.phpt$','.log', $file),
-						'diff'   => ereg_replace('\.phpt$','.diff', $file),
+						'output' => @ereg_replace('\.phpt$','.log', $file),
+						'diff'   => @ereg_replace('\.phpt$','.diff', $file),
 						'info'   => $info
 						);
 
 	// write .exp
 	if (strpos($log_format,'E') !== FALSE) {
-		$logname = ereg_replace('\.phpt$','.exp',$file);
+		$logname = @ereg_replace('\.phpt$','.exp',$file);
 		$log = fopen($logname,'w') or error("Cannot create test log - $logname");
 		fwrite($log,$wanted);
 		fclose($log);
@@ -810,7 +810,7 @@ COMMAND $cmd
 
 	// write .out
 	if (strpos($log_format,'O') !== FALSE) {
-		$logname = ereg_replace('\.phpt$','.out',$file);
+		$logname = @ereg_replace('\.phpt$','.out',$file);
 		$log = fopen($logname,'w') or error("Cannot create test log - $logname");
 		fwrite($log,$output);
 		fclose($log);
@@ -818,7 +818,7 @@ COMMAND $cmd
 
 	// write .diff
 	if (strpos($log_format,'D') !== FALSE) {
-		$logname = ereg_replace('\.phpt$','.diff',$file);
+		$logname = @ereg_replace('\.phpt$','.diff',$file);
 		$log = fopen($logname,'w') or error("Cannot create test log - $logname");
 		fwrite($log,generate_diff($wanted,$output));
 		fclose($log);
@@ -826,7 +826,7 @@ COMMAND $cmd
 
 	// write .log
 	if (strpos($log_format,'L') !== FALSE) {
-		$logname = ereg_replace('\.phpt$','.log',$file);
+		$logname = @ereg_replace('\.phpt$','.log',$file);
 		$log = fopen($logname,'w') or error("Cannot create test log - $logname");
 		fwrite($log,"
 ---- EXPECTED OUTPUT
