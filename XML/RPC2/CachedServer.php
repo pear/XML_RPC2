@@ -342,7 +342,7 @@ class XML_RPC2_CachedServer {
     private function _parseMethodName($request)
     {
         // TODO : change for "simplexml"
-        $res = preg_match('/<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)</methodName>/', $request, $results);
+        $res = preg_match('/<methodName>' . $this->_prefix . '([a-zA-Z0-9\.,\/]*)<\/methodName>/', $request, $results);
         if ($res>0) {
             return $results[1];
         }

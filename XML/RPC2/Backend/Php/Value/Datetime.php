@@ -133,11 +133,20 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
         } else {
             $tzSeconds = 0;
         }
-        $result = ((double) @mktime($hour, $minutes, $seconds, $month, $day, $year, 0)) +
-                  ((double) $milliseconds) -
-                  ((double) $tzSeconds);
-        if ($milliseconds==0) return ((int) $result);
-        return $result;
+        if (class_exists('DateTime')) {
+            $result = new DateTime();
+            $result->setDate($year, $month, $day);
+            $result->setTime($hour, $minutes, $seconds);
+            $result = $result->getTimestamp();
+            if ($milliseconds==0) return $result;
+            return ((float) $result) + $milliseconds/1000;
+        } else {
+            $result = ((double) @mktime($hour, $minutes, $seconds, $month, $day, $year, 0)) +
+                      ((double) $milliseconds) -
+                      ((double) $tzSeconds);
+            if ($milliseconds==0) return ((int) $result);
+            return $result;
+        }
     }     
     
     // }}}
