@@ -63,7 +63,6 @@ require_once 'XML/RPC2/Exception.php';
  */
 class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
 {
-    
     // {{{ properties
     
     /** 
@@ -123,13 +122,13 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
+        if ($this->autoDocument && $this->input->isEmpty()) {
+            $this->autoDocument();
+        } else {
             $response = $this->getResponse();
             header('Content-type: text/xml; charset=' . $this->encoding);
             header('Content-length: ' . $this->getContentLength($response));
             print $response;
-        } else {
-            $this->autoDocument();
         }
     }
     
@@ -145,9 +144,9 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
     {
         try {
             if ($this->signatureChecking) {
-                $tmp = xmlrpc_parse_method_descriptions($GLOBALS['HTTP_RAW_POST_DATA']);
+                $tmp = xmlrpc_parse_method_descriptions($this->input->readRequest());
                 $methodName = $tmp['methodName'];
-                $parameters = xmlrpc_decode($GLOBALS['HTTP_RAW_POST_DATA'], $this->encoding);
+                $parameters = xmlrpc_decode($this->input->readRequest(), $this->encoding);
                 $method = $this->callHandler->getMethod($methodName);
                 if (!($method)) {
                     // see http://xmlrpc-epi.sourceforge.net/specs/rfc.fault_codes.php for standard error codes 
@@ -159,7 +158,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             }
             set_error_handler(array('XML_RPC2_Backend_Xmlrpcext_Server', 'errorToException'));
             $response = @xmlrpc_server_call_method($this->_xmlrpcextServer, 
-                                                  $GLOBALS['HTTP_RAW_POST_DATA'],
+                                                  $this->input->readRequest(),
                                                   null,
                                                   array('output_type' => 'xml', 'encoding' => $this->encoding));
             restore_error_handler();
@@ -170,8 +169,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
         }
     }
-     
-    
+    // }}}
 }
 
 ?>

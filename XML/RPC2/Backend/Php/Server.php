@@ -90,13 +90,13 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
      */
     public function handleCall()
     {
-        if ((!($this->autoDocument)) or ((isset($GLOBALS['HTTP_RAW_POST_DATA'])) && (strlen($GLOBALS['HTTP_RAW_POST_DATA'])>0))) {
+        if ($this->autoDocument && $this->input->isEmpty()) {
+            $this->autoDocument();
+        } else {
             $response = $this->getResponse();
             header('Content-type: text/xml; charset=' . $this->encoding);
             header('Content-length: ' . $this->getContentLength($response));
             print $response;
-        } else {
-            $this->autoDocument();
         }
     }
     
@@ -112,7 +112,7 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     {
         try {
             set_error_handler(array('XML_RPC2_Backend_Php_Server', 'errorToException'));
-            $request = @simplexml_load_string($GLOBALS['HTTP_RAW_POST_DATA']);
+            $request = @simplexml_load_string($this->input->readRequest());
             // TODO : do not use exception but a XMLRPC error !
             if (!is_object($request)) throw new XML_RPC2_FaultException('Unable to parse request XML', 0);
             $request = XML_RPC2_Backend_Php_Request::createFromDecode($request);  

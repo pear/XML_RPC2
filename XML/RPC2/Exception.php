@@ -330,7 +330,7 @@ class XML_RPC2_ReceivedInvalidStatusCodeException extends XML_RPC2_TransportExce
 }
 
 /**
- * XML_RPC2_CurlError is thrown whenever an error is reported by the low level HTTP cURL library
+ * XML_RPC2_CurlException is thrown whenever an error is reported by the low level HTTP cURL library
  * 
  * @category   XML
  * @package    XML_RPC2
@@ -340,6 +340,20 @@ class XML_RPC2_ReceivedInvalidStatusCodeException extends XML_RPC2_TransportExce
  * @link       http://pear.php.net/package/XML_RPC2
  */
 class XML_RPC2_CurlException extends XML_RPC2_TransportException
+{
+}
+
+/**
+ * XML_RPC2_ConfigException is thrown whenever PHP config clashes with XML_RPC2 requirements or config
+ * 
+ * @category   XML
+ * @package    XML_RPC2
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @copyright  2004-2006 Sergio Carvalho
+ * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
+ * @link       http://pear.php.net/package/XML_RPC2
+ */
+class XML_RPC2_ConfigException extends XML_RPC2_Exception
 {
 }
 

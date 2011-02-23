@@ -42,6 +42,7 @@
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Backend.php';
+require_once 'XML/RPC2/Server/Input.php';
 // }}}
 
 
@@ -147,6 +148,15 @@ abstract class XML_RPC2_Server
      * @var boolean
      */
     protected $signatureChecking = true;
+
+    /** 
+     * input handler
+     *
+     * Implementation of XML_RPC2_Server_Input that feeds this server with input
+     *
+     * @var XML_RPC2_Server_Input 
+    */
+    protected $input;
       
     // }}}
     // {{{ constructor
@@ -174,6 +184,19 @@ abstract class XML_RPC2_Server
         }
         if ((isset($options['signatureChecking'])) && (is_bool($options['signatureChecking']))) {
             $this->signatureChecking = $options['signatureChecking'];
+        }
+        if (!isset($options['input'])) $options['input'] = 'XML_RPC2_Server_Input_RawPostData';
+        if (is_string($options['input'])) {
+            $inputDir = strtr($options['input'], array('_' => DIRECTORY_SEPARATOR)) . '.php';
+            require_once($inputDir);
+            $inputClass = $options['input'];
+
+            $options['input'] = new $inputClass();
+        } 
+        if ($options['input'] instanceof XML_RPC2_Server_Input) {
+            $this->input = $options['input'];
+        } else {
+            throw new XML_RPC2_ConfigException('Invalid value for "input" option. It must be either a XML_RPC2_Server_Input subclass name or XML_RPC2_Server_Input subclass instance');
         }
     }
     
