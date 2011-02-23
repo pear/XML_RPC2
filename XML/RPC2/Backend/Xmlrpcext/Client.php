@@ -119,7 +119,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
             throw new XML_RPC2_Exception('Unable to decode response');
         }
         */
-        if (xmlrpc_is_fault($result)) {
+        if (is_array($result) && xmlrpc_is_fault($result)) {
             if ($this->debug) {
                 print "XML_RPC2_FaultException(${result['faultString']}, ${result['faultCode']})";
             }
