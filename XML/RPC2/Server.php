@@ -123,7 +123,7 @@ abstract class XML_RPC2_Server
      *
      * @var string
      */
-    protected $encoding = 'iso-8859-1';
+    protected $encoding = 'utf-8';
     
     /** 
      * display html documentation of xmlrpc exported methods when there is no post datas
