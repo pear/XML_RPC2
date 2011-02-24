@@ -78,6 +78,7 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
     {
         switch ($value) {
             case 'int':
+            case 'i8':
             case 'i4':
             case 'boolean':
             case 'string':
@@ -134,8 +135,10 @@ abstract class XML_RPC2_Backend_Php_Value_Scalar extends XML_RPC2_Backend_Php_Va
     {
         if (is_null($explicitType)) {
             switch (gettype($nativeValue)) {
-                case 'boolean':
                 case 'integer':
+                    $explicitType = $nativeValue <= 2147483647 /* PHP_INT_MAX on 32 bit systems */ ? gettype($nativeValue) : 'Integer64';
+                    break;
+                case 'boolean':
                 case 'double':
                 case 'string':
                     $explicitType = gettype($nativeValue);

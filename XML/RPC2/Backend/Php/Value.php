@@ -107,6 +107,8 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
      *    b) they do not
      *    in the first case, an XML_RPC2_Value_Array is returned. In the second, a XML_RPC2_Value_Struct is returned.
      *  - PHP Objects are serialized and represented in an XML_RPC2_Value_Base64
+     *  - Integers fitting in a 32bit integer are encoded as regular xml-rpc integers
+     *  - Integers larger than 32bit are encoded using the i8 xml-rpc extension 
      *
      * Whenever native object automatic detection proves inaccurate, use XML_RPC2_Value::createFromNative providing 
      * a valid explicit type as second argument
@@ -173,6 +175,10 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
         }        
         $explicitType = ucfirst(strtolower($explicitType));
         switch ($explicitType) {
+            case 'I8':
+                require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
+                return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue, 'Integer64');
+                break;
             case 'I4':
             case 'Int':
             case 'Boolean':
@@ -222,6 +228,9 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
         if (count($valueType) == 1) { // Usually we must check the node name
             $nodename = dom_import_simplexml($valueType[0])->nodeName;
             switch ($nodename) {
+                case 'i8':
+                    $nativeType = 'Integer64';
+                    break;
                 case 'i4':
                 case 'int':
                     $nativeType = 'Integer';
