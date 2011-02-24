@@ -338,7 +338,7 @@ class XML_RPC2_Server_Method
                 print "        <tr><td><b>Type</b></td><td><b>Name</b></td><td><b>Documentation</b></td></tr>\n";
                 while (list($name, $parameter) = each($this->_parameters)) {
                     $type = $parameter['type'];
-                    $doc = htmlentities($parameter['doc']);
+                    $doc = isset($parameter['doc']) ? htmlentities($parameter['doc']) : 'Method is not documented. No PHPDoc block was found associated with the method in the source code.';
                     print "        <tr><td>$type</td><td>$name</td><td>$doc</td></tr>\n";
                 }
                 reset($this->_parameters);
