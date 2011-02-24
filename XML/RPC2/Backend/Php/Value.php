@@ -184,6 +184,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
             case 'Boolean':
             case 'Double':
             case 'String':
+            case 'Nil':
                 require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
                 return XML_RPC2_Backend_Php_Value_Scalar::createFromNative($nativeValue);
                 break;
@@ -255,6 +256,9 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                     break;
                 case 'struct':
                     $nativeType = 'Struct';
+                    break;
+                case 'nil':
+                    $nativeType = 'Nil';
                     break;
                 default:
                     throw new XML_RPC2_DecodeException(sprintf('Unable to decode XML-RPC value. Value type is not recognized \'%s\'', $nodename));
