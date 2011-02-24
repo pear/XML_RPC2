@@ -220,13 +220,14 @@ class XML_RPC2_Server_Method
                     $newParameter['type'] = XML_RPC2_Server_Method::_limitPHPType($matches[1]);
                 }
                 $tmp = '$' . $parameter->getName() . ' ';
-                if (strpos($matches[2], '$' . $tmp) === 0) {
-                    $newParameter['doc'] = $matches[2];
+                if (strpos($matches[3], '$' . $tmp) === 0) {
+                    $newParameter['doc'] = $matches[3];
                 } else {
                     // The phpdoc comment is something like "@param string $param description of param"    
                     // Let's keep only "description of param" as documentation (remove $param)
-                    $newParameter['doc'] = substr($matches[2], strlen($tmp));
+                    $newParameter['doc'] = substr($matches[3], strlen($tmp));
                 }
+                $newParameter['doc'] = preg_replace('_^\s*_', '', $newParameter['doc']);
             }
 
             $parameters[$parameter->getName()] = $newParameter;

@@ -63,8 +63,9 @@ class XML_RPC2_Server_Input_RawPostData implements XML_RPC2_Server_Input
      */
     public function isEmpty()
     {
-        if (!isset($this->input)) $this->readRequest;
-        return empty($this->readRequest);
+        if (!isset($this->input)) $this->readRequest();
+        $result = empty($this->input);
+        return $result;
     }
     /**
      * Return the input as a string
