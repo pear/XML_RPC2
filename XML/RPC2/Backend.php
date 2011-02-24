@@ -41,6 +41,7 @@
 
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
+require_once 'PEAR.php';
 // }}}
 
 /**
@@ -107,9 +108,7 @@ abstract class XML_RPC2_Backend
         if (
             $backend == 'Xmlrpcext' &&
             !function_exists('xmlrpc_server_create') &&
-            !( // TODO Use PEAR::loadExtension once PEAR passes PHP5 unit tests (E_STRICT compliance, namely)
-              @dl('php_xmlrpc' . PHP_SHLIB_SUFFIX)    || @dl('xmlrpc' . PHP_SHLIB_SUFFIX)
-             )
+            !( PEAR::loadExtension('php_xmlrpc') ) 
            ) {
             throw new XML_RPC2_Exception('Unable to load xmlrpc extension.');
         }     
