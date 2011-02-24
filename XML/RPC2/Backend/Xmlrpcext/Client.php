@@ -75,18 +75,22 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
     }
     
     // }}}
-    // {{{ remoteCall()
+    // {{{ __call()
     
     /**
-     * remoteCall executes the XML-RPC call, and returns the result
+     * __call Catchall. This method catches remote method calls and provides for remote forwarding.
      *
-     * NB : The '___' at the end of the method name is to avoid collisions with
-     * XMLRPC __call() 
+     * If the parameters are native types, this method will use XML_RPC_Value::createFromNative to 
+     * convert it into an XML-RPC type. Whenever a parameter is already an instance of XML_RPC_Value
+     * it will be used as provided. It follows that, in situations when XML_RPC_Value::createFromNative
+     * proves inacurate -- as when encoding DateTime values -- you should present an instance of 
+     * XML_RPC_Value in lieu of the native parameter.
      *
      * @param   string      Method name
      * @param   array       Parameters
+     * @return  mixed       The call result, already decoded into native types
      */
-    public function remoteCall___($methodName, $parameters)
+    public function __call($methodName, $parameters)
     {
         $tmp = xmlrpc_encode_request($this->prefix . $methodName, $parameters, array('escaping' => $this->escaping, 'encoding' => $this->encoding));
         if ($this->uglyStructHack) {
