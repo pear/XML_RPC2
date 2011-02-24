@@ -23,10 +23,10 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
   <email>jal@ambitonline.com</email>
   <active>yes</active>
  </developer>
- <date>2010-10-11</date>
- <time>00:21:36</time>
+ <date>2011-02-24</date>
+ <time>21:00:00</time>
  <version>
-  <release>1.0.6</release>
+  <release>1.0.7</release>
   <api>1.0.5</api>
  </version>
  <stability>
@@ -35,17 +35,7 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
  </stability>
  <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
  <notes>
-QA release
-Package 2.0
-Bug #11280 Xmlrpcext escapes UTF-8 	sergiosgc
-Bug #12884 Bogus User-agent header 	sergiosgc
-Bug #13145 Server sends the wrong content-length header if mbstring is used 	sergiosgc
-Bug #13597 XML_RPC2_Backend_Xmlrpcext_Client::remoteCall___ unable to handle FALSE response 	sergiosgc
-Request #14822 Make use of SKIPIF when xmlrpc extension not loaded (unit tests) 	doconnor
-Bug #14896 validator1EasyStructTest.phpt fails when no xmlrpc extension 	doconnor
-Request #15633 Add timeout 	doconnor
-Bug #16145 Exception Codes not being used by class &quot;XML_RPC2_FaultException&quot; 	sergiosgc
-Bug #16301 Invalid XML response from server will crash PHP 	doconnor
+ Closed bugs: 11023 11177 11314 12562 13240 14958 16300 17256 17632 17732 18067 18114 18268 18269 18285 
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">

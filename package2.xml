@@ -28,19 +28,19 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
   <email>jal@ambitonline.com</email>
   <active>yes</active>
  </developer>
- <date>2007-12-05</date>
- <time>16:33:30</time>
+ <date>2011-02-24</date>
+ <time>21:00:00</time>
  <version>
-  <release>1.0.3</release>
-  <api>1.0.3</api>
+  <release>1.0.7</release>
+  <api>1.0.5</api>
  </version>
  <stability>
   <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
- <notes>- Fixed bug 11135: Empty array should not give a notice
-
+ <notes>
+ Closed bugs: 11023 11177 11314 12562 13240 14958 16300 17256 17632 17732 18067 18114 18268 18269 18285 
  </notes>
  <contents>
   <dir name="/">
@@ -65,9 +65,7 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
       </dir> <!-- /tests/XML_RPC2/phpBackend/cachedServer -->
       <dir name="client">
        <file name="faultFromPython.phpt" role="test" />
-       <file name="okFromPEAR.phpt" role="test" />
        <file name="okFromPython.phpt" role="test" />
-       <file name="okFromUserLandGetCurrentTime.phpt" role="test" />
        <file name="phpxmlrpcValidator1ArrayOfStructsTest.phpt" role="test" />
        <file name="phpxmlrpcValidator1CountTheEntities.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTest.phpt" role="test" />
@@ -144,9 +142,7 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
       </dir> <!-- /tests/XML_RPC2/xmlrpcextBackend/cachedServer -->
       <dir name="client">
        <file name="faultFromPython.phpt" role="test" />
-       <file name="okFromPEAR.phpt" role="test" />
        <file name="okFromPython.phpt" role="test" />
-       <file name="okFromUserLandGetCurrentTime.phpt" role="test" />
        <file name="phpxmlrpcValidator1ArrayOfStructsTest.phpt" role="test" />
        <file name="phpxmlrpcValidator1CountTheEntities.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTest.phpt" role="test" />
