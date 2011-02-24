@@ -31,16 +31,16 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
  <date>2011-02-24</date>
  <time>21:00:00</time>
  <version>
-  <release>1.0.7</release>
+  <release>1.1.0b1</release>
   <api>1.0.5</api>
  </version>
  <stability>
-  <release>stable</release>
+  <release>beta</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
  <notes>
- Closed bugs: 11023 11177 11314 12562 13240 14958 16300 17256 17632 17732 18067 18114 18268 18269 18285 
+ Started using HTTP_Request2 as request handler
  </notes>
  <contents>
   <dir name="/">
@@ -237,6 +237,11 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
     <name>PEAR</name>
     <channel>pear.php.net</channel>
     <min>1.0b1</min>
+   </package>
+   <package>
+    <name>HTTP_Request2</name>
+    <channel>pear.php.net</channel>
+    <min>0.6.0</min>
    </package>
    <package>
     <name>Cache_Lite</name>
