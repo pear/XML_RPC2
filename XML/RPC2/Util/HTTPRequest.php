@@ -42,6 +42,7 @@
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Client.php';
+require_once 'HTTP/Request2.php';
 // }}}
 
 /**
@@ -51,7 +52,7 @@ require_once 'XML/RPC2/Client.php';
  * @category   XML
  * @package    XML_RPC2
  * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>
- * @copyright  2004-2006 Sergio Carvalho
+ * @copyright  2004-2011 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
  */
@@ -193,30 +194,66 @@ class XML_RPC2_Util_HTTPRequest
     */
     public function sendRequest()
     {
+        $request = new HTTP_Request2($this->_uri, HTTP_Request2::METHOD_POST);
+        if (isset($params['proxy'])) {
+            $elements = parse_url($params['proxy']);
+            if (is_array($elements)) {
+                if ((isset($elements['scheme'])) and (isset($elements['host']))) {
+                    $request->setConfig('proxy_host', $elements['host']);
+                }
+                if (isset($elements['port'])) {
+                    $request->setConfig('proxy_port', $elements['port']);
+                }
+                if ((isset($elements['user'])) and (isset($elements['pass']))) {
+                    $request->setConfig('proxy_user', $elements['user']);
+                    $request->setConfig('proxy_password', $elements['pass']);
+                }
+            }
+        }
+        $request->setConfig('ssl_verify_peer', $this->_sslverify);
+        $request->setConfig('ssl_verify_host', $this->_sslverify);
+        $request->setHeader('Content-type: text/xml; charset='.$this->_encoding);
+        $request->setHeader('User-Agent: PEAR::XML_RPC2/@package_version@');
+        $request->setBody($this->_postData);
+        if (isset($this->_connectionTimeout)) $request->setConfig('timeout', (int) ($this->_connectionTimeout / 1000));
+        try {
+            $result = $request->send();
+            if ($result->getStatus() != 200) throw new XML_RPC2_ReceivedInvalidStatusCodeException('Received non-200 HTTP Code: ' . $request->getStatus() . '. Response body:' . $result->getBody());
+
+        } catch (HTTP_Request2_Exception $e) {
+            throw new XML_RPC2_CurlException($e);
+        }
+        $this->_body = $result->getBody();
+        return $result->getBody();
+
+
+
+
+/*
         if (!function_exists('curl_init') &&
             !( PEAR::loadExtension('php_curl') )) {
             throw new XML_RPC2_CurlException('cURI extension is not present and load failed');
         }
         if ($ch = curl_init()) {
             if (
-                (is_null($this->_proxy)     || curl_setopt($ch, CURLOPT_PROXY, $this->_proxy)) &&
-                (is_null($this->_proxyAuth) || curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->_proxyAuth)) &&
-                curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
-                curl_setopt($ch, CURLOPT_POST, 1) &&
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $this->_sslverify) &&
-                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR::XML_RPC2/@package_version@')) &&
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData) &&
-                (!isset($this->_connectionTimeout) || curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $this->_connectionTimeout))
+//                (is_null($this->_proxy)     || curl_setopt($ch, CURLOPT_PROXY, $this->_proxy)) &&
+//                (is_null($this->_proxyAuth) || curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->_proxyAuth)) &&
+//                curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
+//?                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
+//                curl_setopt($ch, CURLOPT_POST, 1) &&
+//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
+//                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $this->_sslverify) &&
+//                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR::XML_RPC2/@package_version@')) &&
+//                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData) &&
+//                (!isset($this->_connectionTimeout) || curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $this->_connectionTimeout))
             ) {
                 $result = curl_exec($ch);
-                if (($errno = curl_errno($ch)) != 0) {
-                    throw new XML_RPC2_CurlException("Curl returned non-null errno $errno:" . curl_error($ch), $errno);
-                }
-                $info = curl_getinfo($ch);
-                if ($info['http_code'] != 200) {
-                    throw new XML_RPC2_ReceivedInvalidStatusCodeException('Curl returned non 200 HTTP code: ' . $info['http_code'] . '. Response body:' . $result, $info['http_code']);
+//                if (($errno = curl_errno($ch)) != 0) {
+//                    throw new XML_RPC2_CurlException("Curl returned non-null errno $errno:" . curl_error($ch), $errno);
+//                }
+//                $info = curl_getinfo($ch);
+//                if ($info['http_code'] != 200) {
+//                    throw new XML_RPC2_ReceivedInvalidStatusCodeException('Curl returned non 200 HTTP code: ' . $info['http_code'] . '. Response body:' . $result, $info['http_code']);
                 }
             } else {
                 throw new XML_RPC2_CurlException('Unable to setup curl');
@@ -226,6 +263,7 @@ class XML_RPC2_Util_HTTPRequest
         }
         $this->_body = $result;
         return true;
+ */
     }
 
     // }}}

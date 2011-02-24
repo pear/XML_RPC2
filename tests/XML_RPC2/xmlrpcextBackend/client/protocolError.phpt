@@ -22,5 +22,5 @@ try {
     var_dump($e->getMessage());
 }
 ?>
---EXPECT--
-string(70) "Curl returned non-null errno 6:Couldn't resolve host 'rpc.example.com'"
+--EXPECTREGEX--
+string\(.*\) \"HTTP_Request2_Exception.*

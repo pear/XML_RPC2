@@ -20,4 +20,4 @@ try {
 }
 ?>
 --EXPECTREGEX--
-string\(.*\) \"Curl returned non-null errno.*
+string\(.*\) \"HTTP_Request2_Exception.*
