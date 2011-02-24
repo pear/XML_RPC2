@@ -15,12 +15,14 @@ set_include_path(realpath(dirname(__FILE__) . '/../../../../') . PATH_SEPARATOR 
 require_once('tmpdir.inc');
 require_once 'XML/RPC2/CachedClient.php';
 
+$dir = tmpDir() . '/cache_' . rand().'/';
+@mkdir($dir);
 $options = array(
 	'debug' => false,
 	'backend' => 'Xmlrpcext',
 	'prefix' => 'validator1.',
 	'cacheOptions' => array(
-		'cacheDir' => tmpDir() . '/',
+		'cacheDir' => $dir,
 		'lifetime' => 1,
 		'cacheByDefault' => true,
 		'cachedMethods' => array(
@@ -44,6 +46,7 @@ sleep(3);
 $result = $client->easyStructTest($arg);
 var_dump($result);
 $client->dropCacheFile___('easyStructTest', array($arg));
+@rmdir($dir);
 
 ?>
 --EXPECT--
