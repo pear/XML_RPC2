@@ -190,6 +190,8 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
         <file name="Scalar.php" role="php" />
         <file name="String.php" role="php" />
         <file name="Struct.php" role="php" />
+        <file name="Nil.php" role="php" />
+        <file name="Integer64.php" role="php" />
        </dir> <!-- /XML/RPC2/Backend/Php/Value -->
        <file name="Client.php" role="php" />
        <file name="Request.php" role="php" />
