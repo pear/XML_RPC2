@@ -106,7 +106,7 @@ abstract class XML_RPC2_Client
      *
      * @var string
      */
-    protected $encoding = 'iso-8859-1';
+    protected $encoding = 'utf-8';
 
     /**
      * Holds the escaping method(s) of the client request
