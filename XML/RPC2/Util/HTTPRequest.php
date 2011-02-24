@@ -194,9 +194,7 @@ class XML_RPC2_Util_HTTPRequest
     public function sendRequest()
     {
         if (!function_exists('curl_init') &&
-            !( // TODO Use PEAR::loadExtension once PEAR passes PHP5 unit tests (E_STRICT compliance, namely)
-              @dl('php_curl' . PHP_SHLIB_SUFFIX)    || @dl('curl' . PHP_SHLIB_SUFFIX)
-             )) {
+            !( PEAR::loadExtension('php_curl') )) {
             throw new XML_RPC2_CurlException('cURI extension is not present and load failed');
         }
         if ($ch = curl_init()) {
@@ -214,11 +212,11 @@ class XML_RPC2_Util_HTTPRequest
             ) {
                 $result = curl_exec($ch);
                 if (($errno = curl_errno($ch)) != 0) {
-                    throw new XML_RPC2_CurlException("Curl returned non-null errno $errno:" . curl_error($ch));
+                    throw new XML_RPC2_CurlException("Curl returned non-null errno $errno:" . curl_error($ch), $errno);
                 }
                 $info = curl_getinfo($ch);
                 if ($info['http_code'] != 200) {
-                    throw new XML_RPC2_ReceivedInvalidStatusCodeException('Curl returned non 200 HTTP code: ' . $info['http_code'] . '. Response body:' . $result);
+                    throw new XML_RPC2_ReceivedInvalidStatusCodeException('Curl returned non 200 HTTP code: ' . $info['http_code'] . '. Response body:' . $result, $info['http_code']);
                 }
             } else {
                 throw new XML_RPC2_CurlException('Unable to setup curl');
