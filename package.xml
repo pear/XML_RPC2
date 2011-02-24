@@ -160,8 +160,6 @@ Bug #16301 Invalid XML response from server will crash PHP 	doconnor
    <file baseinstalldir="/" md5sum="cd45c2a7c22b75dc4f1caebb0b6b52be" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1ModerateSizeArrayCheck.phpt" role="test" />
    <file baseinstalldir="/" md5sum="e45dff86d8e3dccc6b6398d4508afaa8" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1NestedStructTest.phpt" role="test" />
    <file baseinstalldir="/" md5sum="50888c598989c5fc9d1fbe72eae1445f" name="tests/XML_RPC2/xmlrpcextBackend/server/validator1SimpleStructReturnTest.phpt" role="test" />
-   <file baseinstalldir="/" md5sum="26219244c7b6be2e415c48707ccb9c2d" name="util/filelist.sh" role="data" />
-   <file baseinstalldir="/" md5sum="afadeac4ed3c600fc5f926343e53665a" name="util/indent.xsl" role="data" />
    <file baseinstalldir="/" md5sum="8e35ea3ff18ec060ac52a3f6d5da719a" name="XML/RPC2/Backend.php" role="php" />
    <file baseinstalldir="/" md5sum="31d93793aa50fa73db0cc1dd7583438e" name="XML/RPC2/CachedClient.php" role="php" />
    <file baseinstalldir="/" md5sum="61572a00bb747971a5440dbff17a6c67" name="XML/RPC2/CachedServer.php" role="php" />
@@ -191,7 +189,6 @@ Bug #16301 Invalid XML response from server will crash PHP 	doconnor
    <file baseinstalldir="/" md5sum="97d87aa23247682d710b6f384ac77433" name="XML/RPC2/Server/CallHandler/Class.php" role="php" />
    <file baseinstalldir="/" md5sum="b87b63cf3c0fd75d8dc5d7542bf022a9" name="XML/RPC2/Server/CallHandler/Instance.php" role="php" />
    <file baseinstalldir="/" md5sum="bfd305f3e8483e35572d09bfd36a4ed0" name="XML/RPC2/Util/HTTPRequest.php" role="php" />
-   <file baseinstalldir="/" md5sum="b4c70d73300f317ee8a6dfb54e053077" name="Makefile" role="data" />
   </dir>
  </contents>
  <dependencies>
