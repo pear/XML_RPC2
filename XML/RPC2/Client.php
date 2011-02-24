@@ -42,6 +42,7 @@
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Backend.php';
+require_once 'XML/RPC2/ClientHelper.php';
 // }}}
 
 /**
@@ -129,16 +130,15 @@ abstract class XML_RPC2_Client
      */
     protected $connectionTimeout = null;
 
-    // }}}
-    // {{{ remoteCall___()
-    
     /**
      * ugly hack flag to avoid http://bugs.php.net/bug.php?id=21949
      * 
      * see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
      */
     protected $uglyStructHack = true;
+    // }}}
     
+    // {{{ remoteCall___()
     /**
      * remoteCall executes the XML-RPC call, and returns the result
      * 
@@ -170,7 +170,7 @@ abstract class XML_RPC2_Client
         }
         $this->uri = $uri;
         if (isset($options['prefix'])) {
-            if (!($this->testMethodName___($options['prefix']))) {
+            if (!(XML_RPC2_ClientHelper::testMethodName($options['prefix']))) {
                 throw new XML_RPC2_InvalidPrefixException(sprintf('Prefix \'%s\' is not valid', $options['prefix']));
             }
             $this->prefix = $options['prefix'];
@@ -257,64 +257,5 @@ abstract class XML_RPC2_Client
     }
    
     // }}}
-    // {{{ displayDebugInformations___()
-    
-    /**
-     * Display debug informations
-     *
-     * NB : The '___' at the end of the method name is to avoid collisions with
-     * XMLRPC __call() 
-     * 
-     * @param string $request XML client request
-     * @param string $body XML server response
-     */
-    protected function displayDebugInformations___($request, $body) 
-    {
-        print '<pre>';
-        print "***** Request *****\n";
-        print htmlspecialchars($request);
-        print "***** End Of request *****\n\n";
-        print "***** Server response *****\n";
-        print htmlspecialchars($body);
-        print "\n***** End of server response *****\n\n";
-    }
-    
-    // }}}
-    // {{{ displayDebugInformations2___()
-    
-    /**
-     * Display debug informations (part 2)
-     *
-     * NB : The '___' at the end of the method name is to avoid collisions with
-     * XMLRPC __call() 
-     * 
-     * @param mixed $result decoded server response
-     */
-    protected function displayDebugInformations2___($result)
-    {
-        print "***** Decoded result *****\n";
-        print_r($result);
-        print "\n***** End of decoded result *****";
-        print '</pre>';
-    }
-    
-    // }}}
-    // {{{ testMethodName___()
-    
-    /**
-     * Return true is the given method name is ok with XML/RPC spec. 
-     *
-     * NB : The '___' at the end of the method name is to avoid collisions with
-     * XMLRPC __call() 
-     * 
-     * @param string $methodName method name
-     * @return boolean true if ok
-     */
-    protected function testMethodName___($methodName)
-    {
-        return (preg_match('~^[a-zA-Z0-9_.:/]*$~', $methodName)); 
-    }
-        
 }
 
-?>

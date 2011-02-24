@@ -108,7 +108,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
         $httpRequest->sendRequest();
         $body = $httpRequest->getBody();
         if ($this->debug) {
-            $this->displayDebugInformations___($request, $body);
+            XML_RPC2_ClientHelper::printPreParseDebugInfo($request, $body);
         }
         $result = xmlrpc_decode($body, $this->encoding);
         /* Commented due to change in behaviour from xmlrpc_decode. It does not return faults now
@@ -126,7 +126,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
             throw new XML_RPC2_FaultException($result['faultString'], $result['faultCode']);
         }
         if ($this->debug) {
-            $this->displayDebugInformations2___($result);
+            XML_RPC2_ClientHelper::printPostRequestDebugInformation($result);
         }
         return $result;
     }

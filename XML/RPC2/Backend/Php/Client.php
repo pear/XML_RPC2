@@ -113,7 +113,7 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
         $httpRequest->sendRequest();
         $body = $httpRequest->getBody();
         if ($this->debug) {
-            $this->displayDebugInformations___($request, $body);
+            XML_RPC2_ClientHelper::printPreParseDebugInfo($request, $body);
         }
         try {
             $document = new SimpleXMLElement($body);
@@ -129,7 +129,7 @@ class XML_RPC2_Backend_Php_Client extends XML_RPC2_Client
             throw $e;
         }
         if ($this->debug) {
-            $this->displayDebugInformations2___($result);
+            XML_RPC2_ClientHelper::printPostRequestDebugInformation($result);
         }
         return $result;
     }
