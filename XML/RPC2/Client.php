@@ -136,6 +136,13 @@ abstract class XML_RPC2_Client
      * see XML_RPC2_Backend_Xmlrpcext_Value::createFromNative() from more infos
      */
     protected $uglyStructHack = true;
+
+    /** 
+     * Preconfigured HTTP_Request2 provided by the user
+     *
+     * @var HTTP_Request2
+     */
+    protected $httpRequest = null;
     // }}}
     
     // {{{ constructor
@@ -146,6 +153,10 @@ abstract class XML_RPC2_Client
      * To create a new XML_RPC2_Client, a URI must be provided (e.g. http://xmlrpc.example.com/1.0/). 
      * Optionally, some options may be set as an associative array. Accepted keys are :
      * 'prefix', 'proxy', 'debug' => see correspondant property to get more informations
+     * 'encoding' => The XML encoding for the requests (optional, defaults to utf-8)
+     * 'sslverify' => boolean, true iff SSL certificates are to be verified against local cert database (optional, default false)
+     * 'connectionTimeout' => Timeout, in seconds, for the XML-RPC HTTP request (optional, default is no timeout)
+     * 'httpRequest' => Preconfigured HTTP_Request2 instance to be used in executing the XML-RPC calls (optional)
      *
      * @param string URI for the XML-RPC server
      * @param array (optional) Associative array of options
@@ -196,6 +207,9 @@ abstract class XML_RPC2_Client
                 throw new XML_RPC2_InvalidConnectionTimeoutException(sprintf('Connection timeout \'%s\' is not valid', $options['connectionTimeout']));
             }
             $this->connectionTimeout = $options['connectionTimeout'];
+        }
+        if (isset($options['httpRequest'])) {  
+            $this->httpRequest = $options['httpRequest'];
         }
     }
     

@@ -107,6 +107,7 @@ class XML_RPC2_Backend_Xmlrpcext_Client extends XML_RPC2_Client
             'sslverify' => $this->sslverify,
             'connectionTimeout' => $this->connectionTimeout
         );
+        if (isset($this->httpRequest)) $options['httpRequest'] = $this->httpRequest;
         $httpRequest = new XML_RPC2_Util_HTTPRequest($uri, $options);
         $httpRequest->setPostData($request);
         $httpRequest->sendRequest();

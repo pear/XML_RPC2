@@ -110,6 +110,13 @@ class XML_RPC2_Util_HTTPRequest
      */
     private $_connectionTimeout = null;
 
+    /**
+     * HTTP_Request2 backend
+     *
+     * @var integer
+     */
+    private $_httpRequest = null;
+
     // }}}
     // {{{ getBody()
 
@@ -150,6 +157,7 @@ class XML_RPC2_Util_HTTPRequest
     *   <li>encoding               - The request encoding (string)</li>
     *   <li>sslverify</li>         - The SSL verify flag (boolean)</li>
     *   <li>connectionTimeout</li> - The connection timeout in milliseconds (integer)</li>
+    *   <li>httpRequest</li>       - Preconfigured instance of HTTP_Request2 (optional)
     * </ul>
     * @access public
     */
@@ -181,6 +189,9 @@ class XML_RPC2_Util_HTTPRequest
         if (isset($params['connectionTimeout'])) {
             $this->_connectionTimeout = $params['connectionTimeout'];
         }
+        if (isset($params['httpRequest'])) {
+            $this->_httpRequest = $params['httpRequest'];
+        }
     }
 
     // }}}
@@ -194,7 +205,10 @@ class XML_RPC2_Util_HTTPRequest
     */
     public function sendRequest()
     {
-        $request = new HTTP_Request2($this->_uri, HTTP_Request2::METHOD_POST);
+        if (is_null($this->_httpRequest)) $this->_httpRequest = new HTTP_Request2($this->_uri, HTTP_Request2::METHOD_POST);
+        $request = $this->_httpRequest;
+        $request->setUrl($this->_uri);
+        $request->setMethod(HTTP_Request2::METHOD_POST);
         if (isset($params['proxy'])) {
             $elements = parse_url($params['proxy']);
             if (is_array($elements)) {
@@ -225,45 +239,6 @@ class XML_RPC2_Util_HTTPRequest
         }
         $this->_body = $result->getBody();
         return $result->getBody();
-
-
-
-
-/*
-        if (!function_exists('curl_init') &&
-            !( PEAR::loadExtension('php_curl') )) {
-            throw new XML_RPC2_CurlException('cURI extension is not present and load failed');
-        }
-        if ($ch = curl_init()) {
-            if (
-//                (is_null($this->_proxy)     || curl_setopt($ch, CURLOPT_PROXY, $this->_proxy)) &&
-//                (is_null($this->_proxyAuth) || curl_setopt($ch, CURLOPT_PROXYUSERPWD, $this->_proxyAuth)) &&
-//                curl_setopt($ch, CURLOPT_URL, $this->_uri) &&
-//?                curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE) &&
-//                curl_setopt($ch, CURLOPT_POST, 1) &&
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $this->_sslverify) &&
-//                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $this->_sslverify) &&
-//                curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: text/xml; charset='.$this->_encoding, 'User-Agent: PEAR::XML_RPC2/@package_version@')) &&
-//                curl_setopt($ch, CURLOPT_POSTFIELDS, $this->_postData) &&
-//                (!isset($this->_connectionTimeout) || curl_setopt($ch, CURLOPT_CONNECTTIMEOUT_MS, $this->_connectionTimeout))
-            ) {
-                $result = curl_exec($ch);
-//                if (($errno = curl_errno($ch)) != 0) {
-//                    throw new XML_RPC2_CurlException("Curl returned non-null errno $errno:" . curl_error($ch), $errno);
-//                }
-//                $info = curl_getinfo($ch);
-//                if ($info['http_code'] != 200) {
-//                    throw new XML_RPC2_ReceivedInvalidStatusCodeException('Curl returned non 200 HTTP code: ' . $info['http_code'] . '. Response body:' . $result, $info['http_code']);
-                }
-            } else {
-                throw new XML_RPC2_CurlException('Unable to setup curl');
-            }
-        } else {
-            throw new XML_RPC2_CurlException('Unable to init curl');
-        }
-        $this->_body = $result;
-        return true;
- */
     }
 
     // }}}
