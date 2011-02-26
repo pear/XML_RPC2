@@ -78,7 +78,7 @@ class XML_RPC2_Backend_Php_Request
      *
      * @var string
      */
-    private $_encoding = 'iso-8859-1';
+    private $_encoding = 'utf-8';
         
     // }}}
     // {{{ setParameters()
@@ -141,7 +141,7 @@ class XML_RPC2_Backend_Php_Request
      * @param string Name of method targeted by this xml-rpc request
      * @param string encoding of the request
      */
-    function __construct($methodName, $encoding = 'iso-8859-1')
+    function __construct($methodName, $encoding = 'utf-8')
     {
         $this->_methodName = $methodName;
         $this->setParameters(array());

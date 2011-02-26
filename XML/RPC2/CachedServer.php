@@ -127,7 +127,7 @@ class XML_RPC2_CachedServer {
      * 
      * @var string
      */
-    private $_encoding = 'iso-8859-1';
+    private $_encoding = 'utf-8';
        
     // }}}
     // {{{ setCacheOptions()
@@ -215,7 +215,7 @@ class XML_RPC2_CachedServer {
     public function handleCall()
     {
         $response = $this->getResponse();
-        $encoding = 'iso-8859-1';
+        $encoding = 'utf-8';
         if (isset($this->_options['encoding'])) {
             $encoding = $this->_options['encoding'];
         }

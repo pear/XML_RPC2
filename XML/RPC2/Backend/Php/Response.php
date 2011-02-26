@@ -77,7 +77,7 @@ class XML_RPC2_Backend_Php_Response
      * @param string $encoding encoding
      * @return string The XML payload
      */
-    public static function encode($param, $encoding = 'iso-8859-1') 
+    public static function encode($param, $encoding = 'utf-8') 
     {
         if (!$param instanceof XML_RPC2_Backend_Php_Value) {
             $param = XML_RPC2_Backend_Php_Value::createFromNative($param);
@@ -99,7 +99,7 @@ class XML_RPC2_Backend_Php_Response
      * @param string $encoding encoding
      * @return string The XML payload
      */
-    public static function encodeFault($code, $message, $encoding = 'iso-8859-1')
+    public static function encodeFault($code, $message, $encoding = 'utf-8')
     {
         $value = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
         $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>';

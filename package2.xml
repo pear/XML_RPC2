@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.5.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
-http://pear.php.net/dtd/tasks-1.0.xsd
-http://pear.php.net/dtd/package-2.0
-http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+    http://pear.php.net/dtd/tasks-1.0.xsd
+    http://pear.php.net/dtd/package-2.0
+    http://pear.php.net/dtd/package-2.0.xsd">
  <name>XML_RPC2</name>
  <channel>pear.php.net</channel>
  <summary>XML-RPC client/server library</summary>
  <description>XML_RPC2 is a pear package providing XML_RPC client and server services. XML-RPC is a simple remote procedure call protocol built using HTTP as transport and XML as encoding.
-As a client library, XML_RPC2 is capable of creating a proxy class which exposes the methods exported by the server. As a server library, XML_RPC2 is capable of exposing methods from a class or object instance, seamlessly exporting local methods as remotely callable procedures.
-
- </description>
+    As a client library, XML_RPC2 is capable of creating a proxy class which exposes the methods exported by the server. As a server library, XML_RPC2 is capable of exposing methods from a class or object instance, seamlessly exporting local methods as remotely callable procedures.</description>
  <lead>
   <name>Sergio Carvalho</name>
   <user>sergiosgc</user>
-  <email>sergio.carvalho@portugalmail.com</email>
+  <email>sergiosgc@php.net</email>
   <active>yes</active>
  </lead>
  <developer>
@@ -28,23 +26,33 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
   <email>jal@ambitonline.com</email>
   <active>yes</active>
  </developer>
- <date>2011-02-24</date>
- <time>21:00:00</time>
+ <date>2011-02-26</date>
+ <time>01:29:47</time>
  <version>
-  <release>1.1.0b1</release>
+  <release>1.1.0b2</release>
   <api>1.0.5</api>
  </version>
  <stability>
   <release>beta</release>
   <api>stable</api>
  </stability>
- <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
+ <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
  <notes>
- Started using HTTP_Request2 as request handler
+Fix missing files in packaged version
  </notes>
  <contents>
-  <dir name="/">
+  <dir baseinstalldir="/" name="/">
+   <dir name="docs">
+    <dir name="tutorials">
+     <file name="XML_RPC2.lyx" role="doc" />
+    </dir> <!-- /docs/tutorials -->
+    <file name="Makefile" role="doc" />
+   </dir> <!-- /docs -->
    <dir name="tests">
+    <dir name="lib">
+     <file name="run-tests" role="test" />
+     <file name="tests-config" role="test" />
+    </dir> <!-- /tests/lib -->
     <dir name="XML_RPC2">
      <dir name="phpBackend">
       <dir name="cachedClient">
@@ -54,8 +62,10 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt" role="test" />
+       <file name="tmpdir.inc" role="test" />
       </dir> <!-- /tests/XML_RPC2/phpBackend/cachedClient -->
       <dir name="cachedServer">
+       <file name="tmpdir.inc" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault3.phpt" role="test" />
@@ -85,6 +95,8 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="faultResponse.phpt" role="test" />
        <file name="integer.phpt" role="test" />
        <file name="integer2.phpt" role="test" />
+       <file name="integer64.phpt" role="test" />
+       <file name="null.phpt" role="test" />
        <file name="request.phpt" role="test" />
        <file name="response.phpt" role="test" />
        <file name="string.phpt" role="test" />
@@ -101,12 +113,17 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="datetime4.phpt" role="test" />
        <file name="double.phpt" role="test" />
        <file name="integer.phpt" role="test" />
+       <file name="integer64.phpt" role="test" />
+       <file name="null.phpt" role="test" />
        <file name="request.phpt" role="test" />
        <file name="response.phpt" role="test" />
        <file name="response2.phpt" role="test" />
        <file name="string.phpt" role="test" />
        <file name="struct.phpt" role="test" />
       </dir> <!-- /tests/XML_RPC2/phpBackend/encoding -->
+      <dir name="regressions">
+       <file name="11135.phpt" role="test" />
+      </dir> <!-- /tests/XML_RPC2/phpBackend/regressions -->
       <dir name="server">
        <file name="invalidXMLRequest.phpt" role="test" />
        <file name="nonexistantMethod.phpt" role="test" />
@@ -123,6 +140,11 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="validator1SimpleStructReturnTest.phpt" role="test" />
       </dir> <!-- /tests/XML_RPC2/phpBackend/server -->
      </dir> <!-- /tests/XML_RPC2/phpBackend -->
+     <dir name="regressions">
+      <file name="11314.phpt" role="test" />
+      <file name="14038.phpt" role="test" />
+      <file name="18258.phpt" role="test" />
+     </dir> <!-- /tests/XML_RPC2/regressions -->
      <dir name="xmlrpcextBackend">
       <dir name="cachedClient">
        <file name="phpxmlrpcValidator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
@@ -131,8 +153,10 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault2.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault3.phpt" role="test" />
        <file name="phpxmlrpcValidator1EasyStructTestCacheOnByDefault4.phpt" role="test" />
+       <file name="tmpdir.inc" role="test" />
       </dir> <!-- /tests/XML_RPC2/xmlrpcextBackend/cachedClient -->
       <dir name="cachedServer">
+       <file name="tmpdir.inc" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault1.phpt" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault2.phpt" role="test" />
        <file name="validator1EasyStructTestCacheOffByDefault3.phpt" role="test" />
@@ -171,6 +195,7 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
       </dir> <!-- /tests/XML_RPC2/xmlrpcextBackend/server -->
      </dir> <!-- /tests/XML_RPC2/xmlrpcextBackend -->
     </dir> <!-- /tests/XML_RPC2 -->
+    <file name="Makefile" role="test" />
    </dir> <!-- /tests -->
    <dir name="XML">
     <dir name="RPC2">
@@ -183,11 +208,11 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
         <file name="Datetime.php" role="php" />
         <file name="Double.php" role="php" />
         <file name="Integer.php" role="php" />
+        <file name="Integer64.php" role="php" />
+        <file name="Nil.php" role="php" />
         <file name="Scalar.php" role="php" />
         <file name="String.php" role="php" />
         <file name="Struct.php" role="php" />
-        <file name="Nil.php" role="php" />
-        <file name="Integer64.php" role="php" />
        </dir> <!-- /XML/RPC2/Backend/Php/Value -->
        <file name="Client.php" role="php" />
        <file name="Request.php" role="php" />
@@ -206,23 +231,28 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
        <file name="Class.php" role="php" />
        <file name="Instance.php" role="php" />
       </dir> <!-- /XML/RPC2/Server/CallHandler -->
+      <dir name="Input">
+       <file name="PhpInput.php" role="php" />
+       <file name="RawPostData.php" role="php" />
+      </dir> <!-- /XML/RPC2/Server/Input -->
       <file name="CallHandler.php" role="php" />
+      <file name="Input.php" role="php" />
       <file name="Method.php" role="php" />
      </dir> <!-- /XML/RPC2/Server -->
      <dir name="Util">
-      <file name="HTTPRequest.php" role="php">
-       <tasks:replace from="@package_version@" to="version" type="package-info" />
-      </file>
+      <file name="HTTPRequest.php" role="php" />
      </dir> <!-- /XML/RPC2/Util -->
      <file name="Backend.php" role="php" />
      <file name="CachedClient.php" role="php" />
      <file name="CachedServer.php" role="php" />
      <file name="Client.php" role="php" />
+     <file name="ClientHelper.php" role="php" />
      <file name="Exception.php" role="php" />
      <file name="Server.php" role="php" />
      <file name="Value.php" role="php" />
     </dir> <!-- /XML/RPC2 -->
    </dir> <!-- /XML -->
+   <file name="Makefile" role="data" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -231,13 +261,8 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
     <min>5.0.0</min>
    </php>
    <pearinstaller>
-    <min>1.4.0b1</min>
+    <min>1.5.4</min>
    </pearinstaller>
-   <package>
-    <name>PEAR</name>
-    <channel>pear.php.net</channel>
-    <min>1.0b1</min>
-   </package>
    <package>
     <name>HTTP_Request2</name>
     <channel>pear.php.net</channel>
@@ -248,25 +273,23 @@ As a client library, XML_RPC2 is capable of creating a proxy class which exposes
     <channel>pear.php.net</channel>
     <min>1.6.0</min>
    </package>
-   <extension>
-    <name>curl</name>
-   </extension>
   </required>
  </dependencies>
  <phprelease />
  <changelog>
   <release>
    <version>
-    <release>0.0.6</release>
-    <api>0.0.6</api>
+    <release>1.1.0b2</release>
+    <api>1.0.5</api>
    </version>
    <stability>
-    <release>alpha</release>
-    <api>alpha</api>
+    <release>beta</release>
+    <api>stable</api>
    </stability>
-   <date>2005-11-29</date>
-   <license uri="http://www.gnu.org/copyleft/lesser.html">LGPL</license>
-   <notes>Initial PEAR release
+   <date>2011-02-26</date>
+   <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
+   <notes>
+Fix missing files in packaged version
    </notes>
   </release>
  </changelog>

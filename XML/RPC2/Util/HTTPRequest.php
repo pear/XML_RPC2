@@ -94,7 +94,7 @@ class XML_RPC2_Util_HTTPRequest
      *
      * @var string
      */
-    private $_encoding='iso-8859-1';
+    private $_encoding='utf-8';
 
     /**
      * SSL verify flag
