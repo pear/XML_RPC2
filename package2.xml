@@ -27,9 +27,9 @@
   <active>yes</active>
  </developer>
  <date>2011-02-26</date>
- <time>01:29:47</time>
+ <time>17:27:42</time>
  <version>
-  <release>1.1.0b2</release>
+  <release>1.1.0b3</release>
   <api>1.0.5</api>
  </version>
  <stability>
@@ -38,7 +38,7 @@
  </stability>
  <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
  <notes>
-Fix missing files in packaged version
+Better usage of HTTP_Request2, allowing the use of pre-configured instances now
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -277,6 +277,21 @@ Fix missing files in packaged version
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <version>
+    <release>1.1.0b3</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>beta</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-02-26</date>
+   <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
+   <notes>
+Better usage of HTTP_Request2, allowing the use of pre-configured instances now
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.1.0b2</release>

@@ -20,11 +20,11 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$release_version = '1.1.0b2';
+$release_version = '1.1.0b3';
 $release_state   = 'beta';
 $api_version     = '1.0.5';
 $api_state   = 'stable';
-$release_notes   = 'Fix missing files in packaged version';
+$release_notes   = 'Better usage of HTTP_Request2, allowing the use of pre-configured instances now';
 
 $packagexml = new PEAR_PackageFileManager2();
 $packagexml->setOptions(
