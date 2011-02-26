@@ -189,7 +189,7 @@ class XML_RPC2_Util_HTTPRequest
         if (isset($params['connectionTimeout'])) {
             $this->_connectionTimeout = $params['connectionTimeout'];
         }
-        if (isset($params['httpRequest'])) {
+        if (isset($params['httpRequest']) && $params['httpRequest'] instanceof HTTP_Request2) {
             $this->_httpRequest = $params['httpRequest'];
         }
     }

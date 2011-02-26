@@ -142,7 +142,7 @@ abstract class XML_RPC2_Client
      *
      * @var HTTP_Request2
      */
-    protected $httpRequest = null;
+    protected $httpRequest;
     // }}}
     
     // {{{ constructor
