@@ -62,8 +62,8 @@ class XML_RPC2_Server_Input_PhpInput implements XML_RPC2_Server_Input
      */
     public function isEmpty()
     {
-        if (!isset($this->input)) $this->readRequest;
-        return empty($this->readRequest);
+        if (!isset($this->input)) $this->readRequest();
+        return empty($this->input);
     }
     /**
      * Return the input as a string
@@ -72,7 +72,10 @@ class XML_RPC2_Server_Input_PhpInput implements XML_RPC2_Server_Input
      */
     public function readRequest()
     {
-        if (!isset($this->input)) $this->input = file_get_contents('php://input');
+        if (!isset($this->input)) {
+            $this->input = file_get_contents('php://input');
+        }
+
         return $this->input;
     }
 }
