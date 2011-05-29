@@ -232,7 +232,7 @@ class XML_RPC2_Util_HTTPRequest
         if (isset($this->_connectionTimeout)) $request->setConfig('timeout', (int) ($this->_connectionTimeout / 1000));
         try {
             $result = $request->send();
-            if ($result->getStatus() != 200) throw new XML_RPC2_ReceivedInvalidStatusCodeException('Received non-200 HTTP Code: ' . $request->getStatus() . '. Response body:' . $result->getBody());
+            if ($result->getStatus() != 200) throw new XML_RPC2_ReceivedInvalidStatusCodeException('Received non-200 HTTP Code: ' . $result->getStatus() . '. Response body:' . $result->getBody());
 
         } catch (HTTP_Request2_Exception $e) {
             throw new XML_RPC2_CurlException($e);
