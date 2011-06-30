@@ -20,16 +20,20 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$release_version = '1.1.0b3';
-$release_state   = 'beta';
+$release_version = '1.1.1';
+$release_state   = 'stable';
 $api_version     = '1.0.5';
 $api_state   = 'stable';
-$release_notes   = 'Better usage of HTTP_Request2, allowing the use of pre-configured instances now';
+$release_notes   = 'QA release
+Better usage of HTTP_Request2, allowing the use of pre-configured instances now
+Bug #18329	Fatal error in HTTPRequest.php
+Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::$readReque
+';
 
 $packagexml = new PEAR_PackageFileManager2();
 $packagexml->setOptions(
     array(
-      'packagefile' => 'package2.xml',
+      'packagefile' => 'package.xml',
       'exceptions' => array(
           'ChangeLog' => 'doc',
           'NEWS' => 'doc'),

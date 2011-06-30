@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
+<package packagerversion="1.9.3" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0
     http://pear.php.net/dtd/tasks-1.0.xsd
     http://pear.php.net/dtd/package-2.0
     http://pear.php.net/dtd/package-2.0.xsd">
@@ -26,19 +26,22 @@
   <email>jal@ambitonline.com</email>
   <active>yes</active>
  </developer>
- <date>2011-02-26</date>
- <time>17:27:42</time>
+ <date>2011-06-30</date>
+ <time>22:27:12</time>
  <version>
-  <release>1.1.0b3</release>
+  <release>1.1.1</release>
   <api>1.0.5</api>
  </version>
  <stability>
-  <release>beta</release>
+  <release>stable</release>
   <api>stable</api>
  </stability>
  <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
  <notes>
+QA release
 Better usage of HTTP_Request2, allowing the use of pre-configured instances now
+Bug #18329	Fatal error in HTTPRequest.php
+Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::$readReque
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -141,6 +144,11 @@ Better usage of HTTP_Request2, allowing the use of pre-configured instances now
       </dir> <!-- /tests/XML_RPC2/phpBackend/server -->
      </dir> <!-- /tests/XML_RPC2/phpBackend -->
      <dir name="regressions">
+      <file name="11314.diff" role="test" />
+      <file name="11314.exp" role="test" />
+      <file name="11314.log" role="test" />
+      <file name="11314.out" role="test" />
+      <file name="11314.php" role="test" />
       <file name="11314.phpt" role="test" />
       <file name="14038.phpt" role="test" />
       <file name="18258.phpt" role="test" />
@@ -253,6 +261,7 @@ Better usage of HTTP_Request2, allowing the use of pre-configured instances now
     </dir> <!-- /XML/RPC2 -->
    </dir> <!-- /XML -->
    <file name="Makefile" role="data" />
+   <file name="run-tests.log" role="data" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
@@ -277,6 +286,24 @@ Better usage of HTTP_Request2, allowing the use of pre-configured instances now
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <version>
+    <release>1.1.1</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2011-06-30</date>
+   <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
+   <notes>
+QA release
+Better usage of HTTP_Request2, allowing the use of pre-configured instances now
+Bug #18329	Fatal error in HTTPRequest.php
+Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::$readReque
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.1.0b3</release>
