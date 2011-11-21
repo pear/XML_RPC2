@@ -144,11 +144,6 @@ Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::
       </dir> <!-- /tests/XML_RPC2/phpBackend/server -->
      </dir> <!-- /tests/XML_RPC2/phpBackend -->
      <dir name="regressions">
-      <file name="11314.diff" role="test" />
-      <file name="11314.exp" role="test" />
-      <file name="11314.log" role="test" />
-      <file name="11314.out" role="test" />
-      <file name="11314.php" role="test" />
       <file name="11314.phpt" role="test" />
       <file name="14038.phpt" role="test" />
       <file name="18258.phpt" role="test" />
