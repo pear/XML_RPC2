@@ -275,7 +275,7 @@ Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::
    <package>
     <name>HTTP_Request2</name>
     <channel>pear.php.net</channel>
-    <min>0.6.0</min>
+    <min>2.0.0</min>
    </package>
    <package>
     <name>Cache_Lite</name>

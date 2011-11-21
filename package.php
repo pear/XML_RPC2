@@ -61,7 +61,7 @@ $packagexml->setPackageType('php');
 $packagexml->addRelease();
 $packagexml->clearDeps();
 $packagexml->detectDependencies();
-$packagexml->addPackageDepWithChannel('required', 'HTTP_Request2', 'pear.php.net', '0.6.0');
+$packagexml->addPackageDepWithChannel('required', 'HTTP_Request2', 'pear.php.net', '2.0.0');
 $packagexml->addPackageDepWithChannel('required', 'Cache_Lite', 'pear.php.net', '1.6.0');
 $packagexml->setChannel('pear.php.net');
 $packagexml->setLicense('PHP License 3.02', 'http://www.php.net/license/3_02.txt');
