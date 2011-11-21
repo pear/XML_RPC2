@@ -256,7 +256,6 @@ Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::
     </dir> <!-- /XML/RPC2 -->
    </dir> <!-- /XML -->
    <file name="Makefile" role="data" />
-   <file name="run-tests.log" role="data" />
   </dir> <!-- / -->
  </contents>
  <dependencies>
