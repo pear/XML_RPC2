@@ -23,4 +23,4 @@ try {
 }
 ?>
 --EXPECTREGEX--
-string\(.*\) \"HTTP_Request2_Exception.*
+string\(.*\) \"HTTP_Request2_ConnectionException.*
