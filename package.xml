@@ -36,7 +36,7 @@
   <release>stable</release>
   <api>stable</api>
  </stability>
- <license uri="http://www.php.net/license/3_02.txt">PHP License 3.02</license>
+ <license uri="http://www.php.net/license/3_01.txt">PHP License 3.01</license>
  <notes>
 QA release
 Better usage of HTTP_Request2, allowing the use of pre-configured instances now
