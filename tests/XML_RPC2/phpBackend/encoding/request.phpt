@@ -15,4 +15,5 @@ $request->addParameter(false);
 var_dump($request->encode());
 ?>
 --EXPECT--
-string(440) "<?xml version="1.0" encoding="utf-8"?><methodCall><methodName>foo.bar</methodName><params><param><value><string>a string</string></value></param><param><value><int>125</int></value></param><param><value><double>125.2</double></value></param><param><value><dateTime.iso8601>2005-01-03</dateTime.iso8601></value></param><param><value><boolean>1</boolean></value></param><param><value><boolean>0</boolean></value></param></params></methodCall>"
+string(441) "<?xml version="1.0" encoding="utf-8"?>
+<methodCall><methodName>foo.bar</methodName><params><param><value><string>a string</string></value></param><param><value><int>125</int></value></param><param><value><double>125.2</double></value></param><param><value><dateTime.iso8601>2005-01-03</dateTime.iso8601></value></param><param><value><boolean>1</boolean></value></param><param><value><boolean>0</boolean></value></param></params></methodCall>"
