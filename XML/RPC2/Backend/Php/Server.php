@@ -79,7 +79,9 @@ class XML_RPC2_Backend_Php_Server extends XML_RPC2_Server
     function __construct($callHandler, $options = array())
     {
         parent::__construct($callHandler, $options);
-        if (strtolower($this->encoding) != 'utf-8') throw new XML_RPC2_Exception('XML_RPC2_Backend_Php does not support any encoding other than utf-8, due to a simplexml limitation');
+        if (strtolower($this->encoding) != 'utf-8') {
+            throw new XML_RPC2_Exception('XML_RPC2_Backend_Php does not support any encoding other than utf-8, due to a simplexml limitation');
+        }
     }
     
     // }}}
