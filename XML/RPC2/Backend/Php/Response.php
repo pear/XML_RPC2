@@ -82,7 +82,7 @@ class XML_RPC2_Backend_Php_Response
         if (!$param instanceof XML_RPC2_Backend_Php_Value) {
             $param = XML_RPC2_Backend_Php_Value::createFromNative($param);
         }
-        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>';
+        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>' . "\n";
         $result .= '<methodResponse><params><param><value>' . $param->encode() . '</value></param></params></methodResponse>';
         return $result;
     }
@@ -102,7 +102,7 @@ class XML_RPC2_Backend_Php_Response
     public static function encodeFault($code, $message, $encoding = 'utf-8')
     {
         $value = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
-        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>';
+        $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>' . "\n";
         $result .= '<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>';
         return $result;
     }

@@ -162,16 +162,16 @@ class XML_RPC2_Backend_Php_Request
         $parameters = $this->getParameters();
 
         $result = '<?xml version="1.0" encoding="' . $this->_encoding . '"?>' . "\n";
-        $result .= "<methodCall>\n";
-        $result .= " <methodName>${methodName}</methodName>\n";
-        $result .= " <params>\n";
+        $result .= "<methodCall>";
+        $result .= "<methodName>${methodName}</methodName>";
+        $result .= "<params>";
         foreach($parameters as $parameter) {
-            $result .= "  <param>\n<value>";
+            $result .= "<param><value>";
             $result .= ($parameter instanceof XML_RPC2_Backend_Php_Value) ? $parameter->encode() : XML_RPC2_Backend_Php_Value::createFromNative($parameter)->encode();
-            $result .= "</value>\n  </param>\n";
+            $result .= "</value></param>";
         }
-        $result .= " </params>\n";
-        $result .= "</methodCall>\n";
+        $result .= "</params>";
+        $result .= "</methodCall>";
         return $result;
     }
     
