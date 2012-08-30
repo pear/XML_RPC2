@@ -50,7 +50,7 @@ class DocumentationServer {
 
 $options = array(
     'prefix' => 'test.',
-    'encoding' => 'ISO-8859-1'
+    'encoding' => 'utf-8'
 );
 
 $server = XML_RPC2_Server::create('DocumentationServer', $options);
@@ -61,7 +61,7 @@ $server->handleCall();
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/HTML; charset=ISO-8859-1"  />
+    <meta http-equiv="Content-Type" content="text/HTML; charset=utf-8"  />
     <title>Available XMLRPC methods for this server</title>
     <style type="text/css">
       li,p { font-size: 10pt; font-family: Arial,Helvetia,sans-serif; }
