@@ -101,9 +101,16 @@ class XML_RPC2_Backend_Php_Response
      */
     public static function encodeFault($code, $message, $encoding = 'utf-8')
     {
-        $value = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
+        if (ini_get('display_errors') == 1) {
+            $value_struct = new XML_RPC2_Backend_Php_Value_Struct(array('faultCode' => (int) $code, 'faultString' => (string) $message));
+            $value = $value_struct->encode();
+        } else {
+            $value = '';
+        }
+
         $result  = '<?xml version="1.0" encoding="' .  $encoding . '"?>' . "\n";
-        $result .= '<methodResponse><fault><value>' . $value->encode() . '</value></fault></methodResponse>';
+        $result .= '<methodResponse><fault><value>' . $value . '</value></fault></methodResponse>';
+
         return $result;
     }
     
