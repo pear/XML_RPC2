@@ -166,7 +166,11 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
         } catch (XML_RPC2_FaultException $e) {
             return (XML_RPC2_Backend_Php_Response::encodeFault($e->getFaultCode(), $e->getMessage()));
         } catch (Exception $e) {
-            return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+            if (ini_get('display_errors') == 1) {
+                return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
+            } else {
+                return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception');
+            }
         }
     }
     // }}}
