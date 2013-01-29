@@ -169,7 +169,7 @@ class XML_RPC2_Backend_Xmlrpcext_Server extends XML_RPC2_Server
             if (ini_get('display_errors') == 1) {
                 return (XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled ' . get_class($e) . ' exception:' . $e->getMessage()));
             } else {
-                return XML_RPC2_Backend_Php_Response::encodeFault(1, '');
+                return XML_RPC2_Backend_Php_Response::encodeFault(1, 'Unhandled PHP Exception');
             }
         }
     }
