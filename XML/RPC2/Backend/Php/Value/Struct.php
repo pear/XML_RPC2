@@ -67,7 +67,7 @@ class XML_RPC2_Backend_Php_Value_Struct extends XML_RPC2_Backend_Php_Value
     protected function setNativeValue($value) 
     {
         if (!is_array($value)) {
-            throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Struct from type \'%s\'.', gettype($nativeValue)));
+            throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Struct from type \'%s\'.', gettype($value)));
         }
         parent::setNativeValue($value);
     }
