@@ -69,13 +69,6 @@ class XML_RPC2_Util_HTTPRequest
     private $_proxy = null;
 
     /**
-     * proxyauth field
-     *
-     * @var string
-     */
-    private $_proxyAuth = null;
-
-    /**
      * postData field
      *
      * @var string
