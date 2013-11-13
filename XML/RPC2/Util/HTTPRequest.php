@@ -169,19 +169,7 @@ class XML_RPC2_Util_HTTPRequest
             $this->_encoding = $params['encoding'];
         }
         if (isset($params['proxy'])) {
-            $proxy = $params['proxy'];
-            $elements = parse_url($proxy);
-            if (is_array($elements)) {
-                if ((isset($elements['scheme'])) and (isset($elements['host']))) {
-                    $this->_proxy = $elements['scheme'] . '://' . $elements['host'];
-                }
-                if (isset($elements['port'])) {
-                    $this->_proxy = $this->_proxy . ':' . $elements['port'];
-                }
-                if ((isset($elements['user'])) and (isset($elements['pass']))) {
-                    $this->_proxyAuth = $elements['user'] . ':' . $elements['pass'];
-                }
-            }
+            $this->_proxy = $params['proxy'];
         }
         if (isset($params['sslverify'])) {
             $this->_sslverify = $params['sslverify'];
@@ -209,8 +197,8 @@ class XML_RPC2_Util_HTTPRequest
         $request = $this->_httpRequest;
         $request->setUrl($this->_uri);
         $request->setMethod(HTTP_Request2::METHOD_POST);
-        if (isset($params['proxy'])) {
-            $elements = parse_url($params['proxy']);
+        if (isset($this->_proxy)) {
+            $elements = parse_url($this->_proxy);
             if (is_array($elements)) {
                 if ((isset($elements['scheme'])) and (isset($elements['host']))) {
                     $request->setConfig('proxy_host', $elements['host']);
