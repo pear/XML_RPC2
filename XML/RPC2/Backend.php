@@ -40,7 +40,7 @@
 // }}}
 
 // dependencies {{{
-require_once 'XML/RPC2/Exception.php';
+require_once __DIR__ . '/Exception.php';
 require_once 'PEAR.php';
 // }}}
 
