@@ -4,6 +4,7 @@
     "type": "library",
     "license": "LGPL-2.1",
     "support": {
+        "docs": "http://pear.php.net/package/XML_RPC2",
         "issues": "http://pear.php.net/bugs/search.php?cmd=display&package_name[]=XML_RPC2",
         "source": "https://github.com/pear/XML_RPC2"
     },
