@@ -20,14 +20,12 @@
 require_once 'PEAR/PackageFileManager2.php';
 PEAR::setErrorHandling(PEAR_ERROR_DIE);
 
-$release_version = '1.1.1';
+$release_version = '1.1.3';
 $release_state   = 'stable';
 $api_version     = '1.0.5';
 $api_state   = 'stable';
 $release_notes   = 'QA release
-Better usage of HTTP_Request2, allowing the use of pre-configured instances now
-Bug #18329	Fatal error in HTTPRequest.php
-Bug #18404	PHP Notice about undefined property: XML_RPC2_Server_Input_PhpInput::$readReque
+Fix issues when installed via composer
 ';
 
 $packagexml = new PEAR_PackageFileManager2();
@@ -64,7 +62,7 @@ $packagexml->detectDependencies();
 $packagexml->addPackageDepWithChannel('required', 'HTTP_Request2', 'pear.php.net', '2.0.0');
 $packagexml->addPackageDepWithChannel('required', 'Cache_Lite', 'pear.php.net', '1.6.0');
 $packagexml->setChannel('pear.php.net');
-$packagexml->setLicense('PHP License 3.02', 'http://www.php.net/license/3_02.txt');
+$packagexml->setLicense('LGPL', 'http://www.gnu.org/copyleft/lesser.html');
 $packagexml->setReleaseVersion($release_version);
 $packagexml->setAPIVersion($api_version);
 $packagexml->setReleaseStability($release_state);
