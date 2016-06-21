@@ -34,9 +34,9 @@
         "phpunit/phpunit": "*"
     },
     "autoload": {
-        "classmap": [
-            "./"
-        ]
+        "psr-0": {
+            "XML_RPC2": ""
+        }
     },
     "include-path": [
         "./"
