@@ -147,7 +147,7 @@ abstract class XML_RPC2_Backend_Php_Value extends XML_RPC2_Value
                         do {
                             $previous = $keys[$i];
                             $i++;
-                            if (array_key_exists($i, $keys) && ($keys[$i] !== $keys[$i - 1] + 1)) $explicitType = 'struct';
+                            if (array_key_exists($i, $keys) && ($keys[$i] !== ((int) $keys[$i - 1]) + 1)) $explicitType = 'struct';
                         } while (array_key_exists($i, $keys) && $explicitType == 'array');
                     }
                     break;
