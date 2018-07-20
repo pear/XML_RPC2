@@ -37,4 +37,12 @@ $server->handleCall();
 ?>
 --EXPECT--
 <?xml version="1.0" encoding="utf-8"?>
-<methodResponse><params><param><value><int>12</int></value></param></params></methodResponse>
+<methodResponse>
+<params>
+ <param>
+  <value>
+   <int>12</int>
+  </value>
+ </param>
+</params>
+</methodResponse>
