@@ -20,4 +20,5 @@ matrix:
     dist: trusty
 install:
   - pear install package.xml
-script: phpunit tests/
+script:
+  - pear run-tests -r tests/
