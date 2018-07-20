@@ -5,13 +5,15 @@ XMLRPCext Backend XML-RPC client against python server returning normal response
 if (!function_exists('xmlrpc_server_create')) {
     print "Skip XMLRPC extension unavailable";
 }
-
+echo("skip : The python XMLRPC server is no longer available !");
+/**
 $handle = @fopen("http://python.xmlrpc2test.sergiocarvalho.com:8765", "r");
 if (!$handle) {
 	echo("skip : The python XMLRPC server is not available !");
 } else {
 	fclose($handle);
 }
+**/
 ?>
 --FILE--
 <?php

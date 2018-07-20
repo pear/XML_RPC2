@@ -5,13 +5,15 @@ PHP Backend XML-RPC client against python server returning fault response
 if (!function_exists('curl_init')) {
     print "Skip no CURI extension available";
 }
-
+echo("skip : The python XMLRPC server is no longer available !");
+/**
 $handle = @fopen("http://python.xmlrpc2test.sergiocarvalho.com:8765", "r");
 if (!$handle) {
 	echo("skip : The python XMLRPC server is not available !");
 } else {
 	fclose($handle);
 }
+**/
 ?>
 --FILE--
 <?php
