@@ -19,7 +19,7 @@ matrix:
   - php: 7.2
     dist: trusty
 install:
-  - pear upgrade --alldeps pear/pear
+  - pear upgrade --force --alldeps pear/pear
   - pear install package.xml
 script:
   - pear run-tests -dqr tests/
