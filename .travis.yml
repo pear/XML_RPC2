@@ -21,4 +21,5 @@ matrix:
 install:
   - pear install package.xml
 script:
-  - pear run-tests -r tests/
+  - pear run-tests -q -r tests/
+  - for i in `find tests/ -name '*.out'`; do echo "$i"; cat "$i"; done
