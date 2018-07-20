@@ -22,4 +22,5 @@ install:
   - pear upgrade --force --alldeps pear/pear
   - pear install package.xml
 script:
-  - pear run-tests -dqr tests/
+  - pear run-tests -qr tests/
+  - for i in `find tests/ -name '*.out'`; do echo "$i"; cat "$i"; done
