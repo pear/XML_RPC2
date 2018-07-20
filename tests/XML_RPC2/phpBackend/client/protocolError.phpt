@@ -16,8 +16,8 @@ $client = XML_RPC2_Client::create('http://rpc.example.com:1000/', '', null);
 try {
     $client->invalidMethod('World');
 } catch (XML_RPC2_CurlException $e) {
-    var_dump($e->getMessage());
+    echo $e->getMessage();
 }
 ?>
---EXPECTREGEX--
-string\(.*\) \"HTTP_Request2_ConnectionException.*
+--EXPECTF--
+Unable to connect to tcp://rpc.example.com:1000. Error: php_network_getaddresses: getaddrinfo failed: Name or service not known
