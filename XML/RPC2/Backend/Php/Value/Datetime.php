@@ -2,7 +2,7 @@
 
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4 foldmethod=marker: */
 
-// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{ 
+// LICENSE AGREEMENT. If folded, press za here to unfold and read license {{{
 
 /**
 * +-----------------------------------------------------------------------------+
@@ -30,7 +30,7 @@
 *
 * @category   XML
 * @package    XML_RPC2
-* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+* @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>
 * @copyright  2004-2006 Sergio Carvalho
 * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
 * @version    CVS: $Id$
@@ -46,18 +46,18 @@ require_once 'XML/RPC2/Backend/Php/Value/Scalar.php';
 
 /**
  * XML_RPC datetime value class. Instances of this class represent datetime scalars in XML_RPC
- * 
+ *
  * To work on a compatible way with the xmlrpcext backend, we introduce a particular "nativeValue" which is
  * a standard class (stdclass) with three public properties :
  * scalar => the iso8601 date string
  * timestamp => the corresponding timestamp (int)
  * xmlrpc_type => 'datetime'
- * 
- * The constructor can be called with a iso8601 string, with a timestamp or with a such object 
- *  
+ *
+ * The constructor can be called with a iso8601 string, with a timestamp or with a such object
+ *
  * @category   XML
  * @package    XML_RPC2
- * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>  
+ * @author     Sergio Carvalho <sergio.carvalho@portugalmail.com>
  * @copyright  2004-2006 Sergio Carvalho
  * @license    http://www.gnu.org/copyleft/lesser.html  LGPL License 2.1
  * @link       http://pear.php.net/package/XML_RPC2
@@ -66,24 +66,24 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
 {
 
     // {{{ constructor
-    
+
     /**
      * Constructor. Will build a new XML_RPC2_Backend_Php_Value_Datetime with the given value
-     * 
-     * The provided value can be an int, which will be interpreted as a Unix timestamp, or 
-     * a string in iso8601 format, or a "stdclass native value"  
      *
-     * @param mixed $nativeValue a timestamp, an iso8601 date or a "stdclass native value" 
+     * The provided value can be an int, which will be interpreted as a Unix timestamp, or
+     * a string in iso8601 format, or a "stdclass native value"
+     *
+     * @param mixed $nativeValue a timestamp, an iso8601 date or a "stdclass native value"
      * @see http://www.w3.org/TR/NOTE-datetime
      */
-    public function __construct($nativeValue) 
+    public function __construct($nativeValue)
     {
         if ((!is_int($nativeValue)) and (!is_float($nativeValue)) and (!is_string($nativeValue)) and (!is_object($nativeValue))) {
             throw new XML_RPC2_InvalidTypeException(sprintf('Cannot create XML_RPC2_Backend_Php_Value_Datetime from type \'%s\'.', gettype($nativeValue)));
         }
         if ((is_object($nativeValue)) &&(strtolower(get_class($nativeValue)) == 'stdclass') && (isset($nativeValue->xmlrpc_type))) {
             $scalar = $nativeValue->scalar;
-            $timestamp = $nativeValue->timestamp;  
+            $timestamp = $nativeValue->timestamp;
         } else {
             if ((is_int($nativeValue)) or (is_float($nativeValue))) {
                 $scalar = XML_RPC2_Backend_Php_Value_Datetime::_timestampToIso8601($nativeValue);
@@ -101,13 +101,13 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
         $tmp->xmlrpc_type = 'datetime';
         $this->setNativeValue($tmp);
     }
-    
+
     // }}}
     // {{{ _iso8601ToTimestamp()
-    
+
     /**
      * Convert a iso8601 datetime string into timestamp
-     * 
+     *
      * @param string $datetime iso8601 datetime
      * @return int corresponding timestamp
      */
@@ -125,11 +125,11 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
         $milliseconds   = array_key_exists(12, $matches) ? ((double) ('0.' . $matches[12])) : 0;
         if (array_key_exists(13, $matches)) {
             if ($matches[13] == 'Z') {
-                $tzSeconds = 0;                
+                $tzSeconds = 0;
             } else {
                 $tmp = ($matches[15] == '-') ? -1 : 1;
                 $tzSeconds = $tmp * (((int) $matches[16]) * 3600 + ((int) $matches[17]) * 60);
-            }    
+            }
         } else {
             $tzSeconds = 0;
         }
@@ -137,7 +137,7 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
             $result = new DateTime();
             $result->setDate($year, $month, $day);
             $result->setTime($hour, $minutes, $seconds);
-            $result = $result->getTimestamp();
+            $result = $result->format('U');
             if ($milliseconds==0) return $result;
             return ((float) $result) + $milliseconds/1000;
         } else {
@@ -147,31 +147,31 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
             if ($milliseconds==0) return ((int) $result);
             return $result;
         }
-    }     
-    
+    }
+
     // }}}
     // {{{ _timestampToIso8601()
-    
+
     /**
      * Convert a timestamp into an iso8601 datetime
-     * 
+     *
      * @param int $timestamp timestamp
      * @return string iso8601 datetim
      */
     private static function _timestampToIso8601($timestamp)
     {
-        return strftime('%Y%m%dT%H:%M:%S', (int) $timestamp);    
+        return strftime('%Y%m%dT%H:%M:%S', (int) $timestamp);
     }
-     
+
     // }}}
     // {{{ decode()
-    
+
     /**
      * Decode transport XML and set the instance value accordingly
      *
      * @param mixed The encoded XML-RPC value,
      */
-    public static function decode($xml) 
+    public static function decode($xml)
     {
         // TODO Remove reparsing of XML fragment, when SimpleXML proves more solid. Currently it segfaults when
         // xpath is used both in an element and in one of its children
@@ -187,23 +187,23 @@ class XML_RPC2_Backend_Php_Value_Datetime extends XML_RPC2_Backend_Php_Value
         $result->xmlrpc_type = 'datetime';
         return $result;
     }
-    
+
     // }}}
     // {{{ encode()
-    
+
     /**
      * Encode the instance into XML, for transport
-     * 
+     *
      * @return string The encoded XML-RPC value,
      */
-    public function encode() 
+    public function encode()
     {
         $native = $this->getNativeValue();
         return '<dateTime.iso8601>' . $native->scalar . '</dateTime.iso8601>';
     }
-    
+
     // }}}
-    
+
 }
 
 ?>
