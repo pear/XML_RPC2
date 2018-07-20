@@ -235,7 +235,7 @@ class XML_RPC2_Util_HTTPRequest
             if ($result->getStatus() != 200) throw new XML_RPC2_ReceivedInvalidStatusCodeException('Received non-200 HTTP Code: ' . $result->getStatus() . '. Response body:' . $result->getBody());
 
         } catch (HTTP_Request2_Exception $e) {
-            throw new XML_RPC2_CurlException($e->getMessage(), 0, $e);
+            throw new XML_RPC2_CurlException($e->getMessage(), 0);
         }
         $this->_body = $result->getBody();
         return $result->getBody();
