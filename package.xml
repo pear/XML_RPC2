@@ -26,10 +26,9 @@
   <email>jal@ambitonline.com</email>
   <active>yes</active>
  </developer>
- <date>2016-06-21</date>
- <time>16:24:50</time>
+ <date>2018-08-03</date>
  <version>
-  <release>1.1.3</release>
+  <release>1.1.4</release>
   <api>1.0.5</api>
  </version>
  <stability>
@@ -38,8 +37,8 @@
  </stability>
  <license uri="https://www.gnu.org/licenses/lgpl-2.1.html">LGPL-2.1</license>
  <notes>
-QA release
-Fix issues when installed via composer
+* PR #7  Don't include the full stacktrace of the original exception in the message of the CurlException
+* PR #8  Explicitly cast to integer before adding one
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -280,6 +279,22 @@ Fix issues when installed via composer
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <date>2018-08-03</date>
+   <version>
+    <release>1.1.4</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <license uri="https://www.gnu.org/licenses/lgpl-2.1.html">LGPL-2.1</license>
+   <notes>
+* PR #7  Don't include the full stacktrace of the original exception in the message of the CurlException
+* PR #8  Explicitly cast to integer before adding one
+   </notes>
+  </release>
   <release>
    <version>
     <release>1.1.3</release>
