@@ -42,6 +42,9 @@
 // dependencies {{{
 require_once 'XML/RPC2/Exception.php';
 require_once 'XML/RPC2/Client.php';
+if (!class_exists('HTTP_Request2', true)) {
+    require_once 'HTTP/Request2.php';
+}
 // }}}
 
 /**
