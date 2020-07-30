@@ -28,7 +28,7 @@
     "require": {
         "php": ">=5.2.0",
         "pear/pear_exception": "^1.0.0",
-        "pear/http_request2": "^2.3.0"
+        "pear/http_request2": "^2.4.0"
     },
     "require-dev": {
         "phpunit/phpunit": "*"
