@@ -26,9 +26,9 @@
   <email>jal@ambitonline.com</email>
   <active>no</active>
  </developer>
- <date>2018-08-03</date>
+ <date>2022-07-24</date>
  <version>
-  <release>1.1.4</release>
+  <release>1.1.5</release>
   <api>1.0.5</api>
  </version>
  <stability>
@@ -37,8 +37,7 @@
  </stability>
  <license uri="https://www.gnu.org/licenses/lgpl-2.1.html">LGPL-2.1</license>
  <notes>
-* PR #7  Don't include the full stacktrace of the original exception in the message of the CurlException
-* PR #8  Explicitly cast to integer before adding one
+* PR #10 Fixes incompatibility with new version of pear/http_request2 2.4.0
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
@@ -279,6 +278,21 @@
  </dependencies>
  <phprelease />
  <changelog>
+  <release>
+   <date>2022-07-24</date>
+   <version>
+    <release>1.1.5</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+     <release>stable</release>
+     <api>stable</api>
+   </stability>
+   <license uri="https://www.gnu.org/licenses/lgpl-2.1.html">LGPL-2.1</license>
+   <notes>
+* PR #10 Fixes incompatibility with new version of pear/http_request2 2.4.0
+   </notes>
+  </release>
   <release>
    <date>2018-08-03</date>
    <version>
