@@ -18,7 +18,7 @@ $options = array(
 	'backend' => 'Xmlrpcext',
 	'prefix' => 'validator1.'
 );
-$client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
+$client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
 $arg = array(
     'moe' => 5,
     'larry' => 6,

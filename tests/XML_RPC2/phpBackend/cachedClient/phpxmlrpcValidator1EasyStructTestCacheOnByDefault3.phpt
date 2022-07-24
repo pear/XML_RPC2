@@ -28,7 +28,7 @@ $options = array(
 	'cacheDebug' => true
 );
 
-$client = XML_RPC2_CachedClient::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
+$client = XML_RPC2_CachedClient::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
 $arg = array(
     'moe' => 5,
     'larry' => 6,

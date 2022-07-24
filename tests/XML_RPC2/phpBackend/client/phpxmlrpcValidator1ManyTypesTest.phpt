@@ -17,7 +17,7 @@ $options = array(
 	'backend' => 'Php',
 	'prefix' => 'validator1.'
 );
-$client = XML_RPC2_Client::create('http://phpxmlrpc.sourceforge.net/server.php', $options);
+$client = XML_RPC2_Client::create('https://gggeek.altervista.org/sw/xmlrpc/demo/server/server.php', $options);
 $tmp = "20060116T19:14:03";
 $time = XML_RPC2_Value::createFromNative($tmp, 'datetime');
 $base64 = XML_RPC2_Value::createFromNative('foobar', 'base64');
