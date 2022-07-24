@@ -12,19 +12,19 @@
   <name>Sergio Carvalho</name>
   <user>sergiosgc</user>
   <email>sergiosgc@php.net</email>
-  <active>yes</active>
+  <active>no</active>
  </lead>
  <developer>
   <name>Fabien MARTY</name>
   <user>fab</user>
   <email>fab@php.net</email>
-  <active>yes</active>
+  <active>no</active>
  </developer>
  <developer>
   <name>Alan Langford</name>
   <user>instance</user>
   <email>jal@ambitonline.com</email>
-  <active>yes</active>
+  <active>no</active>
  </developer>
  <date>2018-08-03</date>
  <version>
